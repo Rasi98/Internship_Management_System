@@ -18,8 +18,12 @@ class Loginform extends Component {
         this.setState({password:event.target.value})
     }
     handleSubmit=(event)=>{
-        alert('Login successfull!');
-        event.preventDefault();
+        event.preventDefault()
+        const user={
+            username:this.state.username,
+            password:this.state.password
+        }
+        console.log(user);
     }
     
 
