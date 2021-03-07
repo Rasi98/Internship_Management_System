@@ -37,7 +37,7 @@ class Loginform extends Component {
                 <form>
                     <div className='form-group'>        
                         <label htmlFor="exampleInputEmail1">Username</label>
-                        <input type="text" className="form-control" placeholder="Enter username" value={this,this.state.username} onChange={this.handleUsernameChange}></input>
+                        <input type="text" className="form-control" placeholder="Enter username" value={this.state.username} onChange={this.handleUsernameChange}></input>
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputPassword1">Password</label>

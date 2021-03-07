@@ -1,11 +1,10 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
+import Addcompany from './components/addCompany'
 
-import Navbar from './components/Navbar'
-
-function app(){
+function App(){
     return(
-        <Navbar/>
+        <Addcompany/>
     );
 }
-export default app;
+export default App;
