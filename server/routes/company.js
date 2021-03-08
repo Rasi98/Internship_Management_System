@@ -3,6 +3,6 @@ import {getCompany,addCompany} from '../controllers/company.js'
 const companyRouter=express.Router();
 
 companyRouter.get('/',getCompany);
-companyRouter.post('/add',addCompany);
+companyRouter.post('/addcompany',addCompany);
 
 export default companyRouter;

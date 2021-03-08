@@ -1,28 +1,45 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import {Navbar,NavDropdown,Nav} from 'react-bootstrap'
+import {Link}from 'react-router-dom'
 
-class Navbar extends Component {
+class AdminNavbar extends Component {
    
     render() { 
         return ( 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand" href="#">Intership Portal</a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div className="navbar-nav">
-                <a className="nav-item nav-link active" href="#">Home <span className="sr-only">(current)</span></a>
-                <a className="nav-item nav-link" href="#">Users</a>
-                <a className="nav-item nav-link" href="#">Students</a>
-                <a className="nav-item nav-link" href="#">Companies</a>
-                <a className="nav-item nav-link" href="#">Allocate</a>
-                <a className="nav-item nav-link" href="#">Report</a>
-              </div>
-            </div>
-          </nav>
+          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+          <Link to="/"><Navbar.Brand>MIT | Intership portal</Navbar.Brand></Link>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto">
+              <NavDropdown title="USERS" id="collasible-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">student</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">ITAA</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">ITA</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">ITPC</NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link href="#pricing">STUDENT PROFILES</Nav.Link>
+              <NavDropdown title="COMPANY" id="collasible-nav-dropdown">
+                <Link to="/addcompany"> <NavDropdown.Item href="/addcompany">Add</NavDropdown.Item></Link>
+                <Link to="/viewcompany"><NavDropdown.Item href="/viewcompany">View</NavDropdown.Item></Link>
+                <NavDropdown.Item href="#action/3.3">Remove</NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="ALLOCATE" id="collasible-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Company</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">ITAA</NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link href="#pricing">REPORTS</Nav.Link>
+            </Nav>
+            <Nav>
+              <Nav.Link href="#deets">Administrator</Nav.Link>
+              <Nav.Link eventKey={2} href="#memes">
+                Logout
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
          );
     }
 }
  
-export default Navbar;
+export default AdminNavbar;

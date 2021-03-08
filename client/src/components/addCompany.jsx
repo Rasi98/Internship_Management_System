@@ -38,16 +38,20 @@ class Addcompany extends Component {
             "vacancies":this.state.vacancies
         }
 
-        axios.post('http://localhost:5000/company/add',company)
-        .then(res=>console.log("Company added!"));
-        
+        axios.post('http://localhost:5000/company/addcompany',company)
+        .then(res=>alert( company.name+" added!"))
+
+       { document.querySelectorAll('input');
+        this.setState({
+          itemvalues: [{}]
+        })};
     }
    
 
     render() { 
         return ( 
             <React.Fragment>
-                <div className="container">
+                <div className="container mt-4">
                 <h3>New company</h3>
                 <form>
                     <div className="col-5">
