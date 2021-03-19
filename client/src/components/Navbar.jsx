@@ -22,7 +22,6 @@ class AdminNavbar extends Component {
               <NavDropdown title="COMPANY" id="collasible-nav-dropdown">
                 <Link to="/addcompany"> <NavDropdown.Item href="/addcompany">Add</NavDropdown.Item></Link>
                 <Link to="/viewcompany"><NavDropdown.Item href="/viewcompany">View</NavDropdown.Item></Link>
-                <NavDropdown.Item href="#action/3.3">Remove</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="ALLOCATE" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Company</NavDropdown.Item>

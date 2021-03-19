@@ -8,7 +8,7 @@
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Lakshan Rasingolla",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",

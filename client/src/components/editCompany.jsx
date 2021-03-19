@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 
-class Addcompany extends Component {
+class Editcompany extends Component {
     constructor(props) {
         super(props);
         this.state = {  
@@ -12,6 +12,22 @@ class Addcompany extends Component {
             phone:'',
             vacancies:''
         }
+    }
+
+    componentDidMount(){
+        axios.get('http://localhost:5000/company/'+this.props.match.params.id)
+        .then(Response=>{
+            this.setState({
+                name:Response.data.name,
+                email:Response.data.email,
+                address:Response.data.address,
+                phone:Response.data.phone,
+                vacancies:Response.data.vacancies
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        })                           
     }
 
     handlenamechange=(e)=>{
@@ -30,6 +46,7 @@ class Addcompany extends Component {
         this.setState({vacancies:e.target.value});
     }
     handlesubmit=(e)=>{
+        e.preventDefault();
         const company={
             "name":this.state.name,
             "email":this.state.email,
@@ -38,18 +55,16 @@ class Addcompany extends Component {
             "vacancies":this.state.vacancies
         }
 
-        axios.post('http://localhost:5000/company/addcompany',company)
-        .then(res=>alert( company.name+" added!"))
+        axios.post('http://localhost:5000/company/update/'+this.props.match.params.id,company)
+        .then(res=>alert( company.name+" updated!"))
 
-      window.location='/addcompany'
+        window.location='/'
     }
-   
-
     render() { 
         return ( 
             <React.Fragment>
                 <div className="container mt-4">
-                <h3 className='text-center'>New company</h3>
+                <h3>Edit company</h3>
                 <form>
                     <div className="col-5">
                         <div className='form-group'>        
@@ -81,4 +96,4 @@ class Addcompany extends Component {
     }
 }
  
-export default Addcompany;
+export default Editcompany;
