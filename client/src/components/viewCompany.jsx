@@ -11,7 +11,8 @@ const Company =props=>(
         <td>{props.company.phone}</td>
         <td>{props.company.vacancies}</td>
         <td>
-            <Link to={"/edit/"+props.company._id}>Edit</Link> | <a href="#" onClick={()=>{props.deleteCompany(props.company._id)}}>Delete</a>
+            <Link to={"/edit/"+props.company._id} className="btn btn-warning">edit</Link>
+            <button className='btn btn-danger m-1' onClick={() => { props.deleteCompany(props.company._id) }}>Delete</button>
         </td>
     </tr>
 )
@@ -20,9 +21,10 @@ class Viewcompany extends Component {
     constructor(props){
         super(props);
 
-        this.deleteCompany=this.deleteCompany.bind(this);
-        
-        this.state={companies:[]};
+        this.deleteCompany=this.deleteCompany.bind(this)
+        this.state={
+            companies:[]
+        };
     }
     
     componentDidMount(){
@@ -36,16 +38,16 @@ class Viewcompany extends Component {
     }
 
     deleteCompany(id){
-        axios.delete('http://localhost:5000/company/delete'+id)
-        .then(res=>console.log(res.data));
+        axios.delete('http://localhost:5000/company/'+id)
+        .then(res=>console.log(res.data))
         this.setState({
-            companies:this.state.companies.filter(el=>el._id!==id)
+            companies: this.state.companies.filter(el => el._id !== id)
         })
     }
 
     companiesList(){
-        return this.state.companies.map(currentcompanies=>{
-            return <Company company={currentcompanies} deleteCompany={this.deleteCompany} key={currentcompanies._id}/>
+        return this.state.companies.map(currentcompany=>{
+            return <Company company={currentcompany} deleteCompany={this.deleteCompany} key={currentcompany._id}/>
         })
     }
 

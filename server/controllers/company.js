@@ -13,31 +13,44 @@ export const getCompany=async(req,res)=>{
 
 export const addCompany=async(req,res)=>{
     const companyData=req.body;
-
     const newCompany=new companyModel(companyData);
     try {
         await newCompany.save();
-
         res.status(201).json(newCompany);
     } catch (error) {
         res.status(409).json({message:error.message})
     }
 }
 
-export const findByCompanyId=async(req, res) => {
-    await companyModel.findById(req.params.id)
+export const findCompany=(req, res) => {
+    companyModel.findById(req.params.id)
       .then(company => res.json(company))
       .catch(err => res.status(400).json('Error: ' + err));
   }
 
-export const deleteCompany= async(req, res) => {
-        await companyModel.findByIdAndDelete(req.params.id)
+export const deleteCompany=(req, res) => {
+        companyModel.findByIdAndDelete(req.params.id)
         .then(() => res.json('Company deleted.'))
         .catch(err => res.status(400).json('Error: ' + err))
     
    
   }
 
+  export const companyUpdate=(req,res)=>{
+      companyModel.findById(req.params.id)
+      .then(company=>{
+          company.name=req.body.name;
+          company.email=req.body.email;
+          company.address=req.body.address;
+          company.phone=req.body.phone;
+          company.vacancies=Number(req.body.vacancies);
+
+          company.save()
+          .then(()=>res.json('Company updated.'))
+          .catch(err=>res.status(400).json('Error:'+err));
+      })
+      .catch(err=>res.status(400).json('Error:'+err));
+  }
   
   
   

@@ -22,10 +22,8 @@ class Editcompany extends Component {
                 email:Response.data.email,
                 address:Response.data.address,
                 phone:Response.data.phone,
-                vacancies:Response.data.vacancies
-            })
-            .catch(function(error){
-                console.log(error);
+                vacancies:Number(Response.data.vacancies),
+
             })
         })                           
     }
@@ -46,7 +44,6 @@ class Editcompany extends Component {
         this.setState({vacancies:e.target.value});
     }
     handlesubmit=(e)=>{
-        e.preventDefault();
         const company={
             "name":this.state.name,
             "email":this.state.email,
@@ -56,9 +53,9 @@ class Editcompany extends Component {
         }
 
         axios.post('http://localhost:5000/company/update/'+this.props.match.params.id,company)
-        .then(res=>alert( company.name+" updated!"))
-
-        window.location='/'
+        .then(res=>console.log(res.data))
+       
+        window.location = '/viewcompany';
     }
     render() { 
         return ( 
@@ -87,7 +84,7 @@ class Editcompany extends Component {
                             <label htmlFor="noofvacancies">No of vacancies</label>
                             <input type="number" className="form-control" placeholder="Enter no of vacancies available" value={this,this.state.vacancies} onChange={this.handlevacancychange}></input>
                         </div>
-                        <button type="button" className="btn btn-primary" onClick={this.handlesubmit}>Add</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handlesubmit}>Update</button>
                     </div>
                 </form>
                 </div>

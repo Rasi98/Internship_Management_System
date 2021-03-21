@@ -35,13 +35,20 @@ class Addcompany extends Component {
             "email":this.state.email,
             "address":this.state.address,
             "phone":this.state.phone,
-            "vacancies":this.state.vacancies
+            "vacancies":Number(this.state.vacancies)
         }
 
         axios.post('http://localhost:5000/company/addcompany',company)
         .then(res=>alert( company.name+" added!"))
 
-      window.location='/addcompany'
+        this.setState({
+            name:'',
+            email:'',
+            address:'',
+            phone:'',
+            vacancies:'',
+        })
+
     }
    
 
