@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 class Editcompany extends Component {
     constructor(props) {
@@ -61,7 +62,7 @@ class Editcompany extends Component {
         return ( 
             <React.Fragment>
                 <div className="container mt-4">
-                <h3>Edit company</h3>
+                <h3 className='text-center'>Edit company</h3>
                 <form>
                     <div className="col-5">
                         <div className='form-group'>        
@@ -78,13 +79,14 @@ class Editcompany extends Component {
                         </div>
                         <div className='form-group'>        
                             <label htmlFor="companymobile">Phone No</label>
-                            <input type="number" maxLength="10" className="form-control" placeholder="Enter phone no." value={this,this.state.phone} onChange={this.handlephonechange}></input>
+                            <input type="number" className="form-control" placeholder="Enter phone no." value={this,this.state.phone} onChange={this.handlephonechange}></input>
                         </div>
                         <div className='form-group'>        
                             <label htmlFor="noofvacancies">No of vacancies</label>
                             <input type="number" className="form-control" placeholder="Enter no of vacancies available" value={this,this.state.vacancies} onChange={this.handlevacancychange}></input>
                         </div>
-                        <button type="button" className="btn btn-primary" onClick={this.handlesubmit}>Update</button>
+                        <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.handlesubmit}>Update</button>
+                        <Link to={"/viewcompany"} className="btn btn-outline-secondary btn-lg btn-block">Back</Link>
                     </div>
                 </form>
                 </div>

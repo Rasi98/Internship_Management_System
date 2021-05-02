@@ -6,6 +6,7 @@ const app =express();
 app.use(cors());
 app.use(express.json());
 
+
 import companyRouter from './routes/company.js'
 app.use('/company',companyRouter);
 

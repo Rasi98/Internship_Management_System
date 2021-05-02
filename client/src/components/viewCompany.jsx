@@ -10,9 +10,11 @@ const Company =props=>(
         <td>{props.company.address}</td>
         <td>{props.company.phone}</td>
         <td>{props.company.vacancies}</td>
+        <td>{props.company.status}</td>
         <td>
-            <Link to={"/edit/"+props.company._id} className="btn btn-warning">edit</Link>
+            <Link to={"/edit/"+props.company._id} className="btn btn-warning m-1">edit</Link>
             <button className='btn btn-danger m-1' onClick={() => { props.deleteCompany(props.company._id) }}>Delete</button>
+            <button className='btn btn-success m-1' onClick={()=>{props.contactCompany(props.company._id)}}>Contact</button>
         </td>
     </tr>
 )
@@ -22,8 +24,10 @@ class Viewcompany extends Component {
         super(props);
 
         this.deleteCompany=this.deleteCompany.bind(this)
+        this.contactCompany=this.contactCompany.bind(this)
         this.state={
-            companies:[]
+            companies:[],
+            
         };
     }
     
@@ -45,9 +49,24 @@ class Viewcompany extends Component {
         })
     }
 
+    contactCompany(id){
+        //Need to pass company name & email
+    
+        const email={
+    
+            "email":"lakshanpublic@gmail.com",
+            "name": "lakshan",
+        }
+        axios.post('http://localhost:5000/company/contactcompany/'+id,email)
+        .then((res)=>{
+            
+        })
+        
+    }
+
     companiesList(){
         return this.state.companies.map(currentcompany=>{
-            return <Company company={currentcompany} deleteCompany={this.deleteCompany} key={currentcompany._id}/>
+            return <Company company={currentcompany} contactCompany={this.contactCompany} deleteCompany={this.deleteCompany} key={currentcompany._id}/>
         })
     }
 
@@ -63,6 +82,7 @@ class Viewcompany extends Component {
                         <th>Address</th>
                         <th>Phone</th>
                         <th>#Vacancies</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>

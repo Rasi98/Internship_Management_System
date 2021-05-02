@@ -7,8 +7,9 @@ const companySchema=new Schema({
     email:{type:String},
     address:{type:String},
     phone:{type:String},
-    vacancies:{type:Number}
+    vacancies:{type:Number},
+    status:{types:String}
 });
 
 const companyModel=mongoose.model('companyModel',companySchema);
-export default companyModel;
+export default companyModel; 
