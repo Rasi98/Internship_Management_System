@@ -11,7 +11,6 @@ class Editcompany extends Component {
             email:'',
             address:'',
             phone:'',
-            vacancies:''
         }
     }
 
@@ -23,7 +22,6 @@ class Editcompany extends Component {
                 email:Response.data.email,
                 address:Response.data.address,
                 phone:Response.data.phone,
-                vacancies:Number(Response.data.vacancies),
 
             })
         })                           
@@ -41,16 +39,12 @@ class Editcompany extends Component {
     handlephonechange=(e)=>{
         this.setState({phone:e.target.value});
     }
-    handlevacancychange=(e)=>{
-        this.setState({vacancies:e.target.value});
-    }
     handlesubmit=(e)=>{
         const company={
             "name":this.state.name,
             "email":this.state.email,
             "address":this.state.address,
             "phone":this.state.phone,
-            "vacancies":this.state.vacancies
         }
 
         axios.post('http://localhost:5000/company/update/'+this.props.match.params.id,company)
@@ -80,10 +74,6 @@ class Editcompany extends Component {
                         <div className='form-group'>        
                             <label htmlFor="companymobile">Phone No</label>
                             <input type="number" className="form-control" placeholder="Enter phone no." value={this,this.state.phone} onChange={this.handlephonechange}></input>
-                        </div>
-                        <div className='form-group'>        
-                            <label htmlFor="noofvacancies">No of vacancies</label>
-                            <input type="number" className="form-control" placeholder="Enter no of vacancies available" value={this,this.state.vacancies} onChange={this.handlevacancychange}></input>
                         </div>
                         <button type="button" className="btn btn-primary btn-lg btn-block" onClick={this.handlesubmit}>Update</button>
                         <Link to={"/viewcompany"} className="btn btn-outline-secondary btn-lg btn-block">Back</Link>

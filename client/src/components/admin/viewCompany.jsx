@@ -9,7 +9,6 @@ const Company =props=>(
         <td>{props.company.email}</td>
         <td>{props.company.address}</td>
         <td>{props.company.phone}</td>
-        <td>{props.company.vacancies}</td>
         <td>{props.company.status}</td>
         <td>
             <Link to={"/edit/"+props.company._id} className="btn btn-warning m-1">edit</Link>
@@ -81,7 +80,6 @@ class Viewcompany extends Component {
                         <th>Email</th>
                         <th>Address</th>
                         <th>Phone</th>
-                        <th>#Vacancies</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>

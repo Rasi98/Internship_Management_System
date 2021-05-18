@@ -31,7 +31,7 @@ class AdminNavbar extends Component {
             </Nav>
             <Nav>
               <Nav.Link href="#deets">Administrator</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
+              <Nav.Link eventKey={2} href="">
                 Logout
               </Nav.Link>
             </Nav>

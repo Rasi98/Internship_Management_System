@@ -41,6 +41,7 @@ class Addcompany extends Component {
             axios.post('http://localhost:5000/company/addcompany',company)
             .then(res=>{
                 const error=res.data.result;
+                console.log(res);
         
                 if(error!==null){
                     alert(error);

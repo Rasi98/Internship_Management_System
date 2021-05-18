@@ -44,7 +44,6 @@ export const deleteCompany=(req, res) => {
           company.email=req.body.email;
           company.address=req.body.address;
           company.phone=req.body.phone;
-          company.vacancies=Number(req.body.vacancies);
           company.status=req.body.status;
 
           company.save()

@@ -1,34 +1,26 @@
-import React from 'react';
-import "bootstrap/dist/css/bootstrap.min.css"
-//import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Switch, Route } from "react-router-dom";
 
-// import Addcompany from './components/addCompany'
-// import Navbar from './components/Navbar'
-// import Viewcompany from './components/viewCompany'
-// import Home from './components/home'
-// import Editcompany from './components/editCompany'
-import Loginpage from './components/login'
+import Addcompany from "./components/admin/addCompany";
+import Navbar from "./components/admin/Navbar";
+import Viewcompany from "./components/admin/viewCompany";
+import Home from "./components/admin/home";
+import Editcompany from "./components/admin/editCompany";
 
-
-function App(){
-    return(
-        <Loginpage></Loginpage>
-    //     <React.Fragment>
-    //     <Router>
-    //         <div>
-    //         <Navbar></Navbar>
-    //         <Switch>
-    //             <Route path="/" exact component={Home}/>
-    //             <Route path="/edit/:id" component={Editcompany} />
-    //             <Route path="/addcompany" component={Addcompany}/>
-    //             <Route path="/viewcompany" component={Viewcompany}/>
-    //         </Switch>
-            
-    //         </div>
-    //     </Router>
-        
-    // </React.Fragment>
-        
-    );
-}
+const App = () => {
+  return (
+    <div>
+      <Navbar></Navbar>
+      <div className="content">
+        <Switch>
+          <Route path="/edit/:id" component={Editcompany} />
+          <Route path="/addcompany" component={Addcompany} />
+          <Route path="/viewcompany" component={Viewcompany} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </div>
+    </div>
+  );
+};
 export default App;
