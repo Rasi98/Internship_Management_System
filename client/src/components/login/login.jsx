@@ -11,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import imlogo from "../resources/imlogo.png";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -53,6 +55,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+
+    axios.post("http://localhost:5000/login", data).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -62,21 +73,27 @@ export default function SignIn() {
         <Typography color="inherit" component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <TextField
             variant="outlined"
             margin="normal"
+            {...register("username")}
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
           />
           <TextField
             variant="outlined"
             margin="normal"
+            {...register("password")}
             required
             fullWidth
             name="password"
@@ -84,10 +101,6 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
           />
           <Button
             type="submit"
@@ -98,13 +111,6 @@ export default function SignIn() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={8}>

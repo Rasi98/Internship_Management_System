@@ -10,8 +10,12 @@ app.use(cors());
 app.use(express.json());
 
 import companyRouter from "./routes/company.js";
+import userRouter from "./routes/user.js";
+import loginRouter from "./routes/login.js";
 
 app.use("/company", companyRouter);
+app.use("/user", userRouter);
+app.use("/", loginRouter);
 
 const port = process.env.port || 5000;
 const uri =
