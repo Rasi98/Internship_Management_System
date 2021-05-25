@@ -12,10 +12,12 @@ app.use(express.json());
 import companyRouter from "./routes/company.js";
 import userRouter from "./routes/user.js";
 import loginRouter from "./routes/login.js";
+import studentRouter from "./routes/studentcontrol.js";
 
 app.use("/company", companyRouter);
 app.use("/user", userRouter);
 app.use("/", loginRouter);
+app.use("/student", studentRouter);
 
 const port = process.env.port || 5000;
 const uri =
