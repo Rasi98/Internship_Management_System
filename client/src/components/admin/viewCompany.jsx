@@ -54,6 +54,7 @@ class Viewcompany extends Component {
       .get("http://localhost:5000/company/")
       .then((Response) => {
         this.setState({ companies: Response.data });
+        console.log(Response);
       })
       .catch((error) => {
         console.log(error);
@@ -99,7 +100,9 @@ class Viewcompany extends Component {
       <div>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">Company List</h3>
+          <h2 className="text-center m-3" style={{ fontSize: "1.5rem" }}>
+            Company List
+          </h2>
           <table className="table">
             <thead className="thead-light">
               <tr>

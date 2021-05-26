@@ -66,11 +66,10 @@ class Addcompany extends Component {
     return (
       <div>
         <Navbar></Navbar>
-        <div className="container mt-4">
-          <h3 className="text-center">New company</h3>
-          <div>
-            <ul className="error"></ul>
-          </div>
+        <h3 className="text-center m-3" style={{ fontSize: "1.5rem" }}>
+          New company
+        </h3>
+        <div className="container justify-content-center mt-4">
           <form>
             <div className="col-5">
               <div className="form-group">
