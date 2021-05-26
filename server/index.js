@@ -13,11 +13,13 @@ import companyRouter from "./routes/company.js";
 import userRouter from "./routes/user.js";
 import loginRouter from "./routes/login.js";
 import studentRouter from "./routes/studentcontrol.js";
+import itpcRouter from "./routes/itpccontrol.js";
 
 app.use("/company", companyRouter);
 app.use("/user", userRouter);
 app.use("/", loginRouter);
 app.use("/student", studentRouter);
+app.use("/itpc", itpcRouter);
 
 const port = process.env.port || 5000;
 const uri =
