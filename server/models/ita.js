@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const itpcSchema = new Schema({
+const itaSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -11,7 +11,6 @@ const itpcSchema = new Schema({
     type: String,
     required: true,
   },
-
   name: {
     type: String,
     required: true,
@@ -24,7 +23,11 @@ const itpcSchema = new Schema({
     type: String,
     required: true,
   },
+  company: {
+    type: String,
+    required: true,
+  },
 });
 
-const ITPC = mongoose.model("ITPC", itpcSchema);
-export default ITPC;
+const ITA = mongoose.model("ITA", itaSchema);
+export default ITA;

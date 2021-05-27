@@ -12,14 +12,18 @@ app.use(express.json());
 import companyRouter from "./routes/company.js";
 import userRouter from "./routes/user.js";
 import loginRouter from "./routes/login.js";
-import studentRouter from "./routes/studentcontrol.js";
-import itpcRouter from "./routes/itpccontrol.js";
+import studentRouter from "./routes/usercontrol/studentcontrol.js";
+import itpcRouter from "./routes/usercontrol/itpccontrol.js";
+import itaaRouter from "./routes/usercontrol/itaacontrol.js";
+import itaRouter from "./routes/usercontrol/itacontrol.js";
 
 app.use("/company", companyRouter);
 app.use("/user", userRouter);
 app.use("/", loginRouter);
 app.use("/student", studentRouter);
 app.use("/itpc", itpcRouter);
+app.use("/itaa", itaaRouter);
+app.use("/ita", itaRouter);
 
 const port = process.env.port || 5000;
 const uri =

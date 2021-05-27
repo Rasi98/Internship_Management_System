@@ -15,6 +15,7 @@ import AllocateCompany from "./components/admin/allocateCompany";
 import AllocateITAA from "./components/admin/allocateITAA";
 import Report from "./components/admin/strategicReport";
 import SignIn from "./components/login/login";
+// import Edititpc from "./components/admin/usercontrol/edititpc";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/usercontrol/itaa" component={ITAA} />
         <Route path="/usercontrol/itpc" component={ITPC} />
         <Route path="/usercontrol/student" component={Student} />
+        {/* <Route path="/usercontrol/itpc/:id" component={Edititpc} /> */}
         <Route path="/company/edit/:id" component={Editcompany} />
         <Route path="/company/addcompany" component={Addcompany} />
         <Route path="/company/viewcompany" component={Viewcompany} />

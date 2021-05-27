@@ -7,7 +7,9 @@ const ITAA = (props) => (
   <tr>
     <td>{props.itaa.name}</td>
     <td>{props.itaa.email}</td>
-    <td>{props.itaa.mobile}</td>
+    <td>{props.itaa.phone}</td>
+    <td>{props.itaa.username}</td>
+    <td>{props.itaa.password}</td>
   </tr>
 );
 
@@ -49,6 +51,8 @@ class userItaa extends Component {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Username</th>
+                <th>Password</th>
               </tr>
             </thead>
             <tbody>{this.itaaList()}</tbody>

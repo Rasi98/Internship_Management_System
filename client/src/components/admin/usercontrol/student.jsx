@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Addstudent from "./addstudent";
 
 const Student = (props) => (
   <tr>
@@ -12,6 +14,16 @@ const Student = (props) => (
     <td>{props.student.address}</td>
     <td>{props.student.mobile}</td>
     <td>{props.student.gender}</td>
+    <td>
+      <button
+        className="btn btn-danger m-1"
+        onClick={() => {
+          props.deletestu(props.student._id);
+        }}
+      >
+        Delete
+      </button>
+    </td>
   </tr>
 );
 
@@ -19,8 +31,10 @@ class userStudent extends Component {
   constructor(props) {
     super(props);
 
+    this.deleteStudent = this.deleteStudent.bind(this);
     this.state = {
-      students: [],
+      showpopup: false,
+      studentlist: [],
     };
   }
 
@@ -28,20 +42,37 @@ class userStudent extends Component {
     axios
       .get("http://localhost:5000/student/")
       .then((Response) => {
-        this.setState({ students: Response.data });
+        this.setState({ studentlist: Response.data });
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
+  deleteStudent(id) {
+    axios
+      .delete("http://localhost:5000/student/" + id)
+      .then((res) => console.log(res.data));
+    this.setState({
+      studentlist: this.state.studentlist.filter((i) => i._id !== id),
+    });
+  }
+
   studentList() {
-    return this.state.students.map((currentstudent) => {
-      return <Student student={currentstudent} key={currentstudent._id} />;
+    return this.state.studentlist.map((currentstudent) => {
+      return (
+        <Student
+          student={currentstudent}
+          deletestu={this.deleteStudent}
+          key={currentstudent._id}
+        />
+      );
     });
   }
 
   render() {
+    let popupclose = () => this.setState({ showpopup: false });
+
     return (
       <div>
         <Navbar></Navbar>
@@ -57,11 +88,22 @@ class userStudent extends Component {
                 <th>Address</th>
                 <th>Phone</th>
                 <th>Gender</th>
+                <th>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      this.setState({ showpopup: true });
+                    }}
+                  >
+                    Add
+                  </Button>
+                </th>
               </tr>
             </thead>
             <tbody>{this.studentList()}</tbody>
           </table>
         </div>
+        <Addstudent show={this.state.showpopup} onHide={popupclose} />
       </div>
     );
   }

@@ -7,6 +7,10 @@ const itaaSchema = new Schema({
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -15,7 +19,7 @@ const itaaSchema = new Schema({
     type: String,
     required: true,
   },
-  mobile: {
+  phone: {
     type: String,
     required: true,
   },

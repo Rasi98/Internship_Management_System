@@ -15,7 +15,7 @@ export const createstudent = async (req, res) => {
   const newStudent = new Student(studentData);
   try {
     await newStudent.save();
-    res.status(201).json(newStudent);
+    res.status(201).json("Success");
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -27,10 +27,15 @@ export const deleteStudent = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+export const findstudent = (req, res) => {
+  Student.findById(req.params.id)
+    .then((student) => res.json(student))
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
 export const studentUpdate = (req, res) => {
   Student.findById(req.params.id)
     .then((student) => {
-      student.username = req.body.username;
       student.name = req.body.name;
       student.stuno = req.body.stuno;
       student.email = req.body.email;
