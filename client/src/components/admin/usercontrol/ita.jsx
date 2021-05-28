@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
+import Addita from "./addita";
 
 const ITA = (props) => (
   <tr>
@@ -11,15 +13,27 @@ const ITA = (props) => (
     <td>{props.ita.company}</td>
     <td>{props.ita.username}</td>
     <td>{props.ita.password}</td>
+    <td>
+      <button
+        className="btn btn-danger m-1"
+        onClick={() => {
+          props.deleteita(props.ita._id);
+        }}
+      >
+        Delete
+      </button>
+    </td>
   </tr>
 );
 
 class userIta extends Component {
   constructor(props) {
     super(props);
+    this.deleteita = this.deleteita.bind(this);
 
     this.state = {
       ita: [],
+      showpopup: false,
     };
   }
 
@@ -34,13 +48,26 @@ class userIta extends Component {
       });
   }
 
+  deleteita(id) {
+    axios
+      .delete("http://localhost:5000/ita/" + id)
+      .then((res) => console.log(res.data));
+    this.setState({
+      ita: this.state.ita.filter((i) => i._id !== id),
+    });
+  }
+
   itaList() {
     return this.state.ita.map((currentita) => {
-      return <ITA ita={currentita} key={currentita._id} />;
+      return (
+        <ITA ita={currentita} deleteita={this.deleteita} key={currentita._id} />
+      );
     });
   }
 
   render() {
+    let popupclose = () => this.setState({ showpopup: false });
+
     return (
       <div>
         <Navbar></Navbar>
@@ -55,11 +82,22 @@ class userIta extends Component {
                 <th>Company</th>
                 <th>Username</th>
                 <th>Password</th>
+                <th>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      this.setState({ showpopup: true });
+                    }}
+                  >
+                    Add
+                  </Button>
+                </th>
               </tr>
             </thead>
             <tbody>{this.itaList()}</tbody>
           </table>
         </div>
+        <Addita show={this.state.showpopup} onHide={popupclose} />
       </div>
     );
   }
