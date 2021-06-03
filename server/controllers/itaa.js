@@ -12,6 +12,7 @@ export const getitaa = async (req, res) => {
 
 export const additaa = async (req, res) => {
   const itaaData = req.body;
+
   const newitaa = new ITAA(itaaData);
   try {
     await newitaa.save();
