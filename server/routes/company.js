@@ -5,7 +5,6 @@ import {
   deleteCompany,
   findCompany,
   companyUpdate,
-  contactCompany,
 } from "../controllers/company.js";
 const companyRouter = express.Router();
 import {
@@ -28,6 +27,4 @@ companyRouter.post(
   companyValidationResults,
   companyUpdate
 );
-companyRouter.post("/contactcompany/:id", contactCompany);
-
 export default companyRouter;

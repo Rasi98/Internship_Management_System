@@ -78,7 +78,7 @@ class userStudent extends Component {
         <Navbar></Navbar>
         <div className="container mt-4">
           <h3 className="text-center">Student List</h3>
-          <table className="table">
+          <table className="table text-center">
             <thead className="thead-light">
               <tr>
                 <th>Name</th>

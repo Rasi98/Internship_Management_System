@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { TextField, Button, Container, Divider } from "@material-ui/core";
 import { Card, CardHeader, CardContent } from "@material-ui/core";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import EmailIcon from "@material-ui/icons/Email";
 import SchoolIcon from "@material-ui/icons/School";
 import DateRangeIcon from "@material-ui/icons/DateRange";
@@ -31,7 +30,6 @@ class ProfileComponent extends Component {
       phone: "",
       github: "",
       linkedin: "",
-
       college: "",
       fromyear1: "",
       toyear1: "",
@@ -42,7 +40,6 @@ class ProfileComponent extends Component {
       toyear2: "",
       qualification2: "",
       description2: "",
-
       title1: "",
       link1: "",
       projectDescription1: "",
@@ -52,7 +49,6 @@ class ProfileComponent extends Component {
       title3: "",
       link3: "",
       projectDescription3: "",
-
       institute1: "",
       position1: "",
       duration1: "",
@@ -61,7 +57,6 @@ class ProfileComponent extends Component {
       position2: "",
       duration2: "",
       experienceDescription2: "",
-
       skill1: "",
       skill2: "",
       skill3: "",
@@ -134,17 +129,17 @@ class ProfileComponent extends Component {
     console.log(Studentprofile);
     axios
       .post(
-        "http://localhost:5000/student/profile/addstudentprofile",
+        "http://localhost:5000/studentprofile/addstudentprofile",
         Studentprofile
       )
       .then((res) => {
-        const response = res.result;
+        const response = res.data.message;
         console.log(response);
 
-        if (response == "success") {
+        if (response == "Success") {
           alert("success");
         } else {
-          console.log("Error occured!");
+          console.log("Error occured!" + response);
         }
       });
   };
@@ -168,7 +163,7 @@ class ProfileComponent extends Component {
                     label="First Name"
                     style={{ width: "80%" }}
                     required
-                    value={(this, this.state.firstname)}
+                    value={this.state.firstname}
                     onChange={this.handleChange}
                   />
                 </Grid>
@@ -180,7 +175,7 @@ class ProfileComponent extends Component {
                     style={{ width: "80%" }}
                     name="lastname"
                     required
-                    value={(this, this.state.lastname)}
+                    value={this.state.lastname}
                     onChange={this.handleChange}
                   />
                 </Grid>
@@ -193,7 +188,7 @@ class ProfileComponent extends Component {
                     name="email"
                     required
                     style={{ alignItems: "left", width: "80%" }}
-                    value={(this, this.state.email)}
+                    value={this.state.email}
                     onChange={this.handleChange}
                     InputProps={{
                       endAdornment: (
@@ -212,7 +207,7 @@ class ProfileComponent extends Component {
                     variant="outlined"
                     name="phone"
                     style={{ alignItems: "left", width: "80%" }}
-                    value={(this, this.state.phone)}
+                    value={this.state.phone}
                     onChange={this.handleChange}
                     InputProps={{
                       endAdornment: (
@@ -231,7 +226,7 @@ class ProfileComponent extends Component {
                     variant="outlined"
                     name="github"
                     style={{ alignItems: "left", width: "80%" }}
-                    value={(this, this.state.github)}
+                    value={this.state.github}
                     onChange={this.handleChange}
                     InputProps={{
                       endAdornment: (
@@ -249,7 +244,7 @@ class ProfileComponent extends Component {
                     variant="outlined"
                     name="linkedin"
                     style={{ alignItems: "left", width: "80%" }}
-                    value={(this, this.state.linkedin)}
+                    value={this.state.linkedin}
                     onChange={this.handleChange}
                     InputProps={{
                       endAdornment: (
@@ -261,46 +256,9 @@ class ProfileComponent extends Component {
                   />
                 </Grid>
               </Grid>
-
-              {/* <Container style={{ marginTop: "15px" }}>
-              <Row>
-                <Col lg={3} xs={0} />
-                <Col lg={3} xs={5}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    //onClick={}
-                    disabled
-                    startIcon={<NavigateBeforeIcon />}
-                  >
-                    Back
-                  </Button>
-                </Col>
-                <Col lg={3} xs={5}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={this.onsubmit}
-                    endIcon={<NavigateNextIcon />}
-                  >
-                    Next
-                  </Button>
-                </Col>
-                <Col lg={3} xs={1} />
-              </Row>
-            </Container> */}
-              {/* <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={this.createAndDownloadPDF}
-                  endIcon={<GetAppIcon />}
-                >
-                  Generate PDF
-                </Button> */}
             </div>
           </CardContent>
         </Paper>
-        //........................Education..................................................
         <Paper style={{ marginTop: "20px" }}>
           <Card>
             <CardHeader title="Education Details" />
@@ -440,11 +398,6 @@ class ProfileComponent extends Component {
                 </Grid>
 
                 <Grid item md={4} sm={6} xs={12} lg={4}>
-                  {/* <CustomDatePicker
-                  name={'toyear2'}
-                  label={'To Year'}
-                  value={values.toyear2}
-                /> */}
                   <TextField
                     margin="dense"
                     variant="outlined"
@@ -494,7 +447,6 @@ class ProfileComponent extends Component {
             </div>
           </CardContent>
         </Paper>
-        //...................Experience...........................................
         <Paper style={{ marginTop: "20px" }}>
           <Card>
             <CardHeader title="Experience Details" />
@@ -696,7 +648,6 @@ class ProfileComponent extends Component {
             </div>
           </CardContent>
         </Paper>
-        //...................Project.........................
         <Paper style={{ marginTop: "20px" }}>
           <Card>
             <CardHeader title="Projects Developed" />
@@ -898,7 +849,6 @@ class ProfileComponent extends Component {
             </div>
           </CardContent>
         </Paper>
-        //.................extra..............................
         <Paper style={{ marginTop: "20px" }}>
           <Card>
             <CardHeader title="Extra Details" />
@@ -1119,10 +1069,9 @@ class ProfileComponent extends Component {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={this.handleChange}
-                  endIcon={<NavigateNextIcon />}
+                  onClick={this.onsubmit}
                 >
-                  Next
+                  Submit
                 </Button>
               </Col>
               <Col xs={4} />

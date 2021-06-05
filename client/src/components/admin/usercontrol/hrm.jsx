@@ -3,21 +3,21 @@ import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
-import Addita from "./addita";
+import Addhrm from "./addhrm";
 
-const ITA = (props) => (
+const HRM = (props) => (
   <tr>
-    <td>{props.ita.name}</td>
-    <td>{props.ita.email}</td>
-    <td>{props.ita.phone}</td>
-    <td>{props.ita.company}</td>
-    <td>{props.ita.username}</td>
-    <td>{props.ita.password}</td>
+    <td>{props.hrm.name}</td>
+    <td>{props.hrm.designation}</td>
+    <td>{props.hrm.email}</td>
+    <td>{props.hrm.phone}</td>
+    <td>{props.hrm.company}</td>
+    <td>{props.hrm.department}</td>
     <td>
       <button
         className="btn btn-danger m-1"
         onClick={() => {
-          props.deleteita(props.ita._id);
+          props.deletehrm(props.hrm._id);
         }}
       >
         Delete
@@ -26,41 +26,41 @@ const ITA = (props) => (
   </tr>
 );
 
-class userIta extends Component {
+class userHrm extends Component {
   constructor(props) {
     super(props);
-    this.deleteita = this.deleteita.bind(this);
+    this.deletehrm = this.deletehrm.bind(this);
 
     this.state = {
-      ita: [],
+      hrm: [],
       showpopup: false,
     };
   }
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/ita/")
+      .get("http://localhost:5000/hrm/")
       .then((Response) => {
-        this.setState({ ita: Response.data });
+        this.setState({ hrm: Response.data });
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  deleteita(id) {
+  deletehrm(id) {
     axios
-      .delete("http://localhost:5000/ita/" + id)
+      .delete("http://localhost:5000/hrm/" + id)
       .then((res) => console.log(res.data));
     this.setState({
-      ita: this.state.ita.filter((i) => i._id !== id),
+      hrm: this.state.hrm.filter((i) => i._id !== id),
     });
   }
 
-  itaList() {
-    return this.state.ita.map((currentita) => {
+  hrmList() {
+    return this.state.hrm.map((currenthrm) => {
       return (
-        <ITA ita={currentita} deleteita={this.deleteita} key={currentita._id} />
+        <HRM hrm={currenthrm} deletehrm={this.deletehrm} key={currenthrm._id} />
       );
     });
   }
@@ -72,16 +72,16 @@ class userIta extends Component {
       <div>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">ITA List</h3>
+          <h3 className="text-center">HRM List</h3>
           <table className="table text-center">
-            <thead className="thead-light">
+            <thead className="thead-light ">
               <tr>
                 <th>Name</th>
+                <th>Designation</th>
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Company</th>
-                <th>Username</th>
-                <th>Password</th>
+                <th>Department</th>
                 <th>
                   <Button
                     variant="primary"
@@ -94,13 +94,13 @@ class userIta extends Component {
                 </th>
               </tr>
             </thead>
-            <tbody>{this.itaList()}</tbody>
+            <tbody>{this.hrmList()}</tbody>
           </table>
         </div>
-        <Addita show={this.state.showpopup} onHide={popupclose} />
+        <Addhrm show={this.state.showpopup} onHide={popupclose} />
       </div>
     );
   }
 }
 
-export default userIta;
+export default userHrm;

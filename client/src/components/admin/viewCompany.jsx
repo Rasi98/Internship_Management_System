@@ -26,14 +26,6 @@ const Company = (props) => (
       >
         Delete
       </button>
-      <button
-        className="btn btn-success m-1"
-        onClick={() => {
-          props.contactCompany(props.company._id);
-        }}
-      >
-        Contact
-      </button>
     </td>
   </tr>
 );
@@ -43,7 +35,6 @@ class Viewcompany extends Component {
     super(props);
 
     this.deleteCompany = this.deleteCompany.bind(this);
-    this.contactCompany = this.contactCompany.bind(this);
     this.state = {
       companies: [],
     };
@@ -70,24 +61,11 @@ class Viewcompany extends Component {
     });
   }
 
-  contactCompany(id) {
-    //Need to pass company name & email
-
-    const email = {
-      email: "lakshanpublic@gmail.com",
-      name: "lakshan",
-    };
-    axios
-      .post("http://localhost:5000/company/contactcompany/" + id, email)
-      .then((res) => {});
-  }
-
   companiesList() {
     return this.state.companies.map((currentcompany) => {
       return (
         <Company
           company={currentcompany}
-          contactCompany={this.contactCompany}
           deleteCompany={this.deleteCompany}
           key={currentcompany._id}
         />
@@ -103,7 +81,7 @@ class Viewcompany extends Component {
           <h2 className="text-center m-3" style={{ fontSize: "1.5rem" }}>
             Company List
           </h2>
-          <table className="table">
+          <table className="table text-center">
             <thead className="thead-light">
               <tr>
                 <th>Name</th>

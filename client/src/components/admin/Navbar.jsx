@@ -1,68 +1,68 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, NavDropdown, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 
 class AdminNavbar extends Component {
   render() {
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Link to="/admin">
+        <LinkContainer to="/admin">
           <Navbar.Brand>MIT | Intership portal</Navbar.Brand>
-        </Link>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <NavDropdown title="USERS" id="collasible-nav-dropdown">
-              <Link to="/usercontrol/student">
-                <NavDropdown.Item href="#action/3.1">student</NavDropdown.Item>
-              </Link>
-              <Link to="/usercontrol/itaa">
-                <NavDropdown.Item href="#action/3.2">ITAA</NavDropdown.Item>
-              </Link>
-              <Link to="/usercontrol/ita">
-                <NavDropdown.Item href="#action/3.3">ITA</NavDropdown.Item>
-              </Link>
-              <Link to="/usercontrol/itpc">
-                <NavDropdown.Item href="#action/3.3">ITPC</NavDropdown.Item>
-              </Link>
+              <LinkContainer to="/usercontrol/student">
+                <NavDropdown.Item>student</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/usercontrol/itaa">
+                <NavDropdown.Item>ITAA</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/usercontrol/ita">
+                <NavDropdown.Item>ITA</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/usercontrol/hrm">
+                <NavDropdown.Item>HRM</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/usercontrol/itpc">
+                <NavDropdown.Item>ITPC</NavDropdown.Item>
+              </LinkContainer>
             </NavDropdown>
-            <Link to="/studentprofile">
-              <Nav.Link href="/studentprofile">STUDENT PROFILES</Nav.Link>
-            </Link>
+            <LinkContainer to="/studentprofile">
+              <Nav.Link>STUDENT PROFILES</Nav.Link>
+            </LinkContainer>
             <NavDropdown title="COMPANY" id="collasible-nav-dropdown">
-              <Link to="/company/addcompany">
-                {" "}
-                <NavDropdown.Item href="/company/addcompany">
-                  Add
-                </NavDropdown.Item>
-              </Link>
-              <Link to="/company/viewcompany">
-                <NavDropdown.Item href="/company/viewcompany">
-                  View
-                </NavDropdown.Item>
-              </Link>
+              <LinkContainer to="/company/addcompany">
+                <NavDropdown.Item>Add</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/company/viewcompany">
+                <NavDropdown.Item>View</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/company/contact">
+                <NavDropdown.Item>Contact</NavDropdown.Item>
+              </LinkContainer>
             </NavDropdown>
             <NavDropdown title="ALLOCATE" id="collasible-nav-dropdown">
-              <Link to="/allocate/company">
-                <NavDropdown.Item href="/allocate/company">
-                  Company
-                </NavDropdown.Item>
-              </Link>
-              <Link to="/allocate/itaa">
-                <NavDropdown.Item href="/allocate/itaa">ITAA</NavDropdown.Item>
-              </Link>
+              <LinkContainer to="/allocate/company">
+                <NavDropdown.Item>Company</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/allocate/itaa">
+                <NavDropdown.Item>ITAA</NavDropdown.Item>
+              </LinkContainer>
             </NavDropdown>
-            <Link to="/report">
-              <Nav.Link href="#pricing">REPORTS</Nav.Link>
-            </Link>
+            <LinkContainer to="/report">
+              <Nav.Link>REPORTS</Nav.Link>
+            </LinkContainer>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">Administrator</Nav.Link>
-            <Link to="/">
-              {" "}
-              <Nav.Link href="/">Logout</Nav.Link>
-            </Link>
+            <LinkContainer to="/usercontrol/itpc">
+              <Nav.Link>Administrator</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/">
+              <Nav.Link>Logout</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

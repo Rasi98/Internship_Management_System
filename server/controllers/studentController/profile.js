@@ -6,7 +6,7 @@ export const Addpersonaldetail = async (req, res) => {
   const newprofile = new studentProfile(profile);
   try {
     await newprofile.save();
-    res.status(201).json("success");
+    res.status(201).json("Success");
   } catch (error) {
     res.status(409).json({ message: error.message });
   }

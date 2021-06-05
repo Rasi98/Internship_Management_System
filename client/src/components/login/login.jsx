@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import imlogo from "../resources/imlogo.png";
 import { useForm } from "react-hook-form";
+import validator from "validator";
 import axios from "axios";
 
 function Copyright() {
@@ -55,9 +56,14 @@ function SignIn() {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const validuname = validator.trim(data.username);
+    const validData = {
+      username: validuname,
+      password: data.password,
+    };
+    console.log(validData);
 
-    axios.post("http://localhost:5000/login", data).then((res) => {
+    axios.post("http://localhost:5000/login", validData).then((res) => {
       console.log(res);
 
       if (res.data.msg == "success") {
