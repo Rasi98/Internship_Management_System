@@ -19,6 +19,8 @@ import { Row, Col } from "react-bootstrap";
 import { Paper, Grid } from "@material-ui/core";
 import axios from "axios";
 import "date-fns";
+import profileValidation from "./profileValidation.js";
+import studentProfile from "./../../admin/studentProfile";
 
 class ProfileComponent extends Component {
   constructor(props) {
@@ -69,6 +71,12 @@ class ProfileComponent extends Component {
       interest4: "",
       interest5: "",
       interest6: "",
+      firstnameerr: "",
+      lastnameerr: "",
+      emailerr: "",
+      phoneerr: "",
+      githuberr: "",
+      linkedinerr: "",
     };
   }
 
@@ -126,22 +134,27 @@ class ProfileComponent extends Component {
       interest5: this.state.interest5,
       interest6: this.state.interest6,
     };
-    console.log(Studentprofile);
-    axios
-      .post(
-        "http://localhost:5000/studentprofile/addstudentprofile",
-        Studentprofile
-      )
-      .then((res) => {
-        const response = res.data.message;
-        console.log(response);
 
-        if (response == "Success") {
-          alert("success");
-        } else {
-          console.log("Error occured!" + response);
-        }
-      });
+    const errormsg = profileValidation(Studentprofile);
+    console.log(errormsg);
+    //  set error msg to state
+    //profileValidation(e);
+
+    // axios
+    //   .post(
+    //     "http://localhost:5000/studentprofile/addstudentprofile",
+    //     Studentprofile
+    //   )
+    //   .then((res) => {
+    //     const response = res.data.message;
+    //     console.log(response);
+
+    //     if (response == "Success") {
+    //       alert("success");
+    //     } else {
+    //       console.log("Error occured!" + response);
+    //     }
+    //   });
   };
 
   render() {
@@ -166,6 +179,7 @@ class ProfileComponent extends Component {
                     value={this.state.firstname}
                     onChange={this.handleChange}
                   />
+                  {/* {this.errormsg.firstname && <p>{this.errormsg.firstname}</p>} */}
                 </Grid>
                 <Grid item md={6} sm={12} xs={12} lg={6}>
                   <TextField
@@ -178,6 +192,7 @@ class ProfileComponent extends Component {
                     value={this.state.lastname}
                     onChange={this.handleChange}
                   />
+                  {/* {errormsg.lastname && <p>{errormsg.lastname}</p>} */}
                 </Grid>
 
                 <Grid item md={6} sm={12} xs={12} lg={6}>
@@ -198,6 +213,7 @@ class ProfileComponent extends Component {
                       ),
                     }}
                   />
+                  {/* {errormsg.email && <p>{errormsg.email}</p>} */}
                 </Grid>
 
                 <Grid item lg={6} xs={12} sm={12} md={6}>

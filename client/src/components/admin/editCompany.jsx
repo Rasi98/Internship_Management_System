@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import Swal from "sweetalert2";
 
 class Editcompany extends Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class Editcompany extends Component {
   handlephonechange = (e) => {
     this.setState({ phone: e.target.value });
   };
+
   handlesubmit = (e) => {
     const company = {
       name: this.state.name,
@@ -53,9 +55,35 @@ class Editcompany extends Component {
         "http://localhost:5000/company/update/" + this.props.match.params.id,
         company
       )
-      .then((res) => console.log(res.data));
+      .then((res) => {
+        const response = res.data.result;
 
-    window.location = "/company/viewcompany";
+        if (response == "success") {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Updated successfully",
+          });
+          window.location = "/company/viewcompany";
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: response,
+          });
+        }
+      });
   };
   render() {
     return (

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "./Navbar";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const HRM = (props) => (
@@ -46,25 +47,30 @@ class Contactcompany extends Component {
   }
 
   contactCompany(obj) {
-    //Need to pass company name & email
-
-    // const email = {
-    //   email: obj.email,
-    //   name: obj.name,
-    // };
-    const email = {
-      email: obj.email,
-      id: obj._id,
-    };
-    console.log(email);
-    axios
-      .post("http://localhost:5000/hrm/contacthrm/" + email.id, email)
-      .then((res) => {
-        const response = res.data;
-        console.log(response);
-        if (response == "sent") alert("Email sent!");
-        else alert("Error occured!");
-      });
+    Swal.fire({
+      title: "Are you sure want to contact?",
+      text: "An email will send.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, contact!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Email sent!", "An email has been sent.", "success");
+        const email = {
+          email: obj.email,
+          id: obj._id,
+        };
+        console.log(email);
+        axios
+          .post("http://localhost:5000/hrm/contacthrm/" + email.id, email)
+          .then((res) => {
+            const response = res.data;
+            console.log(response);
+          });
+      }
+    });
   }
 
   hrmList() {

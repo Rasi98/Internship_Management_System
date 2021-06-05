@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 import Navbar from "./Navbar";
 
 class Addcompany extends Component {
@@ -41,14 +42,33 @@ class Addcompany extends Component {
     axios
       .post("http://localhost:5000/company/addcompany", company)
       .then((res) => {
-        const error = res.data.result;
-        console.log(res);
+        const response = res.data.result;
+        console.log(response);
 
-        if (error !== null) {
-          alert(error);
-        } else {
+        if (response == "success") {
           console.log("success");
-          alert("Company Added!");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Company added successfully",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: response,
+          });
         }
       });
   };

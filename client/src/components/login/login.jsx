@@ -11,6 +11,7 @@ import imlogo from "../resources/imlogo.png";
 import { useForm } from "react-hook-form";
 import validator from "validator";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function Copyright() {
   return (
@@ -70,7 +71,12 @@ function SignIn() {
         //alert("loggedin");
         window.location = "/admin";
       } else {
-        alert(res.data.msg);
+        Swal.fire({
+          icon: "error",
+
+          title: "Oops...",
+          text: res.data.msg,
+        });
       }
     });
   };
