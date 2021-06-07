@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Row, Col, Button } from "react-bootstrap";
-import AdminNavbar from "./Navbar";
+import Navbarstd from "../Navbar";
 
+//print cv
 function createPDF() {
   // get elements of report data
   var cv = document.getElementById("cv").innerHTML;
@@ -34,7 +35,7 @@ function createPDF() {
   win.print(); // PRINT THE CONTENTS.
 }
 
-class StudentProfile extends Component {
+class PreviewProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -87,74 +88,70 @@ class StudentProfile extends Component {
       interest6: "",
     };
   }
-
   componentDidMount() {
-    //console.log(this.props.match.params.email);
-    const email = "lakshan@gmail.com";
-    axios
-      .get(
-        "http://localhost:5000/studentprofile/" + this.props.match.params.email
-      )
-      .then((Response) => {
-        console.log(Response);
-
-        this.setState({
-          firstname: Response.data.firstname,
-          lastname: Response.data.lastname,
-          email: Response.data.email,
-          phone: Response.data.phone,
-          address: Response.data.address,
-          github: Response.data.github,
-          linkedin: Response.data.linkedin,
-          career: Response.data.career,
-          college: Response.data.college,
-          fromyear1: Response.data.fromyear1,
-          toyear1: Response.data.toyear1,
-          qualification1: Response.data.qualification1,
-          description1: Response.data.description1,
-          school: Response.data.school,
-          fromyear2: Response.data.fromyear2,
-          toyear2: Response.data.toyear2,
-          qualification2: Response.data.qualification2,
-          description2: Response.data.description2,
-          title1: Response.data.title1,
-          link1: Response.data.link1,
-          projectDescription1: Response.data.projectDescription1,
-          title2: Response.data.title2,
-          link2: Response.data.link2,
-          projectDescription2: Response.data.projectDescription2,
-          title3: Response.data.title3,
-          link3: Response.data.link3,
-          projectDescription3: Response.data.projectDescription3,
-          institute1: Response.data.institute1,
-          position1: Response.data.position1,
-          duration1: Response.data.duration1,
-          experienceDescription1: Response.data.experienceDescription1,
-          institute2: Response.data.institute2,
-          position2: Response.data.position2,
-          duration2: Response.data.duration2,
-          experienceDescription2: Response.data.experienceDescription2,
-          skill1: Response.data.skill1,
-          skill2: Response.data.skill2,
-          skill3: Response.data.skill3,
-          skill4: Response.data.skill4,
-          skill5: Response.data.skill5,
-          skill6: Response.data.skill6,
-          interest1: Response.data.interest1,
-          interest2: Response.data.interest2,
-          interest3: Response.data.interest3,
-          interest4: Response.data.interest4,
-          interest5: Response.data.interest5,
-          interest6: Response.data.interest6,
-        });
+    const email = this.props.match.params.email;
+    console.log(email);
+    axios.get("http://localhost:5000/studentprofile/" + email).then((res) => {
+      //console.log(Response);
+      const profile = res.data;
+      console.log(profile);
+      this.setState({
+        firstname: res.data.firstname,
+        lastname: res.data.lastname,
+        email: res.data.email,
+        phone: res.data.phone,
+        address: res.data.address,
+        github: res.data.github,
+        linkedin: res.data.linkedin,
+        career: res.data.career,
+        college: res.data.college,
+        fromyear1: res.data.fromyear1,
+        toyear1: res.data.toyear1,
+        qualification1: res.data.qualification1,
+        description1: res.data.description1,
+        school: res.data.school,
+        fromyear2: res.data.fromyear2,
+        toyear2: res.data.toyear2,
+        qualification2: res.data.qualification2,
+        description2: res.data.description2,
+        title1: res.data.title1,
+        link1: res.data.link1,
+        projectDescription1: res.data.projectDescription1,
+        title2: res.data.title2,
+        link2: res.data.link2,
+        projectDescription2: res.data.projectDescription2,
+        title3: res.data.title3,
+        link3: res.data.link3,
+        projectDescription3: res.data.projectDescription3,
+        institute1: res.data.institute1,
+        position1: res.data.position1,
+        duration1: res.data.duration1,
+        experienceDescription1: res.data.experienceDescription1,
+        institute2: res.data.institute2,
+        position2: res.data.position2,
+        duration2: res.data.duration2,
+        experienceDescription2: res.data.experienceDescription2,
+        skill1: res.data.skill1,
+        skill2: res.data.skill2,
+        skill3: res.data.skill3,
+        skill4: res.data.skill4,
+        skill5: res.data.skill5,
+        skill6: res.data.skill6,
+        interest1: res.data.interest1,
+        interest2: res.data.interest2,
+        interest3: res.data.interest3,
+        interest4: res.data.interest4,
+        interest5: res.data.interest5,
+        interest6: res.data.interest6,
       });
+    });
   }
 
   render() {
     return (
       <React.Fragment>
         <div>
-          <AdminNavbar />
+          <Navbarstd />
         </div>
         <div>
           <Button
@@ -329,5 +326,4 @@ class StudentProfile extends Component {
     );
   }
 }
-
-export default StudentProfile;
+export default PreviewProfile;

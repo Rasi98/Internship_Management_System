@@ -27,4 +27,5 @@ companyRouter.post(
   companyValidationResults,
   companyUpdate
 );
+
 export default companyRouter;

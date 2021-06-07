@@ -8,8 +8,10 @@ const studentprofileSchema = new Schema({
   lastname: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
+  address: { type: String, requried: true },
   github: { type: String },
   linkedin: { type: String },
+  career: { type: String, required: true },
   // Education Information
   college: { type: String },
   fromyear1: { type: String },

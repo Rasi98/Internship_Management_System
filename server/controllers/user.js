@@ -23,9 +23,13 @@ export const getUsers = async (req, res) => {
 };
 
 export const createUsers = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
   const hashedPass = await hashPassword(password);
-  const newUser = new user({ username: username, password: hashedPass });
+  const newUser = new user({
+    username: username,
+    password: hashedPass,
+    role: role,
+  });
   try {
     await newUser.save();
     res.status(201).json(newUser);

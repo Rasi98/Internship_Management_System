@@ -86,3 +86,17 @@ export const contacthrm = (req, res) => {
     }
   });
 };
+
+export const setstatus = (req, res) => {
+  HRM.findById(req.params.id).then((hrm) => {
+    (hrm.name = hrm.name), (hrm.email = hrm.email), (hrm.phone = hrm.phone);
+    hrm.company = hrm.company;
+    hrm.department = hrm.department;
+    hrm.designation = hrm.designation;
+    hrm.status = "Contacted";
+    hrm.save();
+  });
+  HRM.findById(req.params.id).then((hrm) => {
+    res.json(hrm).catch((err) => res.status(400).json("Error: " + err));
+  });
+};

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { id } from "date-fns/locale";
 
 const HRM = (props) => (
   <tr>
@@ -68,6 +69,17 @@ class Contactcompany extends Component {
           .then((res) => {
             const response = res.data;
             console.log(response);
+          });
+        console.log(obj._id);
+        axios
+          .get("http://localhost:5000/hrm/contacted/" + obj._id)
+          .then((Response) => {
+            console.log(Response);
+            this.componentDidMount();
+            //window.location = "/company/contact";
+          })
+          .catch((error) => {
+            console.log(error);
           });
       }
     });

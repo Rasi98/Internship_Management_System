@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Navbarstd from "../student/Navbar";
 
 class Internship extends Component {
   constructor(props) {
@@ -6,7 +7,14 @@ class Internship extends Component {
     this.state = {};
   }
   render() {
-    return <h1>Internship</h1>;
+    return (
+      <React.Fragment>
+        <div>
+          <Navbarstd />
+        </div>
+        <h1>Internship</h1>
+      </React.Fragment>
+    );
   }
 }
 

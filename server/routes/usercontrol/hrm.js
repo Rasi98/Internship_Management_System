@@ -6,6 +6,7 @@ import {
   deletehrm,
   updatehrm,
   contacthrm,
+  setstatus,
 } from "../../controllers/hrm.js";
 const hrmRouter = express.Router();
 
@@ -15,5 +16,6 @@ hrmRouter.post("/addhrm", addhrm);
 hrmRouter.delete("/:id", deletehrm);
 hrmRouter.post("/update/:id", updatehrm);
 hrmRouter.post("/contacthrm/:id", contacthrm);
+hrmRouter.get("/contacted/:id", setstatus);
 
 export default hrmRouter;

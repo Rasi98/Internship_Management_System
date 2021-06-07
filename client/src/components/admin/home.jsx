@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./Navbar";
+import Image from "../resources/dash.jpg";
 
 class Home extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class Home extends Component {
     return (
       <div>
         <Navbar />
-        <h1>Home</h1>
+        <h1 className="text-center">Home</h1>
+        <img src={Image} alt="Italian Trulli" />
       </div>
     );
   }

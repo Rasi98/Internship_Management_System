@@ -6,9 +6,9 @@ export const Addpersonaldetail = async (req, res) => {
   const newprofile = new studentProfile(profile);
   try {
     await newprofile.save();
-    res.status(201).json("Success");
+    res.status(201).json({ result: "success" });
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(409).json(error);
   }
 };
 
@@ -20,4 +20,11 @@ export const Getpersonaldetail = async (req, res) => {
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
+};
+
+export const findprofile = (req, res) => {
+  studentProfile
+    .findOne({ email: req.params.email })
+    .then((profile) => res.json(profile))
+    .catch((err) => res.status(400).json("Error: " + err));
 };

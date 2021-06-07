@@ -11,7 +11,7 @@ const Company = (props) => (
     <td>{props.company.email}</td>
     <td>{props.company.address}</td>
     <td>{props.company.phone}</td>
-    <td>{props.company.status}</td>
+
     <td>
       <Link
         to={"/company/edit/" + props.company._id}
@@ -102,7 +102,7 @@ class Viewcompany extends Component {
                 <th>Email</th>
                 <th>Address</th>
                 <th>Phone</th>
-                <th>Status</th>
+
                 <th>Actions</th>
               </tr>
             </thead>

@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 
 import Addcompany from "./components/admin/addCompany";
 import Viewcompany from "./components/admin/viewCompany";
@@ -17,31 +17,41 @@ import AllocateITAA from "./components/admin/allocateITAA";
 import Report from "./components/admin/strategicReport";
 import SignIn from "./components/login/login";
 import Contactcompany from "./components/admin/contactcompany";
-import profile from "./components/admin/stuprofile";
-import contactCompany from "./components/admin/contactcompany";
+import profileAdmin from "./components/admin/studentProfile";
+//Student components
+import Profile from "./components/student/profile.jsx";
+import Internship from "./components/student/internship";
+import Interview from "./components/student/interview";
+import PreviewProfile from "./components/student/Resume/preview";
+import { Container } from "@material-ui/core";
 
 const App = () => {
   return (
-    <div className="content">
-      <Switch>
-        <Route path="/allocate/company" component={AllocateCompany} />
-        <Route path="/allocate/itaa" component={AllocateITAA} />
-        <Route path="/usercontrol/ita" component={ITA} />
-        <Route path="/usercontrol/itaa" component={ITAA} />
-        <Route path="/usercontrol/hrm" component={HRM} />
-        <Route path="/usercontrol/itpc" component={ITPC} />
-        <Route path="/usercontrol/student" component={Student} />
-        <Route path="/company/edit/:id" component={Editcompany} />
-        <Route path="/company/addcompany" component={Addcompany} />
-        <Route path="/company/contact" component={Contactcompany} />
-        <Route path="/company/viewcompany" component={Viewcompany} />
-        <Route path="/studentprofile" component={profile} />
-        <Route path="/report" component={Report} />
-        <Route path="/admin" component={Home} />
-        <Route path="/" component={SignIn} />
-        {/* <Route path="/" component={profile} /> */}
-      </Switch>
-    </div>
+    <Router>
+      <div className="Container">
+        <Switch>
+          <Route path="/preview/:email" component={PreviewProfile} />
+          <Route path="/interview" component={Interview} />
+          <Route path="/internship" component={Internship} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/allocate/company" component={AllocateCompany} />
+          <Route path="/allocate/itaa" component={AllocateITAA} />
+          <Route path="/usercontrol/ita" component={ITA} />
+          <Route path="/usercontrol/itaa" component={ITAA} />
+          <Route path="/usercontrol/hrm" component={HRM} />
+          <Route path="/usercontrol/itpc" component={ITPC} />
+          <Route path="/usercontrol/student" component={Student} />
+          <Route path="/company/edit/:id" component={Editcompany} />
+          <Route path="/company/addcompany" component={Addcompany} />
+          <Route path="/company/contact" component={Contactcompany} />
+          <Route path="/company/viewcompany" component={Viewcompany} />
+          <Route path="/studentprofile/:email" component={profileAdmin} />
+          <Route path="/report" component={Report} />
+          <Route path="/admin" component={Home} />
+          <Route path="/" component={SignIn} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 export default App;

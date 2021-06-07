@@ -5,6 +5,7 @@ import Navbarstd from "./components/student/Navbar.jsx";
 import Profile from "./components/student/profile.jsx";
 import Internship from "./components/student/internship";
 import Interview from "./components/student/interview";
+import PreviewProfile from "./components/student/Resume/preview";
 
 const Student = () => {
   return (
@@ -12,6 +13,7 @@ const Student = () => {
       <Navbarstd />
       <div className="container">
         <Switch>
+          <Route path="/preview/:email" component={PreviewProfile} />
           <Route path="/interview" component={Interview} />
           <Route path="/internship" component={Internship} />
           <Route path="/profile" component={Profile} />

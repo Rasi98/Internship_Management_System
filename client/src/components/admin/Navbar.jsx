@@ -30,7 +30,7 @@ class AdminNavbar extends Component {
                 <NavDropdown.Item>ITPC</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
-            <LinkContainer to="/studentprofile">
+            <LinkContainer to="/studentprofile/lakshan@gmail.com">
               <Nav.Link>STUDENT PROFILES</Nav.Link>
             </LinkContainer>
             <NavDropdown title="COMPANY" id="collasible-nav-dropdown">

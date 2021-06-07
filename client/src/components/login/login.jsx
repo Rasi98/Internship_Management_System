@@ -67,13 +67,13 @@ function SignIn() {
     axios.post("http://localhost:5000/login", validData).then((res) => {
       console.log(res);
 
-      if (res.data.msg == "success") {
-        //alert("loggedin");
+      if (res.data.msg == "successadmin") {
         window.location = "/admin";
+      } else if (res.data.msg == "successstudent") {
+        window.location = "/profile";
       } else {
         Swal.fire({
           icon: "error",
-
           title: "Oops...",
           text: res.data.msg,
         });

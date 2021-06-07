@@ -5,8 +5,9 @@ import axios from "axios";
 class Edititpc extends Component {
   constructor(props) {
     super(props);
+    console.log(props.data);
     this.state = {
-      id: this.props.data._id,
+      id: "",
       name: "",
       email: "",
       phone: "",
@@ -15,20 +16,29 @@ class Edititpc extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   axios
-  //     .get("http://localhost:5000/itpc/" + this.state.id)
-  //     .then((Response) => {
-  //       console.log(Response);
-  //       this.setState({
-  //         name: Response.data.name,
-  //         email: Response.data.email,
-  //         phone: Response.data.phone,
-  //         username: Response.data.username,
-  //         password: Response.data.password,
-  //       });
-  //     });
-  // }
+  componentDidMount(props) {
+    console.log(props);
+    this.setState({
+      id: this.props.data.id,
+      name: this.props.data.name,
+      email: this.props.data.email,
+      phone: this.props.data.phone,
+      username: this.props.data.username,
+      password: this.props.data.password,
+    });
+    // axios
+    //   .get("http://localhost:5000/itpc/" + this.state.id)
+    //   .then((Response) => {
+    //     console.log(Response);
+    //     this.setState({
+    //       name: Response.data.name,
+    //       email: Response.data.email,
+    //       phone: Response.data.phone,
+    //       username: Response.data.username,
+    //       password: Response.data.password,
+    //     });
+    //   });
+  }
 
   handlenamechange = (e) => {
     this.setState({ name: e.target.value });
@@ -88,7 +98,7 @@ class Edititpc extends Component {
                 id="Name"
                 className="form-control"
                 placeholder="Enter name"
-                value={this.props.data.name}
+                value={this.state.name}
                 onChange={this.handlenamechange}
                 required
               ></input>
@@ -100,7 +110,7 @@ class Edititpc extends Component {
                 id="email"
                 className="form-control"
                 placeholder="Enter email"
-                value={this.props.data.email}
+                value={this.state.email}
                 onChange={this.handleemailchange}
                 required
               ></input>

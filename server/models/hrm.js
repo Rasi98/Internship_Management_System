@@ -26,6 +26,9 @@ const hrmSchema = new Schema({
   department: {
     type: String,
   },
+  status: {
+    type: String,
+  },
 });
 
 const HRM = mongoose.model("HRM", hrmSchema);

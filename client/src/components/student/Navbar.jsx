@@ -24,6 +24,11 @@ class Navbarstd extends Component {
               <Nav.Link>Internship</Nav.Link>
             </LinkContainer>
           </Nav>
+          <Nav>
+            <LinkContainer to="/">
+              <Nav.Link>Logout</Nav.Link>
+            </LinkContainer>
+          </Nav>
         </Navbar.Collapse>
       </Navbar>
     );
