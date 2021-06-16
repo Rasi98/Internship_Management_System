@@ -5,13 +5,29 @@ import {
   deleteStudent,
   studentUpdate,
   findstudent,
+  createstudentarray,
 } from "../../controllers/student.js";
+import {
+  studentValidator,
+  studentValidatorResult,
+} from "../../validators/studentValidator.js";
 const studentRouter = express.Router();
 
 studentRouter.get("/", getStudent);
 studentRouter.get("/:id", findstudent);
-studentRouter.post("/addstudent", createstudent);
+studentRouter.post(
+  "/addstudent",
+  studentValidator,
+  studentValidatorResult,
+  createstudent
+);
+studentRouter.post("/addstudentarray", createstudentarray);
 studentRouter.delete("/:id", deleteStudent);
-studentRouter.post("/update/:id", studentUpdate);
+studentRouter.post(
+  "/update/:id",
+  studentValidator,
+  studentValidatorResult,
+  studentUpdate
+);
 
 export default studentRouter;

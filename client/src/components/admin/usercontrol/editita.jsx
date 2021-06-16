@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
 import Swal from "sweetalert2";
 
-class Edititpc extends Component {
+class Editita extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
+      designation: "",
       email: "",
       phone: "",
+      company: "",
       username: "",
       password: "",
     };
@@ -19,12 +21,14 @@ class Edititpc extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/itpc/" + this.props.match.params.id)
+      .get("http://localhost:5000/ita/" + this.props.match.params.id)
       .then((Response) => {
         this.setState({
           name: Response.data.name,
+          designation: Response.data.designation,
           email: Response.data.email,
           phone: Response.data.phone,
+          company: Response.data.company,
           username: Response.data.username,
           password: Response.data.password,
         });
@@ -38,9 +42,11 @@ class Edititpc extends Component {
 
   handlesubmit = (e) => {
     //const history = useHistory();
-    const itpc = {
+    const itaa = {
       name: this.state.name,
+      designation: this.state.designation,
       email: this.state.email,
+      company: this.state.company,
       phone: this.state.phone,
       username: this.state.username,
       password: this.state.password,
@@ -48,8 +54,8 @@ class Edititpc extends Component {
 
     axios
       .post(
-        "http://localhost:5000/itpc/update/" + this.props.match.params.id,
-        itpc
+        "http://localhost:5000/ita/update/" + this.props.match.params.id,
+        itaa
       )
       .then((res) => {
         const response = res.data.result;
@@ -72,7 +78,7 @@ class Edititpc extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          window.location = "/usercontrol/itpc";
+          window.location = "/usercontrol/ita";
           //history.push("/company/viewcompany");
         } else {
           Swal.fire({
@@ -88,7 +94,7 @@ class Edititpc extends Component {
       <React.Fragment>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">Edit ITPC</h3>
+          <h3 className="text-center">Edit ITA</h3>
           <form>
             <div className="col-5">
               <div className="form-group">
@@ -103,12 +109,23 @@ class Edititpc extends Component {
                 ></input>
               </div>
               <div className="form-group">
+                <label htmlFor="designation">Designation</label>
+                <input
+                  type="text"
+                  name="designation"
+                  className="form-control"
+                  placeholder="Enter designation"
+                  value={(this, this.state.designation)}
+                  onChange={this.handlechange}
+                ></input>
+              </div>
+              <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   name="email"
                   className="form-control"
-                  placeholder="Enter company email"
+                  placeholder="Enter email"
                   value={(this, this.state.email)}
                   onChange={this.handlechange}
                 ></input>
@@ -119,8 +136,19 @@ class Edititpc extends Component {
                   type="number"
                   name="phone"
                   className="form-control"
-                  placeholder="Enter company address"
+                  placeholder="Enter phone no."
                   value={(this, this.state.phone)}
+                  onChange={this.handlechange}
+                ></input>
+              </div>
+              <div className="form-group">
+                <label htmlFor="company">Company</label>
+                <input
+                  type="text"
+                  name="company"
+                  className="form-control"
+                  placeholder="Enter company"
+                  value={(this, this.state.company)}
                   onChange={this.handlechange}
                 ></input>
               </div>
@@ -154,7 +182,7 @@ class Edititpc extends Component {
                 Update
               </button>
               <Link
-                to={"/usercontrol/itpc"}
+                to={"/usercontrol/itaa"}
                 className="btn btn-outline-secondary btn-lg btn-block"
               >
                 Back
@@ -167,4 +195,4 @@ class Edititpc extends Component {
   }
 }
 
-export default Edititpc;
+export default Editita;

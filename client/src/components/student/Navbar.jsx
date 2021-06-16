@@ -10,23 +10,23 @@ class Navbarstd extends Component {
   render() {
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Brand href="#home">MIT | Intership portal</Navbar.Brand>
+        <Navbar.Brand href="#home">MIT | INTERNSHIP PORTAL</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <LinkContainer to="/profile">
-              <Nav.Link>Profile</Nav.Link>
+              <Nav.Link>PROFILE</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/interview">
-              <Nav.Link>Interview</Nav.Link>
+              <Nav.Link>INTERVIEW</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/internship">
-              <Nav.Link>Internship</Nav.Link>
+              <Nav.Link>INTERNSHIP</Nav.Link>
             </LinkContainer>
           </Nav>
           <Nav>
             <LinkContainer to="/">
-              <Nav.Link>Logout</Nav.Link>
+              <Nav.Link>LOGOUT</Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>

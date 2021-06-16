@@ -15,9 +15,9 @@ export const additpc = async (req, res) => {
   const newitpc = new ITPC(itpcData);
   try {
     await newitpc.save();
-    res.status(201).json("Success");
+    res.status(201).json({ result: "Success" });
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(409).json(error);
   }
 };
 
@@ -43,8 +43,8 @@ export const updateitpc = (req, res) => {
       itpc.phone = req.body.phone;
       itpc
         .save()
-        .then(() => res.json("ITPC updated!"))
-        .catch((err) => res.status(400).json("Error:" + err));
+        .then(() => res.json({ result: "updated" }))
+        .catch((err) => res.status(400).json(err));
     })
     .catch((err) => res.status(400).json("Error:" + err));
 };

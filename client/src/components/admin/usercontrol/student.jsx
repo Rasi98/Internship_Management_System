@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
+import { Button, Container, Row, Col } from "react-bootstrap";
 import Addstudent from "./addstudent";
-
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import Tabletop from "tabletop";
 const Student = (props) => (
   <tr>
     <td>{props.student.name}</td>
@@ -15,6 +17,13 @@ const Student = (props) => (
     <td>{props.student.mobile}</td>
     <td>{props.student.gender}</td>
     <td>
+      <Link
+        to={"/usercontrol/student/edit/" + props.student._id}
+        className="btn btn-info m-1"
+      >
+        Edit
+      </Link>
+
       <button
         className="btn btn-danger m-1"
         onClick={() => {
@@ -32,6 +41,7 @@ class userStudent extends Component {
     super(props);
 
     this.deleteStudent = this.deleteStudent.bind(this);
+    this.init = this.init.bind(this);
     this.state = {
       showpopup: false,
       studentlist: [],
@@ -50,11 +60,40 @@ class userStudent extends Component {
   }
 
   deleteStudent(id) {
-    axios
-      .delete("http://localhost:5000/student/" + id)
-      .then((res) => console.log(res.data));
-    this.setState({
-      studentlist: this.state.studentlist.filter((i) => i._id !== id),
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //Swal.fire("Deleted!", "Student has been deleted.", "success");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "Deleted!",
+        });
+        axios
+          .delete("http://localhost:5000/student/" + id)
+          .then((res) => console.log(res.data));
+        this.setState({
+          studentlist: this.state.studentlist.filter((i) => i._id !== id),
+        });
+      }
     });
   }
 
@@ -70,6 +109,78 @@ class userStudent extends Component {
     });
   }
 
+  async init() {
+    const { value: url } = await Swal.fire({
+      input: "url",
+      inputLabel: "Import Google Sheet",
+      inputPlaceholder: "Enter the Shareble link",
+    });
+    var n = url.startsWith("https://docs.google.com/spreadsheets/");
+    console.log(n);
+    if (n) {
+      //Swal.fire(`Entered URL: ${url}`)
+      Swal.fire({
+        title: "Are you sure?",
+        text: "All the data will be imported.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Import",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Tabletop.init({
+            key: url,
+            simpleSheet: false,
+          }).then((data) => {
+            console.log(data.Sheet1.elements);
+            const studentsheet = data.Sheet1.elements;
+            axios.post(
+              "http://localhost:5000/student/addstudentarray",
+              studentsheet
+            );
+            //loading msg
+            let timerInterval;
+            Swal.fire({
+              title: "Importing....",
+              html: "I will close in <b></b> milliseconds.",
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                timerInterval = setInterval(() => {
+                  const content = Swal.getHtmlContainer();
+                  if (content) {
+                    const b = content.querySelector("b");
+                    if (b) {
+                      b.textContent = Swal.getTimerLeft();
+                    }
+                  }
+                }, 100);
+                this.componentDidMount();
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+            //Swal.fire("Imported!", "Your data has been imported.", "success");
+          });
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Invalid URL",
+      });
+    }
+  }
+
   render() {
     let popupclose = () => this.setState({ showpopup: false });
 
@@ -78,6 +189,35 @@ class userStudent extends Component {
         <Navbar></Navbar>
         <div className="container mt-4">
           <h3 className="text-center">Student List</h3>
+          <Container>
+            <Row style={{ float: "right", marginBottom: "10px" }}>
+              <Col>
+                <Button
+                  style={{ margin: "2px" }}
+                  variant="primary"
+                  onClick={() => {
+                    this.setState({ showpopup: true });
+                  }}
+                >
+                  Add
+                </Button>
+                <Button
+                  style={{ margin: "2px" }}
+                  variant="info"
+                  onClick={this.init}
+                >
+                  Import
+                </Button>
+                <Button
+                  style={{ margin: "2px" }}
+                  variant="danger"
+                  onClick={this.init}
+                >
+                  Delete All
+                </Button>
+              </Col>
+            </Row>
+          </Container>
           <table className="table text-center">
             <thead className="thead-light">
               <tr>
@@ -88,16 +228,7 @@ class userStudent extends Component {
                 <th>Address</th>
                 <th>Phone</th>
                 <th>Gender</th>
-                <th>
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      this.setState({ showpopup: true });
-                    }}
-                  >
-                    Add
-                  </Button>
-                </th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>{this.studentList()}</tbody>

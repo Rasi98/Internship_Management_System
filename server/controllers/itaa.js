@@ -12,13 +12,12 @@ export const getitaa = async (req, res) => {
 
 export const additaa = async (req, res) => {
   const itaaData = req.body;
-
   const newitaa = new ITAA(itaaData);
   try {
     await newitaa.save();
-    res.status(201).json("Success");
+    res.status(201).json({ result: "success" });
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(409).json(error);
   }
 };
 
@@ -44,8 +43,8 @@ export const updateitaa = (req, res) => {
       itaa.phone = req.body.phone;
       itaa
         .save()
-        .then(() => res.json("ITAA updated!"))
-        .catch((err) => res.status(400).json("Error:" + err));
+        .then(() => res.json({ result: "updated" }))
+        .catch((err) => res.status(400).json(err));
     })
     .catch((err) => res.status(400).json("Error:" + err));
 };

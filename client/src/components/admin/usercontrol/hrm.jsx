@@ -3,7 +3,9 @@ import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 import Addhrm from "./addhrm";
+import Swal from "sweetalert2";
 
 const HRM = (props) => (
   <tr>
@@ -14,6 +16,13 @@ const HRM = (props) => (
     <td>{props.hrm.company}</td>
     <td>{props.hrm.department}</td>
     <td>
+      <Link
+        to={"/usercontrol/hrm/edit/" + props.hrm._id}
+        className="btn btn-info m-1"
+      >
+        Edit
+      </Link>
+
       <button
         className="btn btn-danger m-1"
         onClick={() => {
@@ -49,11 +58,24 @@ class userHrm extends Component {
   }
 
   deletehrm(id) {
-    axios
-      .delete("http://localhost:5000/hrm/" + id)
-      .then((res) => console.log(res.data));
-    this.setState({
-      hrm: this.state.hrm.filter((i) => i._id !== id),
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "HRM has been deleted.", "success");
+        axios
+          .delete("http://localhost:5000/hrm/" + id)
+          .then((res) => console.log(res.data));
+        this.setState({
+          hrm: this.state.hrm.filter((i) => i._id !== id),
+        });
+      }
     });
   }
 
@@ -82,6 +104,7 @@ class userHrm extends Component {
                 <th>Phone</th>
                 <th>Company</th>
                 <th>Department</th>
+                <th>Action</th>
                 <th>
                   <Button
                     variant="primary"

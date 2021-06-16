@@ -102,7 +102,6 @@ class Viewcompany extends Component {
                 <th>Email</th>
                 <th>Address</th>
                 <th>Phone</th>
-
                 <th>Actions</th>
               </tr>
             </thead>

@@ -6,7 +6,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
 import Additpc from "./additpc";
-import Edititpc from "./edititpc";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 //Card component
 const Itpc = (props) => (
@@ -26,16 +27,13 @@ const Itpc = (props) => (
       <ListGroupItem>Phone : {props.itpc.phone}</ListGroupItem>
       <ListGroupItem>Username : {props.itpc.username}</ListGroupItem>
       <ListGroupItem>Password : {props.itpc.password}</ListGroupItem>
-      <ListGroupItem>ID : {props.itpc._id}</ListGroupItem>
     </ListGroup>
-    <button
+    <Link
+      to={"/usercontrol/itpc/edit/" + props.itpc._id}
       className="btn btn-info m-1"
-      onClick={() => {
-        props.seteditstate(props.itpc);
-      }}
     >
       Edit
-    </button>
+    </Link>
     <button
       className="btn btn-danger m-1"
       onClick={() => {
@@ -52,18 +50,10 @@ class userITPC extends Component {
     super(props);
 
     this.deleteItpc = this.deleteItpc.bind(this);
-    this.seteditstate = this.seteditstate.bind(this);
     this.state = {
       itpc: [],
       showpopup: false,
-      showeditpopup: false,
-      current: {},
     };
-  }
-
-  seteditstate(obj) {
-    this.setState({ showeditpopup: true });
-    this.setState({ current: obj });
   }
 
   componentDidMount() {
@@ -79,11 +69,24 @@ class userITPC extends Component {
   }
 
   deleteItpc(id) {
-    axios
-      .delete("http://localhost:5000/itpc/" + id)
-      .then((res) => console.log(res));
-    this.setState({
-      itpc: this.state.itpc.filter((el) => el._id !== id),
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "ITPC has been deleted.", "success");
+        axios
+          .delete("http://localhost:5000/itpc/" + id)
+          .then((res) => console.log(res));
+        this.setState({
+          itpc: this.state.itpc.filter((el) => el._id !== id),
+        });
+      }
     });
   }
 
@@ -93,7 +96,6 @@ class userITPC extends Component {
         <Itpc
           itpc={currentitpc}
           deleteItpc={this.deleteItpc}
-          seteditstate={this.seteditstate}
           key={currentitpc._id}
         />
       );
@@ -102,7 +104,6 @@ class userITPC extends Component {
 
   render() {
     let popupclose = () => this.setState({ showpopup: false });
-    let editpopupclose = () => this.setState({ showeditpopup: false });
 
     return (
       <div>
@@ -118,11 +119,6 @@ class userITPC extends Component {
             {this.itpcList()}
           </div>
           <Additpc show={this.state.showpopup} onHide={popupclose} />
-          <Edititpc
-            show={this.state.showeditpopup}
-            data={this.state.current}
-            onHide={editpopupclose}
-          />
         </div>
       </div>
     );

@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import validator from "validator";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 function SignIn() {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
+  const history = useHistory();
 
   const onSubmit = (data) => {
     const validuname = validator.trim(data.username);
@@ -68,9 +70,11 @@ function SignIn() {
       console.log(res);
 
       if (res.data.msg == "successadmin") {
-        window.location = "/admin";
+        history.push("/admin");
+        //window.location = "/admin";
       } else if (res.data.msg == "successstudent") {
-        window.location = "/profile";
+        //window.location = "/profile";
+        history.push("/profile");
       } else {
         Swal.fire({
           icon: "error",

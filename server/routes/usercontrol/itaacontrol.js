@@ -6,12 +6,16 @@ import {
   deleteitaa,
   updateitaa,
 } from "../../controllers/itaa.js";
+import {
+  itaaValidator,
+  itaaValidatorResult,
+} from "../../validators/itaaValidator.js";
 const itaaRouter = express.Router();
 
 itaaRouter.get("/", getitaa);
 itaaRouter.get("/:id", finditaa);
-itaaRouter.post("/additaa", additaa);
+itaaRouter.post("/additaa", itaaValidator, itaaValidatorResult, additaa);
 itaaRouter.delete("/:id", deleteitaa);
-itaaRouter.post("/update/:id", updateitaa);
+itaaRouter.post("/update/:id", itaaValidator, itaaValidatorResult, updateitaa);
 
 export default itaaRouter;

@@ -222,7 +222,7 @@ class StudentProfile extends Component {
             {this.state.career}
             <hr />
             <h1 style={{ fontSize: "15pt" }}>
-              <i>EDUCATIONAL QUALIIFICATIONS</i>
+              <i>EDUCATIONAL QUALIFICATIONS</i>
             </h1>
             <div>
               <ul>

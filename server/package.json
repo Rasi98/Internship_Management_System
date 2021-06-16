@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "devStart": "nodemon index.js"
   },
   "keywords": [],
   "author": "Lakshan Rasingolla",
@@ -24,7 +25,9 @@
     "mailgen": "^2.0.14",
     "mongoose": "^5.11.16",
     "nodemailer": "^6.5.0",
-    "nodemon": "^2.0.7",
     "valid-url": "^1.0.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

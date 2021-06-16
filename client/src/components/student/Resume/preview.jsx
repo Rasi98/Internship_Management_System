@@ -166,7 +166,7 @@ class PreviewProfile extends Component {
           <div style={{ padding: "left,0px", marginTop: "10px" }}>
             <h1 style={{ fontSize: "36pt" }}>
               <i>
-                <span style={{ color: "#3498DB" }}>Curriculum Vitae</span>
+                <span style={{ color: "#3498DB" }}>Curriculum vitae</span>
               </i>
             </h1>
           </div>
@@ -219,7 +219,7 @@ class PreviewProfile extends Component {
             {this.state.career}
             <hr />
             <h1 style={{ fontSize: "15pt" }}>
-              <i>EDUCATIONAL QUALIIFICATIONS</i>
+              <i>EDUCATIONAL QUALIFICATIONS</i>
             </h1>
             <div>
               <ul>

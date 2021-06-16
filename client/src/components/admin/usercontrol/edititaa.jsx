@@ -2,65 +2,60 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import Swal from "sweetalert2";
-//import { useHistory } from "react-router-dom";
 
-class Editcompany extends Component {
+class Edititaa extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
       email: "",
-      address: "",
       phone: "",
+      username: "",
+      password: "",
     };
   }
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/company/" + this.props.match.params.id)
+      .get("http://localhost:5000/itaa/" + this.props.match.params.id)
       .then((Response) => {
         this.setState({
           name: Response.data.name,
           email: Response.data.email,
-          address: Response.data.address,
           phone: Response.data.phone,
+          username: Response.data.username,
+          password: Response.data.password,
         });
       });
   }
-
-  handlenamechange = (e) => {
-    this.setState({ name: e.target.value });
-  };
-  handleemailchange = (e) => {
-    this.setState({ email: e.target.value });
-  };
-  handleaddresschange = (e) => {
-    this.setState({ address: e.target.value });
-  };
-  handlephonechange = (e) => {
-    this.setState({ phone: e.target.value });
+  handlechange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   };
 
   handlesubmit = (e) => {
     //const history = useHistory();
-    const company = {
+    const itaa = {
       name: this.state.name,
       email: this.state.email,
-      address: this.state.address,
       phone: this.state.phone,
+      username: this.state.username,
+      password: this.state.password,
     };
 
     axios
       .post(
-        "http://localhost:5000/company/update/" + this.props.match.params.id,
-        company
+        "http://localhost:5000/itaa/update/" + this.props.match.params.id,
+        itaa
       )
       .then((res) => {
         const response = res.data.result;
         console.log(response);
-        if (response == "success") {
+
+        if (response == "updated") {
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -77,7 +72,7 @@ class Editcompany extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          window.location = "/company/viewcompany";
+          window.location = "/usercontrol/itaa";
           //history.push("/company/viewcompany");
         } else {
           Swal.fire({
@@ -93,47 +88,62 @@ class Editcompany extends Component {
       <React.Fragment>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">Edit company</h3>
+          <h3 className="text-center">Edit ITAA</h3>
           <form>
             <div className="col-5">
               <div className="form-group">
-                <label htmlFor="companyname">Company name</label>
+                <label htmlFor="name">Name</label>
                 <input
                   type="text"
+                  name="name"
                   className="form-control"
-                  placeholder="Enter company name"
+                  placeholder="Enter name"
                   value={(this, this.state.name)}
-                  onChange={this.handlenamechange}
+                  onChange={this.handlechange}
                 ></input>
               </div>
               <div className="form-group">
-                <label htmlFor="companyemail">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="email"
+                  name="email"
                   className="form-control"
-                  placeholder="Enter company email"
+                  placeholder="Enter email"
                   value={(this, this.state.email)}
-                  onChange={this.handleemailchange}
+                  onChange={this.handlechange}
                 ></input>
               </div>
               <div className="form-group">
-                <label htmlFor="companyaddress">Address</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter company address"
-                  value={(this, this.state.address)}
-                  onChange={this.handleaddresschange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="companymobile">Phone No</label>
+                <label htmlFor="phone">Phone</label>
                 <input
                   type="number"
+                  name="phone"
                   className="form-control"
                   placeholder="Enter phone no."
                   value={(this, this.state.phone)}
-                  onChange={this.handlephonechange}
+                  onChange={this.handlechange}
+                ></input>
+              </div>
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  className="form-control"
+                  placeholder="Enter username"
+                  value={(this, this.state.username)}
+                  onChange={this.handlechange}
+                ></input>
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="text"
+                  name="password"
+                  className="form-control"
+                  placeholder="Enter password"
+                  value={(this, this.state.password)}
+                  onChange={this.handlechange}
                 ></input>
               </div>
               <button
@@ -144,7 +154,7 @@ class Editcompany extends Component {
                 Update
               </button>
               <Link
-                to={"/company/viewcompany"}
+                to={"/usercontrol/itaa"}
                 className="btn btn-outline-secondary btn-lg btn-block"
               >
                 Back
@@ -157,4 +167,4 @@ class Editcompany extends Component {
   }
 }
 
-export default Editcompany;
+export default Edititaa;

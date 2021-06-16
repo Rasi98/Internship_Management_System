@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 class Additaa extends Component {
   constructor(props) {
@@ -41,16 +42,37 @@ class Additaa extends Component {
     };
 
     axios.post("http://localhost:5000/itaa/additaa", itaa).then((res) => {
-      const response = res.data;
+      const response = res.data.result;
       console.log(response);
 
-      if (response == "Success") {
-        alert("User Created !");
+      if (response == "success") {
+        //alert("User Created !");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "ITAA added successfully",
+        });
+        window.location = "/usercontrol/itaa";
       } else {
-        alert("Error occured !");
+        //alert("Error occured !");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response,
+        });
       }
     });
-    window.location = "/usercontrol/itaa";
   };
 
   handleClear = (e) => {
@@ -80,6 +102,7 @@ class Additaa extends Component {
               <label htmlFor="cname">Name</label>
               <input
                 type="text"
+                name="name"
                 id="Name"
                 className="form-control"
                 placeholder="Enter name"
@@ -93,6 +116,7 @@ class Additaa extends Component {
               <input
                 type="email"
                 id="email"
+                name="email"
                 className="form-control"
                 placeholder="Enter email"
                 value={this.state.email}
@@ -107,6 +131,7 @@ class Additaa extends Component {
                 type="number"
                 maxLength="10"
                 id="Phone"
+                name="phone"
                 className="form-control"
                 placeholder="Enter phone no."
                 value={this.state.phone}
@@ -119,6 +144,7 @@ class Additaa extends Component {
               <input
                 type="text"
                 id="username"
+                name="username"
                 className="form-control"
                 placeholder="Enter username"
                 value={this.state.username}
@@ -131,6 +157,7 @@ class Additaa extends Component {
               <input
                 type="text"
                 id="password"
+                name="password"
                 className="form-control"
                 placeholder="Enter password"
                 value={this.state.password}

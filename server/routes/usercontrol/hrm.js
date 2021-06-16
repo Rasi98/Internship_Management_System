@@ -8,13 +8,17 @@ import {
   contacthrm,
   setstatus,
 } from "../../controllers/hrm.js";
+import {
+  hrmValidatorResult,
+  hrmValidator,
+} from "../../validators/hrmaddvalidator.js";
 const hrmRouter = express.Router();
 
 hrmRouter.get("/", gethrm);
 hrmRouter.get("/:id", findhrm);
-hrmRouter.post("/addhrm", addhrm);
+hrmRouter.post("/addhrm", hrmValidator, hrmValidatorResult, addhrm);
 hrmRouter.delete("/:id", deletehrm);
-hrmRouter.post("/update/:id", updatehrm);
+hrmRouter.post("/update/:id", hrmValidator, hrmValidatorResult, updatehrm);
 hrmRouter.post("/contacthrm/:id", contacthrm);
 hrmRouter.get("/contacted/:id", setstatus);
 

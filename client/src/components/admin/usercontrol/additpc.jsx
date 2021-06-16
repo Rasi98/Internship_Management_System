@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 class Additpc extends Component {
   constructor(props) {
@@ -14,21 +15,10 @@ class Additpc extends Component {
     };
   }
 
-  handlenamechange = (e) => {
-    this.setState({ name: e.target.value });
-  };
-  handleemailchange = (e) => {
-    this.setState({ email: e.target.value });
-  };
-
-  handlephonechange = (e) => {
-    this.setState({ phone: e.target.value });
-  };
-  handleusernamechange = (e) => {
-    this.setState({ username: e.target.value });
-  };
-  handlepasswordchange = (e) => {
-    this.setState({ password: e.target.value });
+  handlechange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   };
 
   handlesubmit = (e) => {
@@ -41,16 +31,37 @@ class Additpc extends Component {
     };
 
     axios.post("http://localhost:5000/itpc/additpc", itpc).then((res) => {
-      const response = res.data;
+      const response = res.data.result;
       console.log(response);
 
       if (response == "Success") {
-        alert("User Created !");
+        //alert("User Created !");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "ITPC added successfully",
+        });
+        window.location = "/usercontrol/itpc";
       } else {
-        alert("Error occured !");
+        //alert("Error occured !");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response,
+        });
       }
     });
-    window.location = "/usercontrol/itpc";
   };
 
   handleClear = (e) => {
@@ -83,10 +94,11 @@ class Additpc extends Component {
               <input
                 type="text"
                 id="Name"
+                name="name"
                 className="form-control"
                 placeholder="Enter name"
                 value={this.state.name}
-                onChange={this.handlenamechange}
+                onChange={this.handlechange}
                 required
               ></input>
             </div>
@@ -95,10 +107,11 @@ class Additpc extends Component {
               <input
                 type="email"
                 id="email"
+                name="email"
                 className="form-control"
                 placeholder="Enter email"
                 value={this.state.email}
-                onChange={this.handleemailchange}
+                onChange={this.handlechange}
                 required
               ></input>
             </div>
@@ -108,11 +121,12 @@ class Additpc extends Component {
               <input
                 type="number"
                 maxLength="10"
+                name="phone"
                 id="Phone"
                 className="form-control"
                 placeholder="Enter phone no."
                 value={this.state.phone}
-                onChange={this.handlephonechange}
+                onChange={this.handlechange}
               ></input>
             </div>
             <div className="form-group">
@@ -121,10 +135,11 @@ class Additpc extends Component {
               <input
                 type="text"
                 id="username"
+                name="username"
                 className="form-control"
                 placeholder="Enter username"
                 value={this.state.username}
-                onChange={this.handleusernamechange}
+                onChange={this.handlechange}
               ></input>
             </div>
             <div className="form-group">
@@ -133,10 +148,11 @@ class Additpc extends Component {
               <input
                 type="text"
                 id="password"
+                name="password"
                 className="form-control"
                 placeholder="Enter password"
                 value={this.state.password}
-                onChange={this.handlepasswordchange}
+                onChange={this.handlechange}
               ></input>
             </div>
 

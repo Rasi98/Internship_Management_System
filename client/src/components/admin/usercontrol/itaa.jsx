@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Additaa from "./additaa";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const ITAA = (props) => (
   <tr>
@@ -13,6 +15,12 @@ const ITAA = (props) => (
     <td>{props.itaa.username}</td>
     <td>{props.itaa.password}</td>
     <td>
+      <Link
+        to={"/usercontrol/itaa/edit/" + props.itaa._id}
+        className="btn btn-info m-1"
+      >
+        Edit
+      </Link>
       <button
         className="btn btn-danger m-1"
         onClick={() => {
@@ -49,11 +57,24 @@ class userItaa extends Component {
   }
 
   deleteitaa(id) {
-    axios
-      .delete("http://localhost:5000/itaa/" + id)
-      .then((res) => console.log(res.data));
-    this.setState({
-      itaa: this.state.itaa.filter((i) => i._id !== id),
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "ITAA has been deleted.", "success");
+        axios
+          .delete("http://localhost:5000/itaa/" + id)
+          .then((res) => console.log(res.data));
+        this.setState({
+          itaa: this.state.itaa.filter((i) => i._id !== id),
+        });
+      }
     });
   }
 
@@ -85,6 +106,7 @@ class userItaa extends Component {
                 <th>Phone</th>
                 <th>Username</th>
                 <th>Password</th>
+                <th>Actions</th>
                 <th>
                   <Button
                     variant="primary"

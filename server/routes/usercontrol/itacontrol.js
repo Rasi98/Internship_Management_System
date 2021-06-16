@@ -6,12 +6,16 @@ import {
   deleteita,
   updateita,
 } from "../../controllers/ita.js";
+import {
+  itaValidator,
+  itaValidatorResult,
+} from "../../validators/itaValidator.js";
 const itaRouter = express.Router();
 
 itaRouter.get("/", getita);
 itaRouter.get("/:id", findita);
-itaRouter.post("/addita", addita);
+itaRouter.post("/addita", itaValidator, itaValidatorResult, addita);
 itaRouter.delete("/:id", deleteita);
-itaRouter.post("/update/:id", updateita);
+itaRouter.post("/update/:id", itaValidator, itaValidatorResult, updateita);
 
 export default itaRouter;

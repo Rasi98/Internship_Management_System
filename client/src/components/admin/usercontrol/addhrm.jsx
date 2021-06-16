@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 class Addhrm extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Addhrm extends Component {
       phone: "",
       company: "",
       department: "",
+      status: "Not Contacted",
     };
   }
 
@@ -29,19 +31,41 @@ class Addhrm extends Component {
       phone: this.state.phone,
       company: this.state.company,
       department: this.state.department,
+      status: this.state.status,
     };
 
     axios.post("http://localhost:5000/hrm/addhrm", hrm).then((res) => {
-      const response = res.data;
+      const response = res.data.result;
       console.log(response);
 
-      if (response == "Success") {
-        alert("User Created !");
+      if (response == "success") {
+        //alert("User Created !");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "HRM added successfully",
+        });
+        window.location = "/usercontrol/hrm";
       } else {
-        alert("Error occured !");
+        //alert("Error occured !");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response,
+        });
       }
     });
-    window.location = "/usercontrol/hrm";
   };
 
   handleClear = (e) => {
@@ -69,7 +93,7 @@ class Addhrm extends Component {
         <Modal.Body>
           <div className="col-5">
             <div className="form-group">
-              <label htmlFor="cname">Name</label>
+              <label htmlFor="name">Name</label>
               <input
                 type="text"
                 id="name"
@@ -82,7 +106,7 @@ class Addhrm extends Component {
               ></input>
             </div>
             <div className="form-group">
-              <label htmlFor="cname">Designation</label>
+              <label htmlFor="designation">Designation</label>
               <input
                 type="text"
                 id="designation"

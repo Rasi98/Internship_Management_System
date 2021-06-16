@@ -6,7 +6,6 @@ import Addcompany from "./components/admin/addCompany";
 import Viewcompany from "./components/admin/viewCompany";
 import Home from "./components/admin/home";
 import Editcompany from "./components/admin/editCompany";
-//import Studentprofile from "./components/admin/studentProfile";
 import ITA from "./components/admin/usercontrol/ita";
 import ITAA from "./components/admin/usercontrol/itaa";
 import ITPC from "./components/admin/usercontrol/itpc";
@@ -18,12 +17,17 @@ import Report from "./components/admin/strategicReport";
 import SignIn from "./components/login/login";
 import Contactcompany from "./components/admin/contactcompany";
 import profileAdmin from "./components/admin/studentProfile";
+import Edititpc from "./components/admin/usercontrol/edititpc";
+import Edithrm from "./components/admin/usercontrol/edithrm";
+import Edititaa from "./components/admin/usercontrol/edititaa";
+import EditStudent from "./components/admin/usercontrol/editStudent";
+import Editita from "./components/admin/usercontrol/editita";
+
 //Student components
 import Profile from "./components/student/profile.jsx";
 import Internship from "./components/student/internship";
 import Interview from "./components/student/interview";
 import PreviewProfile from "./components/student/Resume/preview";
-import { Container } from "@material-ui/core";
 
 const App = () => {
   return (
@@ -36,6 +40,11 @@ const App = () => {
           <Route path="/profile" component={Profile} />
           <Route path="/allocate/company" component={AllocateCompany} />
           <Route path="/allocate/itaa" component={AllocateITAA} />
+          <Route path="/usercontrol/ita/edit/:id" component={Editita} />
+          <Route path="/usercontrol/itaa/edit/:id" component={Edititaa} />
+          <Route path="/usercontrol/student/edit/:id" component={EditStudent} />
+          <Route path="/usercontrol/hrm/edit/:id" component={Edithrm} />
+          <Route path="/usercontrol/itpc/edit/:id" component={Edititpc} />
           <Route path="/usercontrol/ita" component={ITA} />
           <Route path="/usercontrol/itaa" component={ITAA} />
           <Route path="/usercontrol/hrm" component={HRM} />

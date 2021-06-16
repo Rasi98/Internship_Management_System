@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { id } from "date-fns/locale";
 
 const HRM = (props) => (
   <tr>
@@ -48,41 +47,72 @@ class Contactcompany extends Component {
   }
 
   contactCompany(obj) {
-    Swal.fire({
-      title: "Are you sure want to contact?",
-      text: "An email will send.",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, contact!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Email sent!", "An email has been sent.", "success");
-        const email = {
-          email: obj.email,
-          id: obj._id,
-        };
-        console.log(email);
-        axios
-          .post("http://localhost:5000/hrm/contacthrm/" + email.id, email)
-          .then((res) => {
-            const response = res.data;
-            console.log(response);
-          });
-        console.log(obj._id);
-        axios
-          .get("http://localhost:5000/hrm/contacted/" + obj._id)
-          .then((Response) => {
-            console.log(Response);
-            this.componentDidMount();
-            //window.location = "/company/contact";
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    });
+    const Status = obj.status;
+    if (Status == "Not Contacted") {
+      Swal.fire({
+        title: "Are you sure want to contact?",
+        text: "An email will send.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, contact!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Email sent!", "An email has been sent.", "success");
+          const email = {
+            email: obj.email,
+            id: obj._id,
+          };
+          console.log(email);
+          //email send
+          axios
+            .post("http://localhost:5000/hrm/contacthrm/" + email.id, email)
+            .then((res) => {
+              const response = res.data;
+              console.log(response);
+            });
+          console.log(obj._id);
+          //set status
+          axios
+            .get("http://localhost:5000/hrm/contacted/" + obj._id)
+            .then((Response) => {
+              console.log(Response);
+              this.componentDidMount();
+              //window.location = "/company/contact";
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+    } else {
+      Swal.fire({
+        title: "Already contacted!",
+        text: "Are you sure want send an email again?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, contact!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Email sent!", "An email has been sent.", "success");
+          const email = {
+            email: obj.email,
+            id: obj._id,
+          };
+          console.log(email);
+          //email send
+          axios
+            .post("http://localhost:5000/hrm/contacthrm/" + email.id, email)
+            .then((res) => {
+              const response = res.data;
+              console.log(response);
+            });
+        }
+      });
+    }
   }
 
   hrmList() {

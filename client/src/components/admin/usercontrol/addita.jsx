@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 class Addita extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
+      designation: "",
       email: "",
       phone: "",
       company: "",
@@ -21,7 +23,9 @@ class Addita extends Component {
   handleemailchange = (e) => {
     this.setState({ email: e.target.value });
   };
-
+  handledesignationchange = (e) => {
+    this.setState({ designation: e.target.value });
+  };
   handlephonechange = (e) => {
     this.setState({ phone: e.target.value });
   };
@@ -38,6 +42,7 @@ class Addita extends Component {
   handlesubmit = (e) => {
     const ita = {
       name: this.state.name,
+      designation: this.state.designation,
       email: this.state.email,
       phone: this.state.phone,
       company: this.state.company,
@@ -46,21 +51,43 @@ class Addita extends Component {
     };
 
     axios.post("http://localhost:5000/ita/addita", ita).then((res) => {
-      const response = res.data;
+      const response = res.data.result;
       console.log(response);
 
-      if (response == "Success") {
-        alert("User Created !");
+      if (response == "success") {
+        //alert("User Created !");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "ITA added successfully",
+        });
+        window.location = "/usercontrol/ita";
       } else {
-        alert("Error occured !");
+        //alert("Error occured !");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: response,
+        });
       }
     });
-    window.location = "/usercontrol/ita";
   };
 
   handleClear = (e) => {
     this.setState({
       name: "",
+      designation: "",
       email: "",
       phone: "",
       company: "",
@@ -95,6 +122,18 @@ class Addita extends Component {
               ></input>
             </div>
             <div className="form-group">
+              <label htmlFor="designation">Designation</label>
+              <input
+                type="text"
+                id="designation"
+                className="form-control"
+                placeholder="Enter designation"
+                value={this.state.designation}
+                onChange={this.handledesignationchange}
+                required
+              ></input>
+            </div>
+            <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -120,11 +159,12 @@ class Addita extends Component {
               ></input>
             </div>
             <div className="form-group">
-              <label htmlFor="mobile">Company</label>
+              <label htmlFor="company">Company</label>
               <br></br>
               <input
                 type="text"
                 id="company"
+                name="company"
                 className="form-control"
                 placeholder="Enter company"
                 value={this.state.company}

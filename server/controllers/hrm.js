@@ -16,9 +16,9 @@ export const addhrm = async (req, res) => {
   const newhrm = new HRM(hrmData);
   try {
     await newhrm.save();
-    res.status(201).json("Success");
+    res.status(201).json({ result: "success" });
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(409).json(error);
   }
 };
 
@@ -45,8 +45,8 @@ export const updatehrm = (req, res) => {
       hrm.designation = req.body.designation;
       hrm
         .save()
-        .then(() => res.json("ITA updated!"))
-        .catch((err) => res.status(400).json("Error:" + err));
+        .then(() => res.json({ result: "updated" }))
+        .catch((err) => res.status(400).json(err));
     })
     .catch((err) => res.status(400).json("Error:" + err));
 };

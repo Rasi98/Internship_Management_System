@@ -15,10 +15,24 @@ export const createstudent = async (req, res) => {
   const newStudent = new Student(studentData);
   try {
     await newStudent.save();
-    res.status(201).json("Success");
-  } catch (error) {
-    res.status(409).json({ message: error.message });
+    res.status(201).json({ result: "success" });
+  } catch (err) {
+    res.status(409).json(err);
   }
+};
+
+export const createstudentarray = async (req, res) => {
+  const studentlist = req.body;
+  console.log(studentlist);
+  studentlist.forEach(async (user) => {
+    var userobj = new Student(user);
+    try {
+      await userobj.save();
+      res.status(201).json({ result: "success" });
+    } catch (error) {
+      res.status(409).json(error);
+    }
+  });
 };
 
 export const deleteStudent = (req, res) => {
@@ -50,8 +64,8 @@ export const studentUpdate = (req, res) => {
 
       student
         .save()
-        .then(() => res.json("Student updated."))
-        .catch((err) => res.status(400).json("Error:" + err));
+        .then(() => res.json({ result: "updated" }))
+        .catch((err) => res.status(400).json(err));
     })
     .catch((err) => res.status(400).json("Error:" + err));
 };

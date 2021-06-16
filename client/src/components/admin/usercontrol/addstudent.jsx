@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import "date-fns";
+import Swal from "sweetalert2";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 class Addstudent extends Component {
   constructor(props) {
@@ -52,16 +58,37 @@ class Addstudent extends Component {
     axios
       .post("http://localhost:5000/student/addstudent", student)
       .then((res) => {
-        const response = res.data;
+        const response = res.data.result;
         console.log(response);
 
-        if (response == "Success") {
-          alert("User Created !");
+        if (response == "success") {
+          //alert("User Created !");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Student added successfully",
+          });
+          window.location = "/usercontrol/student";
         } else {
-          alert("Error occured !");
+          // alert("Error occured !");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: response,
+          });
         }
       });
-    window.location = "/usercontrol/student";
   };
 
   handleClear = (e) => {
@@ -96,6 +123,7 @@ class Addstudent extends Component {
               <input
                 type="text"
                 id="Name"
+                name="name"
                 className="form-control"
                 placeholder="Enter name"
                 value={this.state.name}
@@ -108,6 +136,7 @@ class Addstudent extends Component {
               <input
                 type="text"
                 id="stuno"
+                name="stuno"
                 className="form-control"
                 placeholder="Enter Student No."
                 value={this.state.stuno}
@@ -120,6 +149,7 @@ class Addstudent extends Component {
               <input
                 type="email"
                 id="email"
+                name="email"
                 className="form-control"
                 placeholder="Enter email"
                 value={this.state.email}
@@ -130,13 +160,21 @@ class Addstudent extends Component {
             <div className="form-group">
               <label htmlFor="email">DOB</label>
               <input
-                type="text"
+                type="date"
                 id="dob"
+                name="dob"
                 className="form-control"
                 placeholder="Enter DOB"
                 value={this.state.dob}
                 onChange={this.handledobchange}
                 required
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <DateRangeIcon />
+                    </InputAdornment>
+                  ),
+                }}
               ></input>
             </div>
             <div className="form-group">
@@ -145,6 +183,7 @@ class Addstudent extends Component {
               <input
                 type="text"
                 id="address"
+                name="address"
                 className="form-control"
                 placeholder="Enter address"
                 value={this.state.address}
@@ -158,6 +197,7 @@ class Addstudent extends Component {
                 type="number"
                 maxLength="10"
                 id="Phone"
+                name="mobile"
                 className="form-control"
                 placeholder="Enter phone no."
                 value={this.state.phone}
@@ -167,16 +207,17 @@ class Addstudent extends Component {
             <div className="form-group">
               <label htmlFor="username">Gender</label>
               <br></br>
-              <input
-                type="text"
-                id="gender"
-                className="form-control"
-                placeholder="Enter gender"
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
                 value={this.state.gender}
                 onChange={this.handlegenderchange}
-              ></input>
+                label="Age"
+              >
+                <MenuItem value={"Male"}>Male</MenuItem>
+                <MenuItem value={"Female"}>Female</MenuItem>
+              </Select>
             </div>
-
             <button
               type="button"
               className="btn btn-primary btn-sm btn-block"

@@ -8,14 +8,14 @@ class AdminNavbar extends Component {
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <LinkContainer to="/admin">
-          <Navbar.Brand>MIT | Intership portal</Navbar.Brand>
+          <Navbar.Brand>MIT | INTERNSHIP PORTAL</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <NavDropdown title="USERS" id="collasible-nav-dropdown">
               <LinkContainer to="/usercontrol/student">
-                <NavDropdown.Item>student</NavDropdown.Item>
+                <NavDropdown.Item>STUDENT</NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to="/usercontrol/itaa">
                 <NavDropdown.Item>ITAA</NavDropdown.Item>
@@ -35,18 +35,18 @@ class AdminNavbar extends Component {
             </LinkContainer>
             <NavDropdown title="COMPANY" id="collasible-nav-dropdown">
               <LinkContainer to="/company/addcompany">
-                <NavDropdown.Item>Add</NavDropdown.Item>
+                <NavDropdown.Item>ADD</NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to="/company/viewcompany">
-                <NavDropdown.Item>View</NavDropdown.Item>
+                <NavDropdown.Item>VIEW</NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to="/company/contact">
-                <NavDropdown.Item>Contact</NavDropdown.Item>
+                <NavDropdown.Item>CONTACT</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
             <NavDropdown title="ALLOCATE" id="collasible-nav-dropdown">
               <LinkContainer to="/allocate/company">
-                <NavDropdown.Item>Company</NavDropdown.Item>
+                <NavDropdown.Item>COMPANY</NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to="/allocate/itaa">
                 <NavDropdown.Item>ITAA</NavDropdown.Item>
@@ -58,10 +58,10 @@ class AdminNavbar extends Component {
           </Nav>
           <Nav>
             <LinkContainer to="/usercontrol/itpc">
-              <Nav.Link>Administrator</Nav.Link>
+              <Nav.Link>ADMINISTRATOR</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/">
-              <Nav.Link>Logout</Nav.Link>
+              <Nav.Link>LOGOUT</Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>

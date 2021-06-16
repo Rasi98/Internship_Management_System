@@ -48,7 +48,7 @@ export const companyUpdate = (req, res) => {
       company
         .save()
         .then(() => res.json({ result: "success" }))
-        .catch((err) => res.status(400).json("Error:" + err));
+        .catch((err) => res.status(400).json(err));
     })
     .catch((err) => res.status(400).json("Error:" + err));
 };
