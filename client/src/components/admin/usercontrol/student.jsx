@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Container, Row, Col, Table } from "react-bootstrap";
 import Addstudent from "./addstudent";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Tabletop from "tabletop";
+
 const Student = (props) => (
-  <tr>
+  <tr className="text-center">
     <td>{props.student.name}</td>
     <td>{props.student.stuno}</td>
     <td>{props.student.email}</td>
@@ -17,21 +18,28 @@ const Student = (props) => (
     <td>{props.student.mobile}</td>
     <td>{props.student.gender}</td>
     <td>
-      <Link
+      {/* <Link
         to={"/usercontrol/student/edit/" + props.student._id}
-        className="btn btn-info m-1"
+        className="btn btn-secondary m-1 btn-sm"
+        style={{ width: "40px" }}
       >
         Edit
+      </Link> */}
+      <Link to={"/usercontrol/student/edit/" + props.student._id}>
+        <Button className="btn-secondary m-1 btn-sm" style={{ width: "60px" }}>
+          Edit
+        </Button>
       </Link>
 
-      <button
-        className="btn btn-danger m-1"
+      <Button
+        className="btn btn-danger m-1 btn-sm"
+        style={{ width: "60px" }}
         onClick={() => {
           props.deletestu(props.student._id);
         }}
       >
         Delete
-      </button>
+      </Button>
     </td>
   </tr>
 );
@@ -75,7 +83,7 @@ class userStudent extends Component {
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 2000,
+          timer: 1000,
           timerProgressBar: true,
           didOpen: (toast) => {
             toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -112,72 +120,74 @@ class userStudent extends Component {
   async init() {
     const { value: url } = await Swal.fire({
       input: "url",
-      inputLabel: "Import Google Sheet",
+      inputLabel: "Import a Google Sheet",
       inputPlaceholder: "Enter the Shareble link",
     });
-    var n = url.startsWith("https://docs.google.com/spreadsheets/");
-    console.log(n);
-    if (n) {
-      //Swal.fire(`Entered URL: ${url}`)
-      Swal.fire({
-        title: "Are you sure?",
-        text: "All the data will be imported.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Import",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Tabletop.init({
-            key: url,
-            simpleSheet: false,
-          }).then((data) => {
-            console.log(data.Sheet1.elements);
-            const studentsheet = data.Sheet1.elements;
-            axios.post(
-              "http://localhost:5000/student/addstudentarray",
-              studentsheet
-            );
-            //loading msg
-            let timerInterval;
-            Swal.fire({
-              title: "Importing....",
-              html: "I will close in <b></b> milliseconds.",
-              timer: 2000,
-              timerProgressBar: true,
-              didOpen: () => {
-                Swal.showLoading();
-                timerInterval = setInterval(() => {
-                  const content = Swal.getHtmlContainer();
-                  if (content) {
-                    const b = content.querySelector("b");
-                    if (b) {
-                      b.textContent = Swal.getTimerLeft();
+    if (url) {
+      var n = url.startsWith("https://docs.google.com/spreadsheets/");
+      console.log(n);
+      if (n) {
+        //Swal.fire(`Entered URL: ${url}`)s
+        Swal.fire({
+          title: "Are you sure?",
+          text: "All the data will be imported.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Import",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Tabletop.init({
+              key: url,
+              simpleSheet: false,
+            }).then((data) => {
+              console.log(data.Sheet1.elements);
+              const studentsheet = data.Sheet1.elements;
+              axios.post(
+                "http://localhost:5000/student/addstudentarray",
+                studentsheet
+              );
+              //loading msg
+              let timerInterval;
+              Swal.fire({
+                title: "Importing....",
+                html: "Importing will complete in <b></b> ms.",
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading();
+                  timerInterval = setInterval(() => {
+                    const content = Swal.getHtmlContainer();
+                    if (content) {
+                      const b = content.querySelector("b");
+                      if (b) {
+                        b.textContent = Swal.getTimerLeft();
+                      }
                     }
-                  }
-                }, 100);
-                this.componentDidMount();
-              },
-              willClose: () => {
-                clearInterval(timerInterval);
-              },
-            }).then((result) => {
-              /* Read more about handling dismissals below */
-              if (result.dismiss === Swal.DismissReason.timer) {
-                console.log("I was closed by the timer");
-              }
+                  }, 100);
+                  this.componentDidMount();
+                },
+                willClose: () => {
+                  clearInterval(timerInterval);
+                },
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  console.log("I was closed by the timer");
+                }
+              });
+              //Swal.fire("Imported!", "Your data has been imported.", "success");
             });
-            //Swal.fire("Imported!", "Your data has been imported.", "success");
-          });
-        }
-      });
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Invalid URL",
-      });
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Invalid URL",
+        });
+      }
     }
   }
 
@@ -193,7 +203,8 @@ class userStudent extends Component {
             <Row style={{ float: "right", marginBottom: "10px" }}>
               <Col>
                 <Button
-                  style={{ margin: "2px" }}
+                  className="btn-sm"
+                  style={{ margin: "2px", width: "80px" }}
                   variant="primary"
                   onClick={() => {
                     this.setState({ showpopup: true });
@@ -202,25 +213,26 @@ class userStudent extends Component {
                   Add
                 </Button>
                 <Button
-                  style={{ margin: "2px" }}
-                  variant="info"
+                  className="btn-sm"
+                  style={{ margin: "2px", width: "80px" }}
+                  variant="success"
                   onClick={this.init}
                 >
                   Import
                 </Button>
                 <Button
-                  style={{ margin: "2px" }}
+                  className="btn-sm"
+                  style={{ margin: "2px", width: "80px" }}
                   variant="danger"
-                  onClick={this.init}
                 >
-                  Delete All
+                  Delete all
                 </Button>
               </Col>
             </Row>
           </Container>
-          <table className="table text-center">
-            <thead className="thead-light">
-              <tr>
+          <Table bordered hover>
+            <thead>
+              <tr className="text-center">
                 <th>Name</th>
                 <th>Stu. No</th>
                 <th>Email</th>
@@ -232,7 +244,7 @@ class userStudent extends Component {
               </tr>
             </thead>
             <tbody>{this.studentList()}</tbody>
-          </table>
+          </Table>
         </div>
         <Addstudent show={this.state.showpopup} onHide={popupclose} />
       </div>

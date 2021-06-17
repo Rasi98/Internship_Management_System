@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import "date-fns";
+import { Col, Row, Container, Form } from "react-bootstrap";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import userHrm from "./hrm";
@@ -100,113 +101,146 @@ class EditStudent extends Component {
       <React.Fragment>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">Edit Student</h3>
-          <form>
-            <div className="col-5">
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  className="form-control"
-                  placeholder="Enter name"
-                  value={(this, this.state.name)}
-                  onChange={this.handlechange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="stuno">Student No.</label>
-                <input
-                  type="text"
-                  name="stuno"
-                  className="form-control"
-                  placeholder="Enter Student No."
-                  value={(this, this.state.stuno)}
-                  onChange={this.handlechange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  className="form-control"
-                  placeholder="Enter email"
-                  value={(this, this.state.email)}
-                  onChange={this.handlechange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="dob">DOB</label>
-                <input
-                  type="date"
-                  id="dob"
-                  name="dob"
-                  className="form-control"
-                  placeholder="Enter DOB"
-                  value={this.state.dob}
-                  onChange={this.handlechange}
-                  required
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="start">
-                        <DateRangeIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="address">Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  className="form-control"
-                  placeholder="Enter address"
-                  value={(this, this.state.address)}
-                  onChange={this.handlechange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="mobile">Phone</label>
-                <input
-                  type="number"
-                  name="mobile"
-                  className="form-control"
-                  placeholder="Enter phone no."
-                  value={(this, this.state.mobile)}
-                  onChange={this.handlechange}
-                ></input>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="department">Gender</label>
-                <br />
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={this.state.gender}
-                  onChange={this.handlechange}
-                  label="Gender"
-                >
-                  <MenuItem value={"Male"}>Male</MenuItem>
-                  <MenuItem value={"Female"}>Female</MenuItem>
-                </Select>
-              </div>
-              <button
-                type="button"
-                className="btn btn-primary btn-lg btn-block"
-                onClick={this.handlesubmit}
-              >
-                Update
-              </button>
-              <Link
-                to={"/usercontrol/student"}
-                className="btn btn-outline-secondary btn-lg btn-block"
-              >
-                Back
-              </Link>
-            </div>
+          <h3 className="text-center" style={{ marginBottom: "20px" }}>
+            Edit Student
+          </h3>
+          <form className="border" style={{ borderRadius: "10px" }}>
+            <Container style={{ padding: "15px" }}>
+              <Row>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="name">Name</label>
+                    <input
+                      type="text"
+                      name="name"
+                      className="form-control"
+                      placeholder="Enter name"
+                      value={(this, this.state.name)}
+                      onChange={this.handlechange}
+                    ></input>
+                  </div>
+                </Col>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="stuno">Student No.</label>
+                    <input
+                      type="text"
+                      name="stuno"
+                      className="form-control"
+                      placeholder="Enter Student No."
+                      value={(this, this.state.stuno)}
+                      onChange={this.handlechange}
+                    ></input>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="email"
+                      name="email"
+                      className="form-control"
+                      placeholder="Enter email"
+                      value={(this, this.state.email)}
+                      onChange={this.handlechange}
+                    ></input>
+                  </div>
+                </Col>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="dob">DOB</label>
+                    <input
+                      type="date"
+                      id="dob"
+                      name="dob"
+                      className="form-control"
+                      placeholder="Enter DOB"
+                      value={this.state.dob}
+                      onChange={this.handlechange}
+                      required
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="start">
+                            <DateRangeIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    ></input>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="address">Address</label>
+                    <input
+                      type="text"
+                      name="address"
+                      className="form-control"
+                      placeholder="Enter address"
+                      value={(this, this.state.address)}
+                      onChange={this.handlechange}
+                    ></input>
+                  </div>
+                </Col>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="mobile">Phone</label>
+                    <input
+                      type="number"
+                      name="mobile"
+                      className="form-control"
+                      placeholder="Enter phone no."
+                      value={(this, this.state.mobile)}
+                      onChange={this.handlechange}
+                    ></input>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Group controlId="exampleForm.SelectCustom">
+                    <Form.Label>Gender</Form.Label>
+                    <Form.Control
+                      as="select"
+                      custom
+                      value={this.state.gender}
+                      onChange={this.handlechange}
+                      name="gender"
+                    >
+                      <option value={"Male"}>Male</option>
+                      <option value={"Female"}>Female</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col></Col>
+              </Row>
+              <Row className="text-center" style={{ margin: "5px" }}>
+                <Col>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={this.handlesubmit}
+                    style={{ width: "40%" }}
+                  >
+                    Update
+                  </button>
+                </Col>
+              </Row>
+              <Row className="text-center" style={{ margin: "5px" }}>
+                <Col>
+                  <Link
+                    to={"/usercontrol/student"}
+                    className="btn btn-outline-secondary btn-sm"
+                    style={{ width: "40%" }}
+                  >
+                    Back
+                  </Link>
+                </Col>
+              </Row>
+            </Container>
           </form>
         </div>
       </React.Fragment>

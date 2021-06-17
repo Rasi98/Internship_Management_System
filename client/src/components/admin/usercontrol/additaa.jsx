@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import generator from "generate-password";
 
 class Additaa extends Component {
   constructor(props) {
@@ -12,6 +15,7 @@ class Additaa extends Component {
       phone: "",
       username: "",
       password: "",
+      genpassword: "",
     };
   }
 
@@ -82,7 +86,17 @@ class Additaa extends Component {
       phone: "",
       username: "",
       password: "",
+      genpassword: "",
     });
+  };
+
+  passwordGen = () => {
+    var password = generator.generate({
+      length: 10,
+      numbers: true,
+      symbols: true,
+    });
+    console.log(password);
   };
 
   render() {
@@ -94,92 +108,123 @@ class Additaa extends Component {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">New ITAA</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {" "}
+            <FontAwesomeIcon
+              icon={faUserPlus}
+              style={{ marginRight: "10px" }}
+            />
+            New ITAA
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="col-5">
-            <div className="form-group">
-              <label htmlFor="cname">Name</label>
-              <input
-                type="text"
-                name="name"
-                id="Name"
-                className="form-control"
-                placeholder="Enter name"
-                value={this.state.name}
-                onChange={this.handlenamechange}
-                required
-              ></input>
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="form-control"
-                placeholder="Enter email"
-                value={this.state.email}
-                onChange={this.handleemailchange}
-                required
-              ></input>
-            </div>
-            <div className="form-group">
-              <label htmlFor="mobile">Phone No</label>
-              <br></br>
-              <input
-                type="number"
-                maxLength="10"
-                id="Phone"
-                name="phone"
-                className="form-control"
-                placeholder="Enter phone no."
-                value={this.state.phone}
-                onChange={this.handlephonechange}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <br></br>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                className="form-control"
-                placeholder="Enter username"
-                value={this.state.username}
-                onChange={this.handleusernamechange}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label htmlFor="companymobile">Password</label>
-              <br></br>
-              <input
-                type="text"
-                id="password"
-                name="password"
-                className="form-control"
-                placeholder="Enter password"
-                value={this.state.password}
-                onChange={this.handlepasswordchange}
-              ></input>
-            </div>
-
-            <button
-              type="button"
-              className="btn btn-primary btn-sm btn-block"
-              onClick={this.handlesubmit}
-            >
-              Create
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-secondary btn-sm btn-block"
-              onClick={this.handleClear}
-            >
-              Clear
-            </button>
-          </div>
+          <Container>
+            <Row>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="cname">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="Name"
+                    className="form-control"
+                    placeholder="Enter name"
+                    value={this.state.name}
+                    onChange={this.handlenamechange}
+                    required
+                  ></input>
+                </div>
+              </Col>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className="form-control"
+                    placeholder="Enter email"
+                    value={this.state.email}
+                    onChange={this.handleemailchange}
+                    required
+                  ></input>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="mobile">Phone No</label>
+                  <br></br>
+                  <input
+                    type="number"
+                    maxLength="10"
+                    id="Phone"
+                    name="phone"
+                    className="form-control"
+                    placeholder="Enter phone no."
+                    value={this.state.phone}
+                    onChange={this.handlephonechange}
+                  ></input>
+                </div>
+              </Col>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="username">Username</label>
+                  <br></br>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    className="form-control"
+                    placeholder="Enter username"
+                    value={this.state.username}
+                    onChange={this.handleusernamechange}
+                  ></input>
+                </div>
+              </Col>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="companymobile">Password</label>
+                  <br></br>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="form-control"
+                    value={this.state.password}
+                    placeholder="Enter password"
+                    onChange={this.handlepasswordchange}
+                  ></input>
+                  <button onClick={this.passwordGen}>gen</button>
+                </div>
+              </Col>
+            </Row>
+            <Row className="text-center" style={{ margin: "5px" }}>
+              <Col>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  onClick={this.handlesubmit}
+                  style={{ width: "40%" }}
+                >
+                  Create
+                </button>
+              </Col>
+            </Row>
+            <Row className="text-center" style={{ margin: "5px" }}>
+              <Col>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary btn-sm"
+                  onClick={this.handleClear}
+                  style={{ width: "40%" }}
+                >
+                  Clear
+                </button>
+              </Col>
+            </Row>
+          </Container>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.onHide}>Close</Button>

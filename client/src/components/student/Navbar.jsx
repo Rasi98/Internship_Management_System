@@ -9,7 +9,20 @@ class Navbarstd extends Component {
   }
   render() {
     return (
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        // bg="dark"
+        variant="dark"
+        style={{ backgroundColor: "#283747 " }}
+      >
+        <img
+          src="https://conf.kln.ac.lk/scse/images/Site/IM-LOGO.png"
+          width="30"
+          height="30"
+          className="d-inline-block align-top"
+          style={{ marginRight: "10px" }}
+        />
         <Navbar.Brand href="#home">MIT | INTERNSHIP PORTAL</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

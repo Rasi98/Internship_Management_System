@@ -6,7 +6,25 @@ import { LinkContainer } from "react-router-bootstrap";
 class AdminNavbar extends Component {
   render() {
     return (
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        // bg="dark"
+        variant="dark"
+        style={{
+          backgroundColor: "#283747 ",
+          // position: "fixed",
+          // top: "0",
+          // width: "100%",
+        }}
+      >
+        <img
+          src="https://conf.kln.ac.lk/scse/images/Site/IM-LOGO.png"
+          width="30"
+          height="30"
+          className="d-inline-block align-top"
+          style={{ marginRight: "10px" }}
+        />
         <LinkContainer to="/admin">
           <Navbar.Brand>MIT | INTERNSHIP PORTAL</Navbar.Brand>
         </LinkContainer>
