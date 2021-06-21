@@ -25,5 +25,5 @@ const itaaSchema = new Schema({
   },
 });
 
-const ITAA = mongoose.model("ITAA", itaaSchema);
+const ITAA = mongoose.model("itaa", itaaSchema);
 export default ITAA;

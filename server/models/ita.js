@@ -33,5 +33,5 @@ const itaSchema = new Schema({
   },
 });
 
-const ITA = mongoose.model("ITA", itaSchema);
+const ITA = mongoose.model("ita", itaSchema);
 export default ITA;

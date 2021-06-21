@@ -13,14 +13,7 @@ const ITAA = (props) => (
     <td>{props.itaa.email}</td>
     <td>{props.itaa.phone}</td>
     <td>{props.itaa.username}</td>
-    <td>{props.itaa.password}</td>
     <td>
-      {/* <Link
-        to={"/usercontrol/itaa/edit/" + props.itaa._id}
-        className="btn btn-info m-1"
-      >
-        Edit
-      </Link> */}
       <Link to={"/usercontrol/itaa/edit/" + props.itaa._id}>
         <Button className="btn-secondary m-1 btn-sm" style={{ width: "60px" }}>
           Edit
@@ -150,7 +143,7 @@ class userItaa extends Component {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Username</th>
-                <th>Password</th>
+
                 <th>Actions</th>
               </tr>
             </thead>

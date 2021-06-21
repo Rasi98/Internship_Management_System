@@ -31,5 +31,5 @@ const hrmSchema = new Schema({
   },
 });
 
-const HRM = mongoose.model("HRM", hrmSchema);
+const HRM = mongoose.model("hrm", hrmSchema);
 export default HRM;

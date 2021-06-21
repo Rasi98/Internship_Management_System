@@ -31,9 +31,6 @@ const studentSchema = new Schema({
     type: String,
     required: true,
   },
-  allocatedCompany: {
-    type: String,
-  },
   allocatedITAA: {
     type: String,
   },
@@ -45,5 +42,5 @@ const studentSchema = new Schema({
   },
 });
 
-const Student = mongoose.model("Student", studentSchema);
+const Student = mongoose.model("student", studentSchema);
 export default Student;

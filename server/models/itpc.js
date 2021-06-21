@@ -26,5 +26,5 @@ const itpcSchema = new Schema({
   },
 });
 
-const ITPC = mongoose.model("ITPC", itpcSchema);
+const ITPC = mongoose.model("itpc", itpcSchema);
 export default ITPC;

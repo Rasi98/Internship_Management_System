@@ -13,9 +13,6 @@ class AdminNavbar extends Component {
         variant="dark"
         style={{
           backgroundColor: "#283747 ",
-          // position: "fixed",
-          // top: "0",
-          // width: "100%",
         }}
       >
         <img

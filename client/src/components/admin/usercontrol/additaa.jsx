@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Modal, Button, Container, Row, Col } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Modal, Button, Container, Row, Col,InputGroup,FormControl } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import generator from "generate-password";
+
 
 class Additaa extends Component {
   constructor(props) {
@@ -15,7 +17,6 @@ class Additaa extends Component {
       phone: "",
       username: "",
       password: "",
-      genpassword: "",
     };
   }
 
@@ -43,14 +44,24 @@ class Additaa extends Component {
       phone: this.state.phone,
       username: this.state.username,
       password: this.state.password,
-    };
+    }
+
+    const email={
+      email:this.state.email,
+      username:this.state.username,
+      password:this.state.password,
+    }
+
+    axios.post("http://localhost:5000/itaa/contactitaa/",email)
+        .then((res)=>{
+          console.log(res.data);
+        })
 
     axios.post("http://localhost:5000/itaa/additaa", itaa).then((res) => {
       const response = res.data.result;
       console.log(response);
 
       if (response == "success") {
-        //alert("User Created !");
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -86,17 +97,16 @@ class Additaa extends Component {
       phone: "",
       username: "",
       password: "",
-      genpassword: "",
     });
   };
 
   passwordGen = () => {
-    var password = generator.generate({
+    var genpassword = generator.generate({
       length: 10,
       numbers: true,
       symbols: true,
     });
-    console.log(password);
+    this.setState({ ...this.state, password: genpassword });
   };
 
   render() {
@@ -185,18 +195,23 @@ class Additaa extends Component {
               </Col>
               <Col>
                 <div className="form-group">
-                  <label htmlFor="companymobile">Password</label>
+                  <label htmlFor="password">Password</label>
                   <br></br>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className="form-control"
-                    value={this.state.password}
-                    placeholder="Enter password"
-                    onChange={this.handlepasswordchange}
-                  ></input>
-                  <button onClick={this.passwordGen}>gen</button>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.handlepasswordchange}
+                        placeholder="Password"
+                        aria-label="Password"
+                        aria-describedby="basic-addon2"
+                    />
+                    <InputGroup.Append>
+                      <Button onClick={this.passwordGen} variant="outline-secondary">GEN</Button>
+                    </InputGroup.Append>
+                  </InputGroup>
                 </div>
               </Col>
             </Row>

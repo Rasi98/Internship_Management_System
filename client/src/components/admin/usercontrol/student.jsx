@@ -18,13 +18,6 @@ const Student = (props) => (
     <td>{props.student.mobile}</td>
     <td>{props.student.gender}</td>
     <td>
-      {/* <Link
-        to={"/usercontrol/student/edit/" + props.student._id}
-        className="btn btn-secondary m-1 btn-sm"
-        style={{ width: "40px" }}
-      >
-        Edit
-      </Link> */}
       <Link to={"/usercontrol/student/edit/" + props.student._id}>
         <Button className="btn-secondary m-1 btn-sm" style={{ width: "60px" }}>
           Edit
@@ -49,6 +42,7 @@ class userStudent extends Component {
     super(props);
 
     this.deleteStudent = this.deleteStudent.bind(this);
+    this.deleteall=this.deleteall.bind(this);
     this.init = this.init.bind(this);
     this.state = {
       showpopup: false,
@@ -191,6 +185,48 @@ class userStudent extends Component {
     }
   }
 
+  //Delete all data
+  deleteall(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "All data will be deleted!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete all!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post("http://localhost:5000/student/deleteall")
+            .then((res)=>{
+              const response=res.data;
+              if(response=="success"){
+                this.componentDidMount()
+                Swal.fire(
+                    'Deleted!',
+                    'All data has been deleted.',
+                    'success'
+                )
+              }
+              else{
+                this.componentDidMount();
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                })
+              }
+            })
+
+      }
+    })
+
+
+
+
+
+  }
+
   render() {
     let popupclose = () => this.setState({ showpopup: false });
 
@@ -224,6 +260,7 @@ class userStudent extends Component {
                   className="btn-sm"
                   style={{ margin: "2px", width: "80px" }}
                   variant="danger"
+                  onClick={this.deleteall}
                 >
                   Delete all
                 </Button>

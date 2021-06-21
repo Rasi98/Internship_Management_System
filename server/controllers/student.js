@@ -41,6 +41,12 @@ export const deleteStudent = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
+export const deleteall=(req,res)=>{
+    Student.db.collection("students").drop()
+    .then(()=>res.status(201).json("success"))
+        .catch((err)=>res.status(400).json("Error:"+err))
+}
+
 export const findstudent = (req, res) => {
   Student.findById(req.params.id)
     .then((student) => res.json(student))

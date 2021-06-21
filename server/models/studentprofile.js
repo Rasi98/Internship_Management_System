@@ -57,5 +57,5 @@ const studentprofileSchema = new Schema({
   interest6: { type: String },
 });
 
-const StudentProfile = mongoose.model("StudentProfile", studentprofileSchema);
+const StudentProfile = mongoose.model("studentProfile", studentprofileSchema);
 export default StudentProfile;
