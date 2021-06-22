@@ -37,7 +37,7 @@ class userItaa extends Component {
     super(props);
 
     this.deleteitaa = this.deleteitaa.bind(this);
-
+    this.deleteall=this.deleteall.bind(this);
     this.state = {
       itaa: [],
       showpopup: false,
@@ -105,6 +105,43 @@ class userItaa extends Component {
     });
   }
 
+  //Delete all data
+  deleteall(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "All data will be deleted!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete all!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post("http://localhost:5000/itaa/deleteall")
+            .then((res)=>{
+              const response=res.data;
+              if(response=="success"){
+                this.componentDidMount()
+                Swal.fire(
+                    'Deleted!',
+                    'All data has been deleted.',
+                    'success'
+                )
+              }
+              else{
+                this.componentDidMount();
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                })
+              }
+            })
+      }
+    })
+  }
+
+
   render() {
     let popupclose = () => this.setState({ showpopup: false });
 
@@ -130,6 +167,7 @@ class userItaa extends Component {
                   className="btn-sm"
                   style={{ margin: "2px", width: "80px" }}
                   variant="danger"
+                  onClick={this.deleteall}
                 >
                   Delete all
                 </Button>
@@ -143,7 +181,6 @@ class userItaa extends Component {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Username</th>
-
                 <th>Actions</th>
               </tr>
             </thead>

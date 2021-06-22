@@ -32,7 +32,7 @@ export const itaaValidator = [
     .isEmpty()
     .withMessage("Username is required!")
     .isLength({ min: 6 })
-    .withMessage("Password should have at least 6 characters!"),
+    .withMessage("Username should have at least 6 characters!"),
   check("password")
     .not()
     .isEmpty()

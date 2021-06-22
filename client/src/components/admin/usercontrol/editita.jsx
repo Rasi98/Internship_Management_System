@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
+import {Button,Row,Col,Container,InputGroup,FormControl} from "react-bootstrap"
 import Swal from "sweetalert2";
 
 class Editita extends Component {
@@ -95,8 +96,10 @@ class Editita extends Component {
         <Navbar></Navbar>
         <div className="container mt-4">
           <h3 className="text-center">Edit ITA</h3>
-          <form>
-            <div className="col-5">
+          <form  className="border" style={{ borderRadius: "10px" }}>
+            <Container style={{ padding: "15px" }}>
+              <Row>
+                <Col>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input
@@ -108,6 +111,8 @@ class Editita extends Component {
                   onChange={this.handlechange}
                 ></input>
               </div>
+                </Col>
+                <Col>
               <div className="form-group">
                 <label htmlFor="designation">Designation</label>
                 <input
@@ -119,6 +124,10 @@ class Editita extends Component {
                   onChange={this.handlechange}
                 ></input>
               </div>
+                </Col>
+              </Row>
+              <Row>
+              <Col>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
@@ -130,6 +139,8 @@ class Editita extends Component {
                   onChange={this.handlechange}
                 ></input>
               </div>
+              </Col>
+                <Col>
               <div className="form-group">
                 <label htmlFor="phone">Phone</label>
                 <input
@@ -141,6 +152,10 @@ class Editita extends Component {
                   onChange={this.handlechange}
                 ></input>
               </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
               <div className="form-group">
                 <label htmlFor="company">Company</label>
                 <input
@@ -152,6 +167,10 @@ class Editita extends Component {
                   onChange={this.handlechange}
                 ></input>
               </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
               <div className="form-group">
                 <label htmlFor="username">Username</label>
                 <input
@@ -163,6 +182,8 @@ class Editita extends Component {
                   onChange={this.handlechange}
                 ></input>
               </div>
+                </Col>
+                <Col>
               <div className="form-group">
                 <label htmlFor="password">Password</label>
                 <input
@@ -174,20 +195,32 @@ class Editita extends Component {
                   onChange={this.handlechange}
                 ></input>
               </div>
+                </Col>
+              </Row>
+              <Row className="text-center" style={{ margin: "5px" }}>
+                <Col>
               <button
                 type="button"
-                className="btn btn-primary btn-lg btn-block"
+                className="btn btn-primary btn-sm"
                 onClick={this.handlesubmit}
+                style={{ width: "40%" }}
               >
                 Update
               </button>
+                </Col>
+              </Row>
+              <Row className="text-center" style={{ margin: "5px" }}>
+                <Col>
               <Link
-                to={"/usercontrol/itaa"}
-                className="btn btn-outline-secondary btn-lg btn-block"
+                to={"/usercontrol/ita"}
+                className="btn btn-outline-secondary btn-sm"
+                style={{ width: "40%" }}
               >
                 Back
               </Link>
-            </div>
+                </Col>
+              </Row>
+            </Container>
           </form>
         </div>
       </React.Fragment>

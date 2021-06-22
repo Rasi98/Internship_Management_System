@@ -11,6 +11,12 @@ export const getitaa = async (req, res) => {
   }
 };
 
+export const deleteall=(req,res)=>{
+    ITAA.db.collection("itaas").drop()
+        .then(()=>res.status(201).json("success"))
+        .catch((err)=>res.status(400).json("Error:"+err))
+}
+
 export const additaa = async (req, res) => {
   const itaaData = req.body;
   const newitaa = new ITAA(itaaData);

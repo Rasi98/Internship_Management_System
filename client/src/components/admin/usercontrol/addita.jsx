@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button,Container,Row,Col,InputGroup,FormControl } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 class Addita extends Component {
   constructor(props) {
@@ -105,10 +107,15 @@ class Addita extends Component {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">New ITA</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter"> <FontAwesomeIcon
+              icon={faUserPlus}
+              style={{ marginRight: "10px" }}
+          />New ITA</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="col-5">
+          <Container>
+            <Row>
+              <Col>
             <div className="form-group">
               <label htmlFor="cname">Name</label>
               <input
@@ -121,6 +128,8 @@ class Addita extends Component {
                 required
               ></input>
             </div>
+              </Col>
+              <Col>
             <div className="form-group">
               <label htmlFor="designation">Designation</label>
               <input
@@ -133,6 +142,10 @@ class Addita extends Component {
                 required
               ></input>
             </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -145,6 +158,8 @@ class Addita extends Component {
                 required
               ></input>
             </div>
+              </Col>
+              <Col>
             <div className="form-group">
               <label htmlFor="mobile">Phone No</label>
               <br></br>
@@ -158,6 +173,8 @@ class Addita extends Component {
                 onChange={this.handlephonechange}
               ></input>
             </div>
+              </Col>
+            </Row>
             <div className="form-group">
               <label htmlFor="company">Company</label>
               <br></br>
@@ -171,6 +188,8 @@ class Addita extends Component {
                 onChange={this.handlecompanychange}
               ></input>
             </div>
+            <Row>
+              <Col>
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <br></br>
@@ -183,6 +202,8 @@ class Addita extends Component {
                 onChange={this.handleusernamechange}
               ></input>
             </div>
+              </Col>
+              <Col>
             <div className="form-group">
               <label htmlFor="companymobile">Password</label>
               <br></br>
@@ -195,22 +216,34 @@ class Addita extends Component {
                 onChange={this.handlepasswordchange}
               ></input>
             </div>
+              </Col>
+            </Row>
+            <Row className="text-center" style={{ margin: "5px" }}>
+              <Col>
+                <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={this.handlesubmit}
+                    style={{ width: "40%" }}
+                >
+                  Create
+                </button>
+              </Col>
+            </Row>
+            <Row className="text-center" style={{ margin: "5px" }}>
+              <Col>
+                <button
+                    type="button"
+                    className="btn btn-outline-secondary btn-sm"
+                    onClick={this.handleClear}
+                    style={{ width: "40%" }}
+                >
+                  Clear
+                </button>
+              </Col>
+            </Row>
 
-            <button
-              type="button"
-              className="btn btn-primary btn-sm btn-block"
-              onClick={this.handlesubmit}
-            >
-              Create
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline-secondary btn-sm btn-block"
-              onClick={this.handleClear}
-            >
-              Clear
-            </button>
-          </div>
+          </Container>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.onHide}>Close</Button>

@@ -6,6 +6,7 @@ import {
   deleteitaa,
   updateitaa,
   contactitaa,
+    deleteall
 } from "../../controllers/itaa.js";
 import {
   itaaValidator,
@@ -19,5 +20,6 @@ itaaRouter.post("/additaa", itaaValidator, itaaValidatorResult, additaa);
 itaaRouter.delete("/:id", deleteitaa);
 itaaRouter.post("/update/:id", itaaValidator, itaaValidatorResult, updateitaa);
 itaaRouter.post("/contactitaa/",contactitaa);
+itaaRouter.post("/deleteall",deleteall);
 
 export default itaaRouter;

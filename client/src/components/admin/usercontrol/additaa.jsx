@@ -52,16 +52,17 @@ class Additaa extends Component {
       password:this.state.password,
     }
 
-    axios.post("http://localhost:5000/itaa/contactitaa/",email)
-        .then((res)=>{
-          console.log(res.data);
-        })
+
 
     axios.post("http://localhost:5000/itaa/additaa", itaa).then((res) => {
       const response = res.data.result;
       console.log(response);
 
       if (response == "success") {
+        axios.post("http://localhost:5000/itaa/contactitaa/",email)
+            .then((res)=>{
+              console.log(res.data);
+            })
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",

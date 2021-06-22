@@ -220,11 +220,6 @@ class userStudent extends Component {
 
       }
     })
-
-
-
-
-
   }
 
   render() {

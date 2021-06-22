@@ -65,9 +65,7 @@ class Edititaa extends Component {
         username:this.state.newusername,
         password:this.state.newpassword,
       }
-      axios.post("http://localhost:5000/itaa/contactitaa/", email).then((res)=>{
-        console.log(res);
-      })
+
       axios.post(
           "http://localhost:5000/itaa/update/" + this.props.match.params.id,
           itaa
@@ -77,6 +75,9 @@ class Edititaa extends Component {
             console.log(response);
 
             if (response == "updated") {
+              axios.post("http://localhost:5000/itaa/contactitaa/", email).then((res)=>{
+                console.log(res);
+              })
               const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -122,6 +123,7 @@ class Edititaa extends Component {
             console.log(response);
 
             if (response == "updated") {
+
               const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
