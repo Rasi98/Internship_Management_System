@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
 import {Button,Row,Col,Container,InputGroup,FormControl} from "react-bootstrap"
 import Swal from "sweetalert2";
+import generator from "generate-password";
 
 class Editita extends Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class Editita extends Component {
       company: "",
       username: "",
       password: "",
+      newusername:"",
+      newpassword:"",
     };
   }
 
@@ -32,6 +35,8 @@ class Editita extends Component {
           company: Response.data.company,
           username: Response.data.username,
           password: Response.data.password,
+          newusername:Response.data.username,
+          newpassword:Response.data.password,
         });
       });
   }
@@ -40,56 +45,126 @@ class Editita extends Component {
       [event.target.name]: event.target.value,
     });
   };
+  handleusernamechange=(e)=>{
+    this.setState({newusername:e.target.value})
+  }
+
+  handlepasswordchange=(e)=>{
+    this.setState({newpassword:e.target.value})
+  }
 
   handlesubmit = (e) => {
-    //const history = useHistory();
-    const itaa = {
+
+    const ita = {
       name: this.state.name,
       designation: this.state.designation,
       email: this.state.email,
       company: this.state.company,
       phone: this.state.phone,
-      username: this.state.username,
-      password: this.state.password,
+      username: this.state.newusername,
+      password: this.state.newpassword,
     };
 
-    axios
-      .post(
-        "http://localhost:5000/ita/update/" + this.props.match.params.id,
-        itaa
-      )
-      .then((res) => {
-        const response = res.data.result;
-        console.log(response);
+    if(this.state.username!==this.state.newusername || this.state.password!==this.state.newpassword){
+      const email={
+        email:this.state.email,
+        username:this.state.newusername,
+        password:this.state.newpassword,
+      }
 
-        if (response == "updated") {
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
+      axios
+          .post(
+              "http://localhost:5000/ita/update/" + this.props.match.params.id,
+              ita
+          )
+          .then((res) => {
+            const response = res.data.result;
+            console.log(response);
+
+            if (response == "updated") {
+              axios.post("http://localhost:5000/ita/contactita/", email).then((res)=>{
+                console.log(res);
+              })
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "success",
+                title: "Updated successfully",
+              });
+              window.location = "/usercontrol/ita";
+              //history.push("/company/viewcompany");
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: response,
+              });
+            }
+          });
+    }
+    else{
+      axios
+          .post(
+              "http://localhost:5000/ita/update/" + this.props.match.params.id,
+              ita
+          )
+          .then((res) => {
+            const response = res.data.result;
+            console.log(response);
+
+            if (response == "updated") {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "success",
+                title: "Updated successfully",
+              });
+              window.location = "/usercontrol/ita";
+              //history.push("/company/viewcompany");
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: response,
+              });
+            }
           });
 
-          Toast.fire({
-            icon: "success",
-            title: "Updated successfully",
-          });
-          window.location = "/usercontrol/ita";
-          //history.push("/company/viewcompany");
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: response,
-          });
-        }
-      });
+    }
+
+
   };
+
+  passwordGen = () => {
+    var genpassword = generator.generate({
+      length: 10,
+      numbers: true,
+      symbols: true,
+    });
+    this.setState({ ...this.state, newpassword: genpassword });
+  };
+
+
   render() {
     return (
       <React.Fragment>
@@ -178,23 +253,31 @@ class Editita extends Component {
                   name="username"
                   className="form-control"
                   placeholder="Enter username"
-                  value={(this, this.state.username)}
-                  onChange={this.handlechange}
+                  value={(this, this.state.newusername)}
+                  onChange={this.handleusernamechange}
                 ></input>
               </div>
                 </Col>
                 <Col>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="text"
-                  name="password"
-                  className="form-control"
-                  placeholder="Enter password"
-                  value={(this, this.state.password)}
-                  onChange={this.handlechange}
-                ></input>
-              </div>
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <br></br>
+                    <InputGroup className="mb-3">
+                      <FormControl
+                          type="password"
+                          id="password"
+                          name="password"
+                          value={this.state.newpassword}
+                          onChange={this.handlepasswordchange}
+                          placeholder="Password"
+                          aria-label="Password"
+                          aria-describedby="basic-addon2"
+                      />
+                      <InputGroup.Append>
+                        <Button onClick={this.passwordGen} variant="outline-secondary">GEN</Button>
+                      </InputGroup.Append>
+                    </InputGroup>
+                  </div>
                 </Col>
               </Row>
               <Row className="text-center" style={{ margin: "5px" }}>

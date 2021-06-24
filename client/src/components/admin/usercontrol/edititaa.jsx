@@ -159,7 +159,7 @@ class Edititaa extends Component {
       numbers: true,
       symbols: true,
     });
-    this.setState({ ...this.state, password: genpassword });
+    this.setState({ ...this.state, newpassword: genpassword });
   };
 
 

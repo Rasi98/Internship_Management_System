@@ -7,6 +7,7 @@ import {
   updatehrm,
   contacthrm,
   setstatus,
+    deleteall
 } from "../../controllers/hrm.js";
 import {
   hrmValidatorResult,
@@ -21,5 +22,6 @@ hrmRouter.delete("/:id", deletehrm);
 hrmRouter.post("/update/:id", hrmValidator, hrmValidatorResult, updatehrm);
 hrmRouter.post("/contacthrm/:id", contacthrm);
 hrmRouter.get("/contacted/:id", setstatus);
+hrmRouter.post("/deleteall",deleteall);
 
 export default hrmRouter;

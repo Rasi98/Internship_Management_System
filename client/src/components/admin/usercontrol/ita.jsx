@@ -15,7 +15,6 @@ const ITA = (props) => (
     <td>{props.ita.phone}</td>
     <td>{props.ita.company}</td>
     <td>{props.ita.username}</td>
-    <td>{props.ita.password}</td>
     <td>
       <Link
         to={"/usercontrol/ita/edit/" + props.ita._id}
@@ -41,6 +40,7 @@ class userIta extends Component {
   constructor(props) {
     super(props);
     this.deleteita = this.deleteita.bind(this);
+    this.deleteall=this.deleteall.bind(this);
 
     this.state = {
       ita: [],
@@ -89,6 +89,42 @@ class userIta extends Component {
     });
   }
 
+  //Delete all data
+  deleteall(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "All data will be deleted!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete all!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post("http://localhost:5000/ita/deleteall")
+            .then((res)=>{
+              const response=res.data;
+              if(response=="success"){
+                this.componentDidMount()
+                Swal.fire(
+                    'Deleted!',
+                    'All data has been deleted.',
+                    'success'
+                )
+              }
+              else{
+                this.componentDidMount();
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                })
+              }
+            })
+      }
+    })
+  }
+
   render() {
     let popupclose = () => this.setState({ showpopup: false });
 
@@ -113,6 +149,7 @@ class userIta extends Component {
                 <Button
                     className="btn-sm"
                     style={{ margin: "2px", width: "80px" }}
+                    onClick={this.deleteall}
                     variant="danger"
                 >
                   Delete all
@@ -129,7 +166,6 @@ class userIta extends Component {
                 <th>Phone</th>
                 <th>Company</th>
                 <th>Username</th>
-                <th>Password</th>
                 <th>Action</th>
               </tr>
             </thead>

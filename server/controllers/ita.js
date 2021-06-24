@@ -20,6 +20,12 @@ export const addita = async (req, res) => {
     res.status(409).json(error);
   }
 };
+export const deleteall=(req,res)=>{
+    ITA.db.collection("itas").drop()
+        .then(()=>res.status(201).json("success"))
+        .catch((err)=>res.status(400).json("Error:"+err))
+}
+
 
 export const findita = (req, res) => {
   ITA.findById(req.params.id)
@@ -39,6 +45,7 @@ export const updateita = (req, res) => {
       ita.username = req.body.username;
       ita.password = req.body.password;
       ita.name = req.body.name;
+      ita.designation=req.body.designation;
       ita.email = req.body.email;
       ita.phone = req.body.phone;
       ita.company = req.body.company;

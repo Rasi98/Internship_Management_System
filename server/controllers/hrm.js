@@ -11,6 +11,12 @@ export const gethrm = async (req, res) => {
   }
 };
 
+export const deleteall=(req,res)=>{
+  HRM.db.collection("hrms").drop()
+      .then(()=>res.status(201).json("success"))
+      .catch((err)=>res.status(400).json("Error:"+err))
+}
+
 export const addhrm = async (req, res) => {
   const hrmData = req.body;
   const newhrm = new HRM(hrmData);

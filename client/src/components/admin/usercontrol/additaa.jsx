@@ -52,6 +52,12 @@ class Additaa extends Component {
       password:this.state.password,
     }
 
+    const user={
+      username:this.state.username,
+      password:this.state.password,
+      role:"itaa"
+    }
+
 
 
     axios.post("http://localhost:5000/itaa/additaa", itaa).then((res) => {

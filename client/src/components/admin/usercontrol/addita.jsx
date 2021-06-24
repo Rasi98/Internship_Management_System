@@ -4,6 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import generator from "generate-password";
 
 class Addita extends Component {
   constructor(props) {
@@ -52,12 +53,36 @@ class Addita extends Component {
       password: this.state.password,
     };
 
+    const email={
+      email:this.state.email,
+      username:this.state.username,
+      password:this.state.password,
+    }
+
+    const user={
+      username:this.state.username,
+      password:this.state.password,
+      role:"ita"
+    }
+
+    axios.post("http://localhost:5000/user/adduser",user).then((res)=>{
+      const response=res.data.result;
+      console.log(response);
+      if(response=="success"){
+        axios.post("http://localhost:5000/ita/contactita/",email)
+            .then((res)=>{
+              console.log(res.data.result);
+            })
+      }
+    })
+
     axios.post("http://localhost:5000/ita/addita", ita).then((res) => {
       const response = res.data.result;
       console.log(response);
 
       if (response == "success") {
         //alert("User Created !");
+
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -96,6 +121,15 @@ class Addita extends Component {
       username: "",
       password: "",
     });
+  };
+
+  passwordGen = () => {
+    var genpassword = generator.generate({
+      length: 10,
+      numbers: true,
+      symbols: true,
+    });
+    this.setState({ ...this.state, password: genpassword });
   };
 
   render() {
@@ -204,18 +238,25 @@ class Addita extends Component {
             </div>
               </Col>
               <Col>
-            <div className="form-group">
-              <label htmlFor="companymobile">Password</label>
-              <br></br>
-              <input
-                type="text"
-                id="password"
-                className="form-control"
-                placeholder="Enter password"
-                value={this.state.password}
-                onChange={this.handlepasswordchange}
-              ></input>
-            </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <br></br>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.handlepasswordchange}
+                        placeholder="Password"
+                        aria-label="Password"
+                        aria-describedby="basic-addon2"
+                    />
+                    <InputGroup.Append>
+                      <Button onClick={this.passwordGen} variant="outline-secondary">GEN</Button>
+                    </InputGroup.Append>
+                  </InputGroup>
+                </div>
               </Col>
             </Row>
             <Row className="text-center" style={{ margin: "5px" }}>

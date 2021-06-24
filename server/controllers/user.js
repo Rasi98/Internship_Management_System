@@ -32,7 +32,7 @@ export const createUsers = async (req, res) => {
   });
   try {
     await newUser.save();
-    res.status(201).json(newUser);
+    res.status(201).json({result:"success"});
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
