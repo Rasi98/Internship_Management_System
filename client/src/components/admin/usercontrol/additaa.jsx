@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal, Button, Container, Row, Col,InputGroup,FormControl } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Container,
+  Row,
+  Col,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import generator from "generate-password";
-
 
 class Additaa extends Component {
   constructor(props) {
@@ -44,31 +51,14 @@ class Additaa extends Component {
       phone: this.state.phone,
       username: this.state.username,
       password: this.state.password,
-    }
-
-    const email={
-      email:this.state.email,
-      username:this.state.username,
-      password:this.state.password,
-    }
-
-    const user={
-      username:this.state.username,
-      password:this.state.password,
-      role:"itaa"
-    }
-
-
+      role:"itaa",
+    };
 
     axios.post("http://localhost:5000/itaa/additaa", itaa).then((res) => {
       const response = res.data.result;
       console.log(response);
 
       if (response == "success") {
-        axios.post("http://localhost:5000/itaa/contactitaa/",email)
-            .then((res)=>{
-              console.log(res.data);
-            })
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -85,7 +75,8 @@ class Additaa extends Component {
           icon: "success",
           title: "ITAA added successfully",
         });
-        window.location = "/usercontrol/itaa";
+        this.props.history.push("/usercontrol/itaa");
+
       } else {
         //alert("Error occured !");
         Swal.fire({
@@ -206,17 +197,22 @@ class Additaa extends Component {
                   <br></br>
                   <InputGroup className="mb-3">
                     <FormControl
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.handlepasswordchange}
-                        placeholder="Password"
-                        aria-label="Password"
-                        aria-describedby="basic-addon2"
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.handlepasswordchange}
+                      placeholder="Password"
+                      aria-label="Password"
+                      aria-describedby="basic-addon2"
                     />
                     <InputGroup.Append>
-                      <Button onClick={this.passwordGen} variant="outline-secondary">GEN</Button>
+                      <Button
+                        onClick={this.passwordGen}
+                        variant="outline-secondary"
+                      >
+                        GEN
+                      </Button>
                     </InputGroup.Append>
                   </InputGroup>
                 </div>

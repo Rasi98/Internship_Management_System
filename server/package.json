@@ -21,6 +21,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
+    "generate-password": "^1.6.0",
     "jsonwebtoken": "^8.5.1",
     "mailgen": "^2.0.14",
     "mongoose": "^5.11.16",

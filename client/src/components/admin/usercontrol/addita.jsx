@@ -51,38 +51,14 @@ class Addita extends Component {
       company: this.state.company,
       username: this.state.username,
       password: this.state.password,
+      role:"ita",
     };
-
-    const email={
-      email:this.state.email,
-      username:this.state.username,
-      password:this.state.password,
-    }
-
-    const user={
-      username:this.state.username,
-      password:this.state.password,
-      role:"ita"
-    }
-
-    axios.post("http://localhost:5000/user/adduser",user).then((res)=>{
-      const response=res.data.result;
-      console.log(response);
-      if(response=="success"){
-        axios.post("http://localhost:5000/ita/contactita/",email)
-            .then((res)=>{
-              console.log(res.data.result);
-            })
-      }
-    })
 
     axios.post("http://localhost:5000/ita/addita", ita).then((res) => {
       const response = res.data.result;
       console.log(response);
 
       if (response == "success") {
-        //alert("User Created !");
-
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -99,7 +75,8 @@ class Addita extends Component {
           icon: "success",
           title: "ITA added successfully",
         });
-        window.location = "/usercontrol/ita";
+        this.props.history.push("/usercontrol/ita");
+
       } else {
         //alert("Error occured !");
         Swal.fire({

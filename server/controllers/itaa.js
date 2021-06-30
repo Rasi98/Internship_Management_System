@@ -1,4 +1,5 @@
 import ITAA from "../models/itaa.js";
+import {sendMail} from "./sendcredentials.js";
 
 export const getitaa = async (req, res) => {
   try {
@@ -20,8 +21,11 @@ export const additaa = async (req, res) => {
   const itaaData = req.body;
   const newitaa = new ITAA(itaaData);
   try {
-    await newitaa.save();
-    res.status(201).json({ result: "success" });
+    await newitaa.save()
+        .then(()=>{
+            sendMail(itaaData.email,itaaData.username,itaaData.password);
+            res.status(201).json({ result: "success" });
+        })
   } catch (error) {
     res.status(409).json(error);
   }
@@ -42,8 +46,12 @@ export const deleteitaa = (req, res) => {
 export const updateitaa = (req, res) => {
   ITAA.findById(req.params.id)
     .then((itaa) => {
+        if(itaa.username!==req.body.username || itaa.password!==req.body.password){
+            sendMail(req.body.email,req.body.username,req.body.password);
+        }
       itaa.username = req.body.username;
       itaa.password = req.body.password;
+      itaa.role="itaa";
       itaa.name = req.body.name;
       itaa.email = req.body.email;
       itaa.phone = req.body.phone;

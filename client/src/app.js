@@ -22,6 +22,7 @@ import Edithrm from "./components/admin/usercontrol/edithrm";
 import Edititaa from "./components/admin/usercontrol/edititaa";
 import EditStudent from "./components/admin/usercontrol/editStudent";
 import Editita from "./components/admin/usercontrol/editita";
+import StudentHome from "./components/student/home";
 
 //Student components
 import Profile from "./components/student/profile.jsx";

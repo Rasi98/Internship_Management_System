@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Modal, Button, Container, Row, Col, Form } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Container,
+  Row,
+  Col,
+  Form,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 import axios from "axios";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -7,6 +16,7 @@ import "date-fns";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import generator from "generate-password";
 
 class Addstudent extends Component {
   constructor(props) {
@@ -19,6 +29,8 @@ class Addstudent extends Component {
       address: "",
       mobile: "",
       gender: "",
+      username: "",
+      password: "",
     };
   }
 
@@ -43,6 +55,12 @@ class Addstudent extends Component {
   handlegenderchange = (e) => {
     this.setState({ gender: e.target.value });
   };
+  handleusernamechange = (e) => {
+    this.setState({ username: e.target.value });
+  };
+  handlepasswordchange = (e) => {
+    this.setState({ password: e.target.value });
+  };
 
   handlesubmit = (e) => {
     const student = {
@@ -53,6 +71,9 @@ class Addstudent extends Component {
       address: this.state.address,
       mobile: this.state.mobile,
       gender: this.state.gender,
+      username: this.state.username,
+      password: this.state.password,
+      role:"student",
     };
 
     axios
@@ -62,7 +83,6 @@ class Addstudent extends Component {
         console.log(response);
 
         if (response == "success") {
-          //alert("User Created !");
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -79,9 +99,9 @@ class Addstudent extends Component {
             icon: "success",
             title: "Student added successfully",
           });
-          window.location = "/usercontrol/student";
+          this.props.history.push("/usercontrol/student");
+
         } else {
-          // alert("Error occured !");
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -100,7 +120,18 @@ class Addstudent extends Component {
       address: "",
       mobile: "",
       gender: "",
+      username: "",
+      password: "",
     });
+  };
+
+  passwordGen = () => {
+    var genpassword = generator.generate({
+      length: 10,
+      numbers: true,
+      symbols: true,
+    });
+    this.setState({ ...this.state, password: genpassword });
   };
 
   render() {
@@ -220,7 +251,7 @@ class Addstudent extends Component {
                     name="mobile"
                     className="form-control"
                     placeholder="Enter phone no."
-                    value={this.state.phone}
+                    value={this.state.mobile}
                     onChange={this.handlephonechange}
                   ></input>
                 </div>
@@ -235,10 +266,54 @@ class Addstudent extends Component {
                     onChange={this.handlegenderchange}
                     name="gender"
                   >
+                    <option value="" selected disabled hidden>Choose here</option>
                     <option value={"Male"}>Male</option>
                     <option value={"Female"}>Female</option>
                   </Form.Control>
                 </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="username">Username</label>
+                  <br></br>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    className="form-control"
+                    placeholder="Enter username"
+                    value={this.state.username}
+                    onChange={this.handleusernamechange}
+                  ></input>
+                </div>
+              </Col>
+              <Col>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <br></br>
+                  <InputGroup className="mb-3">
+                    <FormControl
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.handlepasswordchange}
+                      placeholder="Password"
+                      aria-label="Password"
+                      aria-describedby="basic-addon2"
+                    />
+                    <InputGroup.Append>
+                      <Button
+                        onClick={this.passwordGen}
+                        variant="outline-secondary"
+                      >
+                        GEN
+                      </Button>
+                    </InputGroup.Append>
+                  </InputGroup>
+                </div>
               </Col>
             </Row>
             <Row className="text-center" style={{ margin: "5px" }}>

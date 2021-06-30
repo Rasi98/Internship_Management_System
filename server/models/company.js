@@ -6,6 +6,7 @@ const companySchema = new Schema({
   name: { type: String },
   email: { type: String },
   address: { type: String },
+  type:{type:String},
   phone: { type: String },
   status: { type: String },
 });

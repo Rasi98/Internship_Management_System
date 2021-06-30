@@ -42,7 +42,7 @@ class userStudent extends Component {
     super(props);
 
     this.deleteStudent = this.deleteStudent.bind(this);
-    this.deleteall=this.deleteall.bind(this);
+    this.deleteall = this.deleteall.bind(this);
     this.init = this.init.bind(this);
     this.state = {
       showpopup: false,
@@ -141,7 +141,9 @@ class userStudent extends Component {
               axios.post(
                 "http://localhost:5000/student/addstudentarray",
                 studentsheet
-              );
+              ).then((res)=>{
+                console.log(res.data);
+                if(res.data.result=="success"){
               //loading msg
               let timerInterval;
               Swal.fire({
@@ -171,6 +173,8 @@ class userStudent extends Component {
                   console.log("I was closed by the timer");
                 }
               });
+                }
+              })
               //Swal.fire("Imported!", "Your data has been imported.", "success");
             });
           }
@@ -186,40 +190,33 @@ class userStudent extends Component {
   }
 
   //Delete all data
-  deleteall(){
+  deleteall() {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "All data will be deleted!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete all!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete all!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.post("http://localhost:5000/student/deleteall")
-            .then((res)=>{
-              const response=res.data;
-              if(response=="success"){
-                this.componentDidMount()
-                Swal.fire(
-                    'Deleted!',
-                    'All data has been deleted.',
-                    'success'
-                )
-              }
-              else{
-                this.componentDidMount();
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Something went wrong!',
-                })
-              }
-            })
-
+        axios.post("http://localhost:5000/student/deleteall").then((res) => {
+          const response = res.data;
+          if (response == "success") {
+            this.componentDidMount();
+            Swal.fire("Deleted!", "All data has been deleted.", "success");
+          } else {
+            this.componentDidMount();
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          }
+        });
       }
-    })
+    });
   }
 
   render() {

@@ -18,8 +18,8 @@ class Editita extends Component {
       company: "",
       username: "",
       password: "",
-      newusername:"",
-      newpassword:"",
+      // newusername:"",
+      // newpassword:"",
     };
   }
 
@@ -35,8 +35,8 @@ class Editita extends Component {
           company: Response.data.company,
           username: Response.data.username,
           password: Response.data.password,
-          newusername:Response.data.username,
-          newpassword:Response.data.password,
+          // newusername:Response.data.username,
+          // newpassword:Response.data.password,
         });
       });
   }
@@ -45,13 +45,6 @@ class Editita extends Component {
       [event.target.name]: event.target.value,
     });
   };
-  handleusernamechange=(e)=>{
-    this.setState({newusername:e.target.value})
-  }
-
-  handlepasswordchange=(e)=>{
-    this.setState({newpassword:e.target.value})
-  }
 
   handlesubmit = (e) => {
 
@@ -61,58 +54,10 @@ class Editita extends Component {
       email: this.state.email,
       company: this.state.company,
       phone: this.state.phone,
-      username: this.state.newusername,
-      password: this.state.newpassword,
+      username: this.state.username,
+      password: this.state.password,
     };
 
-    if(this.state.username!==this.state.newusername || this.state.password!==this.state.newpassword){
-      const email={
-        email:this.state.email,
-        username:this.state.newusername,
-        password:this.state.newpassword,
-      }
-
-      axios
-          .post(
-              "http://localhost:5000/ita/update/" + this.props.match.params.id,
-              ita
-          )
-          .then((res) => {
-            const response = res.data.result;
-            console.log(response);
-
-            if (response == "updated") {
-              axios.post("http://localhost:5000/ita/contactita/", email).then((res)=>{
-                console.log(res);
-              })
-              const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener("mouseenter", Swal.stopTimer);
-                  toast.addEventListener("mouseleave", Swal.resumeTimer);
-                },
-              });
-
-              Toast.fire({
-                icon: "success",
-                title: "Updated successfully",
-              });
-              window.location = "/usercontrol/ita";
-              //history.push("/company/viewcompany");
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: response,
-              });
-            }
-          });
-    }
-    else{
       axios
           .post(
               "http://localhost:5000/ita/update/" + this.props.match.params.id,
@@ -139,7 +84,8 @@ class Editita extends Component {
                 icon: "success",
                 title: "Updated successfully",
               });
-              window.location = "/usercontrol/ita";
+              this.props.history.push("/usercontrol/ita");
+
               //history.push("/company/viewcompany");
             } else {
               Swal.fire({
@@ -149,10 +95,6 @@ class Editita extends Component {
               });
             }
           });
-
-    }
-
-
   };
 
   passwordGen = () => {
@@ -161,7 +103,7 @@ class Editita extends Component {
       numbers: true,
       symbols: true,
     });
-    this.setState({ ...this.state, newpassword: genpassword });
+    this.setState({ ...this.state, password: genpassword });
   };
 
 
@@ -253,8 +195,8 @@ class Editita extends Component {
                   name="username"
                   className="form-control"
                   placeholder="Enter username"
-                  value={(this, this.state.newusername)}
-                  onChange={this.handleusernamechange}
+                  value={(this, this.state.username)}
+                  onChange={this.handlechange}
                 ></input>
               </div>
                 </Col>
@@ -267,8 +209,8 @@ class Editita extends Component {
                           type="password"
                           id="password"
                           name="password"
-                          value={this.state.newpassword}
-                          onChange={this.handlepasswordchange}
+                          value={this.state.password}
+                          onChange={this.handlechange}
                           placeholder="Password"
                           aria-label="Password"
                           aria-describedby="basic-addon2"

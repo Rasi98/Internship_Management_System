@@ -1,10 +1,12 @@
 import Student from "../models/student.js";
+import generator from "generate-password";
+import {sendMail} from "../controllers/sendcredentials.js";
 
 export const getStudent = async (req, res) => {
   try {
     const studentList = await Student.find();
-    console.log(studentList);
     res.status(200).json(studentList);
+
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -14,8 +16,11 @@ export const createstudent = async (req, res) => {
   const studentData = req.body;
   const newStudent = new Student(studentData);
   try {
-    await newStudent.save();
-    res.status(201).json({ result: "success" });
+    await newStudent.save()
+        .then(()=>{
+            sendMail(studentData.email,studentData.username,studentData.password);
+            res.status(201).json({ result: "success" });
+        })
   } catch (err) {
     res.status(409).json(err);
   }
@@ -24,16 +29,44 @@ export const createstudent = async (req, res) => {
 export const createstudentarray = async (req, res) => {
   const studentlist = req.body;
   console.log(studentlist);
-  studentlist.forEach(async (user) => {
-    var userobj = new Student(user);
-    try {
-      await userobj.save();
-      res.status(201).json({ result: "success" });
-    } catch (error) {
-      res.status(409).json(error);
-    }
-  });
+  studentlist.forEach(async (user)=> {
+      const newuser =
+          {
+              name: user.name,
+              stuno: user.stuno,
+              email: user.email,
+              dob: user.dob,
+              address: user.address,
+              mobile: user.mobile,
+              gender: user.gender,
+              username: usernameGen(),
+              password: passwordGen(),
+              role:"student",
+          }
+        var newu=new Student(newuser);
+      console.log(newu);
+        newu.save()
+          .then(() => {
+              sendMail(newuser.email,newuser.username,newuser.password);
+          })
+  })
+    res.status(201).json({ result: "success" });
 };
+
+function passwordGen() {
+  const genpassword = generator.generate({
+    length: 10,
+    numbers: true,
+    symbols: true,
+  });
+  return genpassword;
+}
+function usernameGen() {
+  const genusername = generator.generate({
+    length: 10,
+  });
+  return genusername;
+}
 
 export const deleteStudent = (req, res) => {
   Student.findByIdAndDelete(req.params.id)
@@ -41,11 +74,13 @@ export const deleteStudent = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-export const deleteall=(req,res)=>{
-    Student.db.collection("students").drop()
-    .then(()=>res.status(201).json("success"))
-        .catch((err)=>res.status(400).json("Error:"+err))
-}
+export const deleteall = (req, res) => {
+  Student.db
+    .collection("students")
+    .drop()
+    .then(() => res.status(201).json("success"))
+    .catch((err) => res.status(400).json("Error:" + err));
+};
 
 export const findstudent = (req, res) => {
   Student.findById(req.params.id)
@@ -56,6 +91,9 @@ export const findstudent = (req, res) => {
 export const studentUpdate = (req, res) => {
   Student.findById(req.params.id)
     .then((student) => {
+        if(student.username!==req.body.username || student.password!==req.body.password){
+            sendMail(req.body.email,req.body.username,req.body.password);
+        }
       student.name = req.body.name;
       student.stuno = req.body.stuno;
       student.email = req.body.email;
@@ -63,6 +101,9 @@ export const studentUpdate = (req, res) => {
       student.address = req.body.address;
       student.mobile = req.body.mobile;
       student.gender = req.body.gender;
+      student.username = req.body.username;
+      student.password = req.body.password;
+      student.role="student";
       student.allocatedCompany = req.body.allocatedCompany;
       student.allocatedITAA = req.body.allocatedITAA;
       student.selectedCompany = req.body.selectedCompany;

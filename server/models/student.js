@@ -31,6 +31,18 @@ const studentSchema = new Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+
+  },
+  password: {
+    type: String,
+
+  },
+  role:{
+    type:String,
+    required:true,
+  },
   allocatedITAA: {
     type: String,
   },

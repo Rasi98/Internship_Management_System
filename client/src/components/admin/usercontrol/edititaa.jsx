@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Navbar from "../Navbar";
 import Swal from "sweetalert2";
 import {Row, Col, Container, InputGroup, FormControl, Button} from "react-bootstrap";
 import generator from "generate-password";
+
 
 class Edititaa extends Component {
   constructor(props) {
@@ -16,8 +17,6 @@ class Edititaa extends Component {
       phone: "",
       username: "",
       password: "",
-      newusername:"",
-      newpassword:"",
     };
   }
 
@@ -31,8 +30,7 @@ class Edititaa extends Component {
           phone: Response.data.phone,
           username: Response.data.username,
           password: Response.data.password,
-          newusername:Response.data.username,
-          newpassword:Response.data.password,
+
         });
       });
   }
@@ -42,116 +40,52 @@ class Edititaa extends Component {
     });
   };
 
-  handleusernamechange=(e)=>{
-    this.setState({newusername:e.target.value})
-  }
-
-  handlepasswordchange=(e)=>{
-    this.setState({newpassword:e.target.value})
-  }
 
   handlesubmit = (e) => {
-    //const history = useHistory();
-    if(this.state.username!==this.state.newusername || this.state.password!==this.state.newpassword){
-      const itaa = {
-        name: this.state.name,
-        email: this.state.email,
-        phone: this.state.phone,
-        username: this.state.newusername,
-        password: this.state.newpassword,
-      }
-      const email={
-        email:this.state.email,
-        username:this.state.newusername,
-        password:this.state.newpassword,
-      }
-
-      axios.post(
-          "http://localhost:5000/itaa/update/" + this.props.match.params.id,
-          itaa
-      )
-          .then((res) => {
-            const response = res.data.result;
-            console.log(response);
-
-            if (response == "updated") {
-              axios.post("http://localhost:5000/itaa/contactitaa/", email).then((res)=>{
-                console.log(res);
-              })
-              const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener("mouseenter", Swal.stopTimer);
-                  toast.addEventListener("mouseleave", Swal.resumeTimer);
-                },
-              });
-
-              Toast.fire({
-                icon: "success",
-                title: "Updated successfully",
-              });
-              window.location = "/usercontrol/itaa";
-              //history.push("/company/viewcompany");
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: response,
-              });
-            }
-          });
-
-    }else{
-     const itaan = {
-        name: this.state.name,
-        email: this.state.email,
-        phone: this.state.phone,
-        username: this.state.username,
-        password: this.state.password,
-      }
-
-      axios
-          .post("http://localhost:5000/itaa/update/" + this.props.match.params.id,
-              itaan
-          )
-          .then((res) => {
-            const response = res.data.result;
-            console.log(response);
-
-            if (response == "updated") {
-
-              const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener("mouseenter", Swal.stopTimer);
-                  toast.addEventListener("mouseleave", Swal.resumeTimer);
-                },
-              });
-
-              Toast.fire({
-                icon: "success",
-                title: "Updated successfully",
-              });
-              window.location = "/usercontrol/itaa";
-              //history.push("/company/viewcompany");
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: response,
-              });
-            }
-          });
+    const itaa = {
+      name: this.state.name,
+      email: this.state.email,
+      phone: this.state.phone,
+      username: this.state.username,
+      password: this.state.password,
     }
-  };
+
+    axios.post(
+        "http://localhost:5000/itaa/update/" + this.props.match.params.id,
+        itaa
+    )
+        .then((res) => {
+          const response = res.data.result;
+          console.log(response);
+
+          if (response == "updated") {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Updated successfully",
+            });
+            this.props.history.push("/usercontrol/itaa");
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: response,
+            });
+          }
+        });
+  }
+
 
   passwordGen = () => {
     var genpassword = generator.generate({
@@ -159,7 +93,7 @@ class Edititaa extends Component {
       numbers: true,
       symbols: true,
     });
-    this.setState({ ...this.state, newpassword: genpassword });
+    this.setState({ ...this.state, password: genpassword });
   };
 
 
@@ -213,6 +147,8 @@ class Edititaa extends Component {
                     ></input>
                   </div>
                 </Col>
+              </Row>
+              <Row>
                 <Col>
                   <div className="form-group">
                     <label htmlFor="username">Username</label>
@@ -221,13 +157,11 @@ class Edititaa extends Component {
                       name="username"
                       className="form-control"
                       placeholder="Enter username"
-                      value={(this, this.state.newusername)}
-                      onChange={this.handleusernamechange}
+                      value={(this, this.state.username)}
+                      onChange={this.handlechange}
                     ></input>
                   </div>
                 </Col>
-              </Row>
-              <Row>
                 <Col>
                   <div className="form-group">
                     <label htmlFor="password">Password</label>
@@ -236,8 +170,8 @@ class Edititaa extends Component {
                           type="password"
                           id="password"
                           name="password"
-                          value={this.state.newpassword}
-                          onChange={this.handlepasswordchange}
+                          value={this.state.password}
+                          onChange={this.handlechange}
                           placeholder="Password"
                           aria-label="Password"
                           aria-describedby="basic-addon2"
@@ -248,7 +182,6 @@ class Edititaa extends Component {
                     </InputGroup>
                   </div>
                 </Col>
-                <Col></Col>
               </Row>
 
               <Row className="text-center" style={{ margin: "5px" }}>

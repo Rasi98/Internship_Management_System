@@ -1,4 +1,7 @@
 import LoginuserModel from "../models/user.js";
+import studentLogin from "../models/student.js";
+import itaLogin from "../models/ita.js";
+import itaaLogin from "../models/itaa.js";
 import bcrypt from "bcrypt";
 
 const Login = async (req, res) => {

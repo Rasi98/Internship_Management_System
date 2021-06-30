@@ -7,10 +7,8 @@ import Swal from "sweetalert2";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import "date-fns";
-import { Col, Row, Container, Form } from "react-bootstrap";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import userHrm from "./hrm";
+import {Col, Row, Container, Form, InputGroup, FormControl, Button} from "react-bootstrap";
+import generator from "generate-password";
 
 class EditStudent extends Component {
   constructor(props) {
@@ -23,6 +21,8 @@ class EditStudent extends Component {
       address: "",
       mobile: "",
       gender: "",
+      username:"",
+      password:"",
     };
   }
 
@@ -38,6 +38,8 @@ class EditStudent extends Component {
           address: Response.data.address,
           mobile: Response.data.mobile,
           gender: Response.data.gender,
+          username:Response.data.username,
+          password:Response.data.password,
         });
       });
   }
@@ -48,7 +50,6 @@ class EditStudent extends Component {
   };
 
   handlesubmit = (e) => {
-    //const history = useHistory();
     const student = {
       name: this.state.name,
       stuno: this.state.stuno,
@@ -57,6 +58,8 @@ class EditStudent extends Component {
       address: this.state.address,
       mobile: this.state.mobile,
       gender: this.state.gender,
+      username:this.state.username,
+      password:this.state.password,
     };
 
     axios
@@ -85,7 +88,8 @@ class EditStudent extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          window.location = "/usercontrol/student";
+          this.props.history.push("/usercontrol/student");
+
           //history.push("/company/viewcompany");
         } else {
           Swal.fire({
@@ -96,6 +100,16 @@ class EditStudent extends Component {
         }
       });
   };
+
+  passwordGen = () => {
+    var genpassword = generator.generate({
+      length: 10,
+      numbers: true,
+      symbols: true,
+    });
+    this.setState({ ...this.state, password: genpassword });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -215,7 +229,41 @@ class EditStudent extends Component {
                     </Form.Control>
                   </Form.Group>
                 </Col>
-                <Col></Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        className="form-control"
+                        placeholder="Enter username"
+                        value={(this, this.state.username)}
+                        onChange={this.handlechange}
+                    ></input>
+                  </div>
+                </Col>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <InputGroup className="mb-3">
+                      <FormControl
+                          type="password"
+                          id="password"
+                          name="password"
+                          value={this.state.password}
+                          onChange={this.handlechange}
+                          placeholder="Password"
+                          aria-label="Password"
+                          aria-describedby="basic-addon2"
+                      />
+                      <InputGroup.Append>
+                        <Button onClick={this.passwordGen} variant="outline-secondary">GEN</Button>
+                      </InputGroup.Append>
+                    </InputGroup>
+                  </div>
+                </Col>
               </Row>
               <Row className="text-center" style={{ margin: "5px" }}>
                 <Col>

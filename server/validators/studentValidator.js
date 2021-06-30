@@ -22,6 +22,18 @@ export const studentValidator = [
     .withMessage("Provide a valid email!")
     .normalizeEmail(),
   check("dob").not().isEmpty().withMessage("DOB is required!"),
+  check("username")
+    .not()
+    .isEmpty()
+    .withMessage("Username is required!")
+    .isLength({ min: 6 })
+    .withMessage("Username should have at least 6 characters!"),
+  check("password")
+    .not()
+    .isEmpty()
+    .withMessage("Password is required!")
+    .isLength({ min: 6 })
+    .withMessage("Password should have at least 6 characters!"),
   check("mobile")
     .trim()
     .not()

@@ -72,7 +72,8 @@ class Edititpc extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          window.location = "/usercontrol/itpc";
+          this.props.history.push("/usercontrol/itpc");
+
           //history.push("/company/viewcompany");
         } else {
           Swal.fire({

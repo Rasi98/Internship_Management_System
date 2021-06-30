@@ -5,9 +5,8 @@ import {
   addita,
   deleteita,
   updateita,
-    deleteall
+  deleteall,
 } from "../../controllers/ita.js";
-import {sendAccess} from "../../controllers/sendcredentials.js"
 import {
   itaValidator,
   itaValidatorResult,
@@ -19,7 +18,6 @@ itaRouter.get("/:id", findita);
 itaRouter.post("/addita", itaValidator, itaValidatorResult, addita);
 itaRouter.delete("/:id", deleteita);
 itaRouter.post("/update/:id", itaValidator, itaValidatorResult, updateita);
-itaRouter.post("/contactita/",sendAccess);
-itaRouter.post("/deleteall",deleteall);
+itaRouter.post("/deleteall", deleteall);
 
 export default itaRouter;

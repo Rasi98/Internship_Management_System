@@ -77,7 +77,8 @@ class Edithrm extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          window.location = "/usercontrol/hrm";
+          this.props.history.push("/usercontrol/hrm");
+
           //history.push("/company/viewcompany");
         } else {
           Swal.fire({

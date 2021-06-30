@@ -4,7 +4,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import Swal from "sweetalert2";
-//import { useHistory } from "react-router-dom";
+import {Form,Container,Row,Col} from "react-bootstrap";
+
 
 class Editcompany extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Editcompany extends Component {
       email: "",
       address: "",
       phone: "",
+      type:"",
     };
   }
 
@@ -26,6 +28,7 @@ class Editcompany extends Component {
           email: Response.data.email,
           address: Response.data.address,
           phone: Response.data.phone,
+          type:Response.data.type,
         });
       });
   }
@@ -42,6 +45,9 @@ class Editcompany extends Component {
   handlephonechange = (e) => {
     this.setState({ phone: e.target.value });
   };
+  handletypechange=(e)=>{
+    this.setState({type:e.target.value});
+  }
 
   handlesubmit = (e) => {
     //const history = useHistory();
@@ -50,6 +56,7 @@ class Editcompany extends Component {
       email: this.state.email,
       address: this.state.address,
       phone: this.state.phone,
+      type:this.state.type,
     };
 
     axios
@@ -77,7 +84,7 @@ class Editcompany extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          window.location = "/company/viewcompany";
+          this.props.history.push("/company/viewcompany");
           //history.push("/company/viewcompany");
         } else {
           Swal.fire({
@@ -94,62 +101,104 @@ class Editcompany extends Component {
         <Navbar></Navbar>
         <div className="container mt-4">
           <h3 className="text-center">Edit company</h3>
-          <form>
-            <div className="col-5">
-              <div className="form-group">
-                <label htmlFor="companyname">Company name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter company name"
-                  value={(this, this.state.name)}
-                  onChange={this.handlenamechange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="companyemail">Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Enter company email"
-                  value={(this, this.state.email)}
-                  onChange={this.handleemailchange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="companyaddress">Address</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter company address"
-                  value={(this, this.state.address)}
-                  onChange={this.handleaddresschange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="companymobile">Phone No</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  placeholder="Enter phone no."
-                  value={(this, this.state.phone)}
-                  onChange={this.handlephonechange}
-                ></input>
-              </div>
-              <button
-                type="button"
-                className="btn btn-primary btn-lg btn-block"
-                onClick={this.handlesubmit}
-              >
-                Update
-              </button>
-              <Link
-                to={"/company/viewcompany"}
-                className="btn btn-outline-secondary btn-lg btn-block"
-              >
-                Back
-              </Link>
-            </div>
+          <form className="border" style={{ borderRadius: "10px" }}>
+            <Container style={{ padding: "15px" }}>
+              <Row>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="companyname">Company name</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter company name"
+                        value={(this, this.state.name)}
+                        onChange={this.handlenamechange}
+                    ></input>
+                  </div>
+                </Col>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="companyemail">Email</label>
+                    <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Enter company email"
+                        value={(this, this.state.email)}
+                        onChange={this.handleemailchange}
+                    ></input>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="companyaddress">Address</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter company address"
+                        value={(this, this.state.address)}
+                        onChange={this.handleaddresschange}
+                    ></input>
+                  </div>
+                </Col>
+                <Col>
+                  <div className="form-group">
+                    <label htmlFor="companymobile">Phone No</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Enter phone no."
+                        value={(this, this.state.phone)}
+                        onChange={this.handlephonechange}
+                    ></input>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <div className="form-group">
+                    <Form.Group controlId="exampleForm.SelectCustom">
+                      <Form.Label>Company Type</Form.Label>
+                      <Form.Control
+                          as="select"
+                          custom
+                          value={this.state.type}
+                          onChange={this.handletypechange}
+                          name="type"
+                      >
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <option value={"IT"}>IT</option>
+                        <option value={"Management"}>Management</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="text-center" style={{ margin: "5px" }}>
+                <Col>
+                  <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={this.handlesubmit}
+                      style={{ width: "40%" }}
+                  >
+                    Update
+                  </button>
+                </Col>
+              </Row>
+              <Row className="text-center" style={{ margin: "5px" }}>
+                <Col>
+                  <Link
+                      to={"/company/viewcompany"}
+                      className="btn btn-outline-secondary btn-sm"
+                      style={{ width: "40%" }}
+                  >
+                    Back
+                  </Link>
+                </Col>
+              </Row>
+            </Container>
           </form>
         </div>
       </React.Fragment>

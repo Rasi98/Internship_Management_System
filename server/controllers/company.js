@@ -42,6 +42,7 @@ export const companyUpdate = (req, res) => {
       company.name = req.body.name;
       company.email = req.body.email;
       company.address = req.body.address;
+      company.type=req.body.type;
       company.phone = req.body.phone;
       company.status = req.body.status;
 
@@ -50,5 +51,5 @@ export const companyUpdate = (req, res) => {
         .then(() => res.json({ result: "success" }))
         .catch((err) => res.status(400).json(err));
     })
-    .catch((err) => res.status(400).json("Error:" + err));
+    .catch((error) => res.status(400).json("Error:" + error));
 };

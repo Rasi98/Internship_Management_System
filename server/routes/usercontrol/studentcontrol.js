@@ -6,7 +6,7 @@ import {
   studentUpdate,
   findstudent,
   createstudentarray,
-  deleteall
+  deleteall,
 } from "../../controllers/student.js";
 import {
   studentValidator,
@@ -30,6 +30,6 @@ studentRouter.post(
   studentValidatorResult,
   studentUpdate
 );
-studentRouter.post("/deleteall",deleteall);
+studentRouter.post("/deleteall", deleteall);
 
 export default studentRouter;

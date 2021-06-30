@@ -1,4 +1,5 @@
 import ITA from "../models/ita.js";
+import {sendMail} from "../controllers/sendcredentials.js";
 
 export const getita = async (req, res) => {
   try {
@@ -14,8 +15,11 @@ export const addita = async (req, res) => {
   const itaData = req.body;
   const newita = new ITA(itaData);
   try {
-    await newita.save();
-    res.status(201).json({ result: "success" });
+          await newita.save()
+              .then(()=>{
+                  sendMail(itaData.email,itaData.username,itaData.password);
+                  res.status(201).json({ result: "success" });
+              })
   } catch (error) {
     res.status(409).json(error);
   }
@@ -42,8 +46,12 @@ export const deleteita = (req, res) => {
 export const updateita = (req, res) => {
   ITA.findById(req.params.id)
     .then((ita) => {
+        if(ita.username!==req.body.username || ita.password!==req.body.password){
+            sendMail(req.body.email,req.body.username,req.body.password);
+        }
       ita.username = req.body.username;
       ita.password = req.body.password;
+      ita.role="ita";
       ita.name = req.body.name;
       ita.designation=req.body.designation;
       ita.email = req.body.email;
