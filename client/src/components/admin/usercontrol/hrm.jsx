@@ -17,7 +17,7 @@ const HRM = (props) => (
     <td>{props.hrm.department}</td>
     <td>
       <Link
-        to={"/usercontrol/hrm/edit/" + props.hrm._id}>
+        to={"/admin/usercontrol/hrm/edit/" + props.hrm._id}>
         <Button className="btn-secondary m-1 btn-sm" style={{ width: "60px" }}>
           Edit
         </Button>

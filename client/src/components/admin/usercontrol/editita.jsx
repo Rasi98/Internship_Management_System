@@ -84,7 +84,7 @@ class Editita extends Component {
                 icon: "success",
                 title: "Updated successfully",
               });
-              this.props.history.push("/usercontrol/ita");
+              this.props.history.push("/admin/usercontrol/ita");
 
               //history.push("/company/viewcompany");
             } else {
@@ -237,7 +237,7 @@ class Editita extends Component {
               <Row className="text-center" style={{ margin: "5px" }}>
                 <Col>
               <Link
-                to={"/usercontrol/ita"}
+                to={"/admin/usercontrol/ita"}
                 className="btn btn-outline-secondary btn-sm"
                 style={{ width: "40%" }}
               >

@@ -88,7 +88,7 @@ class EditStudent extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          this.props.history.push("/usercontrol/student");
+          this.props.history.push("/admin/usercontrol/student");
 
           //history.push("/company/viewcompany");
         } else {
@@ -280,7 +280,7 @@ class EditStudent extends Component {
               <Row className="text-center" style={{ margin: "5px" }}>
                 <Col>
                   <Link
-                    to={"/usercontrol/student"}
+                    to={"/admin/usercontrol/student"}
                     className="btn btn-outline-secondary btn-sm"
                     style={{ width: "40%" }}
                   >

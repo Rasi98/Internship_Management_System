@@ -29,7 +29,7 @@ const Itpc = (props) => (
       <ListGroupItem>Password : {props.itpc.password}</ListGroupItem>
     </ListGroup>
     <Link
-      to={"/usercontrol/itpc/edit/" + props.itpc._id}
+      to={"/admin/usercontrol/itpc/edit/" + props.itpc._id}
       className="btn btn-info m-1"
     >
       Edit

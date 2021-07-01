@@ -18,7 +18,7 @@ const Student = (props) => (
     <td>{props.student.mobile}</td>
     <td>{props.student.gender}</td>
     <td>
-      <Link to={"/usercontrol/student/edit/" + props.student._id}>
+      <Link to={"/admin/usercontrol/student/edit/" + props.student._id}>
         <Button className="btn-secondary m-1 btn-sm" style={{ width: "60px" }}>
           Edit
         </Button>

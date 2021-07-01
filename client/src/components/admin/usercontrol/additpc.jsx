@@ -53,7 +53,7 @@ class Additpc extends Component {
           title: "ITPC added successfully",
         });
         //this.props.history.push("/usercontrol/itpc");
-        window.location="/usercontrol/itpc";
+        window.location="/admin/usercontrol/itpc";
       } else {
         //alert("Error occured !");
         Swal.fire({

@@ -44,7 +44,7 @@ export const companyUpdate = (req, res) => {
       company.address = req.body.address;
       company.type=req.body.type;
       company.phone = req.body.phone;
-      company.status = req.body.status;
+
 
       company
         .save()

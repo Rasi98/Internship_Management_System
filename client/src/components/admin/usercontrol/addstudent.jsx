@@ -100,7 +100,7 @@ class Addstudent extends Component {
             title: "Student added successfully",
           });
           //this.props.history.push("/usercontrol/student");
-          window.location="/usercontrol/student"
+          window.location="/admin/usercontrol/student"
         } else {
           Swal.fire({
             icon: "error",

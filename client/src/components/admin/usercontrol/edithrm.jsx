@@ -77,7 +77,7 @@ class Edithrm extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          this.props.history.push("/usercontrol/hrm");
+          this.props.history.push("/admin/usercontrol/hrm");
 
           //history.push("/company/viewcompany");
         } else {
@@ -196,7 +196,7 @@ class Edithrm extends Component {
               <Row className="text-center" style={{ margin: "5px" }}>
                 <Col>
                   <Link
-                      to={"/usercontrol/hrm"}
+                      to={"/admin/usercontrol/hrm"}
                       className="btn btn-outline-secondary btn-sm"
                       style={{ width: "40%" }}
                   >

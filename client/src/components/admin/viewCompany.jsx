@@ -15,7 +15,7 @@ const Company = (props) => (
     <td>{props.company.phone}</td>
     <td>
       <Link
-        to={"/company/edit/" + props.company._id}
+        to={"/admin/company/edit/" + props.company._id}
       >
         <Button className="btn-secondary m-1 btn-sm" style={{ width: "60px" }}>
           Edit

@@ -49,11 +49,21 @@ const studentSchema = new Schema({
   },
   selectedCompany: {
     type: String,
-  },
-  interviewCount: {
-    type: String,
     default:"",
   },
+  interviewCount: {
+    type: Number,
+    default:0,
+  },
+  staffInterview:{
+    type:String,
+    default:"Pending",
+  },
+
+  staffintmarks:{
+    type:String,
+    default:"Pending",
+  }
 });
 
 const Student = mongoose.model("student", studentSchema);

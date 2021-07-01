@@ -17,7 +17,7 @@ const ITA = (props) => (
     <td>{props.ita.username}</td>
     <td>
       <Link
-        to={"/usercontrol/ita/edit/" + props.ita._id}
+        to={"/admin/usercontrol/ita/edit/" + props.ita._id}
       >
         <Button className="btn-secondary m-1 btn-sm" style={{ width: "60px" }}>
           Edit

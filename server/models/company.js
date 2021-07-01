@@ -8,7 +8,6 @@ const companySchema = new Schema({
   address: { type: String },
   type:{type:String},
   phone: { type: String },
-  status: { type: String },
 });
 
 const companyModel = mongoose.model("company", companySchema);

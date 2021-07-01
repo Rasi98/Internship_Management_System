@@ -14,7 +14,7 @@ const ITAA = (props) => (
     <td>{props.itaa.phone}</td>
     <td>{props.itaa.username}</td>
     <td>
-      <Link to={"/usercontrol/itaa/edit/" + props.itaa._id}>
+      <Link to={"/admin/usercontrol/itaa/edit/" + props.itaa._id}>
         <Button className="btn-secondary m-1 btn-sm" style={{ width: "60px" }}>
           Edit
         </Button>

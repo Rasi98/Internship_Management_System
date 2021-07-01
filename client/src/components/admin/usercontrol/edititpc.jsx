@@ -72,7 +72,7 @@ class Edititpc extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          this.props.history.push("/usercontrol/itpc");
+          this.props.history.push("/admin/usercontrol/itpc");
 
           //history.push("/company/viewcompany");
         } else {
@@ -155,7 +155,7 @@ class Edititpc extends Component {
                 Update
               </button>
               <Link
-                to={"/usercontrol/itpc"}
+                to={"/admin/usercontrol/itpc"}
                 className="btn btn-outline-secondary btn-lg btn-block"
               >
                 Back

@@ -85,7 +85,7 @@ class Editcompany extends Component {
             title: "Updated successfully",
           });
           //this.props.history.push("/company/viewcompany");
-          window.location="/company/viewcompany";
+          window.location="/admin/company/viewcompany";
           //history.push("/company/viewcompany");
         } else {
           Swal.fire({
@@ -191,7 +191,7 @@ class Editcompany extends Component {
               <Row className="text-center" style={{ margin: "5px" }}>
                 <Col>
                   <Link
-                      to={"/company/viewcompany"}
+                      to={"/admin/company/viewcompany"}
                       className="btn btn-outline-secondary btn-sm"
                       style={{ width: "40%" }}
                   >

@@ -29,50 +29,55 @@ class AdminNavbar extends Component {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <NavDropdown title="USERS" id="collasible-nav-dropdown">
-              <LinkContainer to="/usercontrol/student">
+              <LinkContainer to="/admin/usercontrol/student">
                 <NavDropdown.Item>STUDENT</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/usercontrol/itaa">
+              <LinkContainer to="/admin/usercontrol/itaa">
                 <NavDropdown.Item>ITAA</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/usercontrol/ita">
+              <LinkContainer to="/admin/usercontrol/ita">
                 <NavDropdown.Item>ITA</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/usercontrol/hrm">
+              <LinkContainer to="/admin/usercontrol/hrm">
                 <NavDropdown.Item>HRM</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/usercontrol/itpc">
+              <LinkContainer to="/admin/usercontrol/itpc">
                 <NavDropdown.Item>ITPC</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
-            <LinkContainer to="/studentprofile/lakshan@gmail.com">
-              <Nav.Link>STUDENT PROFILES</Nav.Link>
+            <LinkContainer to="/admin/studentprofile/lakshan@gmail.com">
+              <Nav.Link>STUDENT CV</Nav.Link>
             </LinkContainer>
+            <NavDropdown title="INTERVIEW" id="collasible-nav-dropdown">
+              <LinkContainer to="/admin/interview/staffinterview">
+                <NavDropdown.Item>STAFF</NavDropdown.Item>
+              </LinkContainer>
+            </NavDropdown>
             <NavDropdown title="COMPANY" id="collasible-nav-dropdown">
-              <LinkContainer to="/company/addcompany">
+              <LinkContainer to="/admin/company/addcompany">
                 <NavDropdown.Item>ADD</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/company/viewcompany">
+              <LinkContainer to="/admin/company/viewcompany">
                 <NavDropdown.Item>VIEW</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/company/contact">
+              <LinkContainer to="/admin/company/contact">
                 <NavDropdown.Item>CONTACT</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
             <NavDropdown title="ALLOCATE" id="collasible-nav-dropdown">
-              <LinkContainer to="/allocate/company">
+              <LinkContainer to="/admin/allocate/company">
                 <NavDropdown.Item>COMPANY</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/allocate/itaa">
+              <LinkContainer to="/admin/allocate/itaa">
                 <NavDropdown.Item>ITAA</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
-            <LinkContainer to="/report">
+            <LinkContainer to="/admin/report">
               <Nav.Link>REPORTS</Nav.Link>
             </LinkContainer>
           </Nav>
           <Nav>
-            <LinkContainer to="/usercontrol/itpc">
+            <LinkContainer to="/admin/usercontrol/itpc">
               <Nav.Link>ADMINISTRATOR</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/">

@@ -107,10 +107,6 @@ export const studentUpdate = (req, res) => {
       student.username = req.body.username;
       student.password = req.body.password;
       student.role="student";
-      student.allocatedCompany = req.body.allocatedCompany;
-      student.allocatedITAA = req.body.allocatedITAA;
-      student.selectedCompany = req.body.selectedCompany;
-      student.interviewCount = req.body.gender;
 
       student
         .save()
@@ -119,3 +115,17 @@ export const studentUpdate = (req, res) => {
     })
     .catch((err) => res.status(400).json("Error:" + err));
 };
+
+//Add staff interview marks | obj{stuid,mark} | success res=> "updated"
+export const intMarks=(req,res)=>{
+    Student.findByIdAndUpdate(req.body.stuid,{staffintmarks:req.body.mark},function (err,docs) {
+        if(err) res.json(err)
+        else res.json("updated")
+    })
+}
+export const staffInterview=(req,res)=> {
+    Student.findByIdAndUpdate(req.params.stuid, {staffInterview: "Completed"}, function (err) {
+        if (err) res.json(err)
+        else res.json("updated")
+    })
+}

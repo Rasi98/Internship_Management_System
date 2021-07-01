@@ -76,7 +76,7 @@ class Addita extends Component {
           title: "ITA added successfully",
         });
         //this.props.history.push("/usercontrol/ita");
-        window.location="/usercontrol/ita";
+        window.location="/admin/usercontrol/ita";
       } else {
         //alert("Error occured !");
         Swal.fire({

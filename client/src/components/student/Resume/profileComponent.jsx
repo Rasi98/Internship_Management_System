@@ -1155,7 +1155,7 @@ class ProfileComponent extends Component {
                 <Col xs={2}>
                   <LinkContainer
                     id="preview"
-                    to={"/preview/" + this.state.email}
+                    to={"/student/preview/" + this.state.email}
                   >
                     <Button
                       disabled={this.state.disable}

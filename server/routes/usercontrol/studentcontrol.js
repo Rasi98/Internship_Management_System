@@ -6,7 +6,7 @@ import {
   studentUpdate,
   findstudent,
   createstudentarray,
-  deleteall,
+  deleteall, intMarks, staffInterview,
 } from "../../controllers/student.js";
 import {
   studentValidator,
@@ -33,5 +33,7 @@ studentRouter.post(
 );
 studentRouter.post("/deleteall", deleteall);
 studentRouter.post("/allocateitaa",allocateItaa)
+studentRouter.post("/staffintmark",intMarks)
+studentRouter.post("/staffinterview/:stuid",staffInterview)
 
 export default studentRouter;

@@ -27,13 +27,13 @@ class Navbarstd extends Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <LinkContainer to="/profile">
+            <LinkContainer to="/student/profile">
               <Nav.Link>PROFILE</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/interview">
+            <LinkContainer to="/student/interview">
               <Nav.Link>INTERVIEW</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/internship">
+            <LinkContainer to="/student/internship">
               <Nav.Link>INTERNSHIP</Nav.Link>
             </LinkContainer>
           </Nav>

@@ -75,7 +75,7 @@ class Edititaa extends Component {
               icon: "success",
               title: "Updated successfully",
             });
-            this.props.history.push("/usercontrol/itaa");
+            this.props.history.push("/admin/usercontrol/itaa");
           } else {
             Swal.fire({
               icon: "error",
@@ -199,7 +199,7 @@ class Edititaa extends Component {
               <Row className="text-center" style={{ margin: "5px" }}>
                 <Col>
                   <Link
-                      to={"/usercontrol/itaa"}
+                      to={"/admin/usercontrol/itaa"}
                       className="btn btn-outline-secondary btn-sm"
                       style={{ width: "40%" }}
                   >
