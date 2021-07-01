@@ -45,12 +45,14 @@ const studentSchema = new Schema({
   },
   allocatedITAA: {
     type: String,
+    default:"",
   },
   selectedCompany: {
     type: String,
   },
   interviewCount: {
     type: String,
+    default:"",
   },
 });
 

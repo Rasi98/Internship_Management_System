@@ -11,16 +11,16 @@ export const allocateCompany=async (req,res)=>{
             try{
                await allocateobj.save()
                     .then(() => {
-                        res.json("allocated");
+                        res.status(200).json({result:"allocated"});
                     })
             }
         catch (err){
-            res.json(err);
+            res.status(404).json({message:err.message});
 
         }
     }
     else {
-        res.status(201).json("Already allocated!")
+        res.status(201).json({result:"Already allocated!"})
     }
 
 
@@ -50,11 +50,12 @@ export const setStatus=async(req,res)=>{
 }
 
 export const deletecompany=(req,res)=>{
-    Allocate.findOneAndRemove({student:req.body.studentid,company:req.body.companyid})
+    console.log(req.params.id)
+    Allocate.findByIdAndDelete(req.params.id)
         .then(()=>{
-            res.json("deleted");
+            res.status(200).json({result:"deleted"});
         })
         .catch((err)=>{
-            res.json(err)
+            res.status(400).json(err)
         })
 }

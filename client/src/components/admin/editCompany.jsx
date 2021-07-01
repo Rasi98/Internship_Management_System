@@ -84,7 +84,8 @@ class Editcompany extends Component {
             icon: "success",
             title: "Updated successfully",
           });
-          this.props.history.push("/company/viewcompany");
+          //this.props.history.push("/company/viewcompany");
+          window.location="/company/viewcompany";
           //history.push("/company/viewcompany");
         } else {
           Swal.fire({

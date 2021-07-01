@@ -99,8 +99,8 @@ class Addstudent extends Component {
             icon: "success",
             title: "Student added successfully",
           });
-          this.props.history.push("/usercontrol/student");
-
+          //this.props.history.push("/usercontrol/student");
+          window.location="/usercontrol/student"
         } else {
           Swal.fire({
             icon: "error",

@@ -12,6 +12,7 @@ import {
   studentValidator,
   studentValidatorResult,
 } from "../../validators/studentValidator.js";
+import {allocateItaa} from "../../controllers/allocateitaa.js";
 const studentRouter = express.Router();
 
 studentRouter.get("/", getStudent);
@@ -31,5 +32,6 @@ studentRouter.post(
   studentUpdate
 );
 studentRouter.post("/deleteall", deleteall);
+studentRouter.post("/allocateitaa",allocateItaa)
 
 export default studentRouter;

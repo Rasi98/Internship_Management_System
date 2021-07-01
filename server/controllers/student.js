@@ -1,4 +1,5 @@
-import Student from "../models/student.js";
+import Student from "../models/student.js"
+import Allocatecompany from "../models/allocated.js"
 import generator from "generate-password";
 import {sendMail} from "../controllers/sendcredentials.js";
 
@@ -80,6 +81,8 @@ export const deleteall = (req, res) => {
     .drop()
     .then(() => res.status(201).json("success"))
     .catch((err) => res.status(400).json("Error:" + err));
+  Allocatecompany.db.collection("allocations")
+      .drop()
 };
 
 export const findstudent = (req, res) => {

@@ -6,6 +6,6 @@ const companyAllocate=express.Router();
 companyAllocate.post("/add",allocateCompany);
 companyAllocate.get("/:studentid",getAllocate)
 companyAllocate.post("/status",setStatus);
-companyAllocate.post("/deletecompany",deletecompany);
+companyAllocate.delete("/deletecompany/:id",deletecompany);
 
 export  default companyAllocate;

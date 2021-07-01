@@ -3,6 +3,9 @@ import Navbar from "./Navbar";
 import {Container, Row, Col, ListGroup, Button, Form} from "react-bootstrap";
 import axios from "axios";
 import AllocateCompanyModel from "./allocateCompanymodel";
+import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Student=(props)=>(
     <ListGroup.Item action onClick={() =>  props.setSelectedStudent(props.student)}>
@@ -14,35 +17,48 @@ const Student=(props)=>(
 class allocateCompany extends Component {
     constructor(props) {
         super(props);
+        this.deleteCompany = this.deleteCompany.bind(this);
+        this.setSelectedStudent=this.setSelectedStudent.bind(this);
         this.state={
             studentList:[],
             allocatedcompany:[],
             selectedStudent: {},
+            selestudentid:"",
             showpopup: false,
+            stuname:""
+
         }
     }
     setSelectedStudent = (stu) => {
-
+        this.setState({selestudentid:stu._id,stuname:stu.name})
         axios.get(`http://localhost:5000/companyallocate/${stu._id}`)
             .then((res)=>{
                 this.setState({
                     allocatedcompany: []
                 })
-                res.data.forEach(a => {
-                    let preAll = this.state.allocatedcompany
-                    let allocated = {
-                        id: a._id,
-                        name: a.company.name,
-                        student_id:a.student._id,
-                        company_id: a.company._id,
-                        status: a.status
-                    }
-                    preAll.push(allocated)
-                    this.setState({
-                        allocateCompany: preAll
-                    })
-                })
+                console.log(res);
+                if(res.data.length===0) {
+                    document.getElementById("notice").innerText = "No Placements";
+                }
+                else {
+                    res.data.forEach(a => {
+                        let preAll = this.state.allocatedcompany
+                        let allocated = {
+                            id: a._id,
+                            name: a.company.name,
+                            stuname:a.student.name,
+                            student_id: a.student._id,
+                            company_id: a.company._id,
+                            status: a.status
+                        }
+                        preAll.push(allocated)
+                        this.setState({
+                            allocateCompany: preAll
+                        })
+                        document.getElementById("notice").innerText= a.student.name;
 
+                    })
+                }
             })
             .catch((error)=>{
                 console.log(error);
@@ -63,6 +79,29 @@ class allocateCompany extends Component {
 
  }
 
+    deleteCompany=(id,stuid)=> {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire("Deleted!", "Your item has been deleted.", "success");
+                axios
+                    .delete("http://localhost:5000/companyallocate/deletecompany/" + id)
+                    .then((res) => console.log(res.data));
+                // this.setState({
+                //     allocatedcompany: this.state.allocatedcompany.filter((el) => el._id !== id),
+                // });
+                this.setSelectedStudent(stuid);
+            }
+        });
+    }
+
     studentList() {
         return this.state.studentList.map((currentstudent) => {
             return (
@@ -75,6 +114,25 @@ class allocateCompany extends Component {
             );
         });
     }
+
+    colorchange(state){
+        if(state==="allocate")
+          return "#A3E4D7"
+        if(state==="cvsent")
+            return "#FAD7A0"
+        if(state==="shortlisted")
+            return "#82E0AA"
+        if(state==="interviewed")
+            return "#85C1E9 "
+        if(state==="notselected")
+            return "#F1948A "
+        if(state==="paused")
+            return "#AEB6BF"
+        if(state==="stopped")
+            return "#D2B4DE "
+    }
+
+
 
 
     render() {
@@ -109,17 +167,26 @@ class allocateCompany extends Component {
                           </Col>
                       </Row>
                   </Container>
-                  <Col className="mt-1 mb-1"  sm={4}>
-                      <ListGroup defaultActiveKey="#link1" style={{padding:"3px",borderRadius:"10px",overflowY:"scroll",maxHeight:"400px"}}>
+                  <Col className="mt-1 mb-1" style={{overflowY:"scroll",maxHeight:"400px"}}  sm={4}>
+                      <ListGroup  style={{padding:"3px",borderRadius:"10px"}}>
                           {this.studentList()}
                       </ListGroup>
                   </Col>
-                  <Col className="border mt-1 mb-1" style={{borderRadius:"10px"}}  sm={8}>
+                  <Col className="border mt-1 mb-1" style={{borderRadius:"10px",overflowY:"scroll",maxHeight:"400px"}}  sm={8}>
+                      <h5 className="text-center" id="notice"></h5>
                       {this.state.allocatedcompany && this.state.allocatedcompany.map((c) =>{ return(
-                      <Container className="border m-2" style={{borderRadius:"10px",height:"auto"}}>
+                      <Container className="border m-2" style={{borderRadius:"10px",height:"auto", backgroundColor:this.colorchange(c.status)}}>
+
                           <Row className="m-1">
                               <Col>
-                                  {c.name}-{c.company_id}--{c.student_id}
+                                  <h5>{c.name}</h5>
+                              </Col>
+                              <Col >
+                                  <Button className="btn-danger" style={{float:"right",marginTop:"3px"}} onClick={()=>this.deleteCompany(c.id,c.student_id)}>
+                                  <FontAwesomeIcon
+                                      icon={faTrash}
+                                  />
+                                  </Button>
                               </Col>
                           </Row>
                           <Row className="m-1">
@@ -135,13 +202,12 @@ class allocateCompany extends Component {
                                   </div>
                               </Form>
                           </Row>
-                          <AllocateCompanyModel data={c.student_id} show={this.state.showpopup} onHide={popupclose}/>
                       </Container>
                           )})}
                   </Col>
               </Row>
           </Container>
-
+                <AllocateCompanyModel data={this.state.selestudentid} stuname={this.state.stuname}  show={this.state.showpopup} onHide={popupclose}/>
             </div>
       </React.Fragment>
 

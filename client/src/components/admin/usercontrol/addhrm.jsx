@@ -58,7 +58,8 @@ class Addhrm extends Component {
           icon: "success",
           title: "HRM added successfully",
         });
-        this.props.history.push("/usercontrol/hrm");
+        //this.props.history.push("/usercontrol/hrm");
+        window.location="/usercontrol/hrm";
       } else {
         //alert("Error occured !");
         Swal.fire({

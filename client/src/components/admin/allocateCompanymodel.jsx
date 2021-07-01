@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import {Button, Col, Container, Form, Modal, Row} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {faBuilding} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Options=(props)=>(
         <option>{props.company.name}</option>
@@ -11,23 +12,20 @@ const Options=(props)=>(
 class AllocateCompanyModel extends Component{
     constructor(props) {
         super(props);
+        this.Allocate=this.Allocate.bind(this);
+        this.handlechange=this.handlechange.bind(this);
         this.state={
             comapnyList:[],
-            studentID:this.props.data,
+            stuname:"",
+            comname:"",
+            studentID:"",
             companyID:""
         }
     }
 
-    Allocate(){
-        const allocateobj={
-            studentid:this.state.studentID,
-            companyid:this.state.companyID,
-        }
-
-        axios.post("http://localhost:5000/companyallocate/add",allocateobj)
-            .then((res)=>{
-                console.log(res);
-            })
+    componentWillReceiveProps() {
+        this.setState({studentID:this.props.data})
+        this.setState({stuname:this.props.stuname})
     }
 
     componentDidMount() {
@@ -35,6 +33,7 @@ class AllocateCompanyModel extends Component{
             .then((res)=>{
                 this.setState({comapnyList:res.data})
                 console.log(this.state.comapnyList);
+                this.setState({companyID:this.state.comapnyList[0]._id})
             })
             .catch((err)=>{
                 console.log(err);
@@ -52,9 +51,61 @@ class AllocateCompanyModel extends Component{
         });
     }
 
+    Dropdownlist(){
+        return this.state.comapnyList.map((com)=>{
+            return(
+                <option value={com._id}>{com.name}</option>
+
+            )
+        })
+    }
+    Allocate=(e)=>{
+        const allocateobj={
+            studentid:this.state.studentID,
+            companyid:this.state.companyID,
+        }
+
+        axios.post("http://localhost:5000/companyallocate/add",allocateobj)
+            .then((res)=>{
+                console.log(res.data);
+
+                if(res.data.result==="allocated"){
+                    //move back to list
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Allocated successfully'
+                    })
+                }
+                if(res.data.result==="Already allocated!") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Already allocated!',
+                    })
+                }
+            })
+    }
+
+
     handlechange=(e)=>{
         this.setState({companyID:e.target.value})
         console.log("comID"+this.state.companyID);
+        const com = document.getElementById("drop");
+        const strUser = com.options[com.selectedIndex].text;
+        this.setState({comname:strUser})
+        console.log(this.state.comname)
     }
 
 
@@ -69,23 +120,17 @@ class AllocateCompanyModel extends Component{
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter"><FontAwesomeIcon
-                        icon={faUserPlus}
+                        icon={faBuilding}
                         style={{ marginRight: "10px" }}
                     />Allocate a company</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h1>{this.props.data}</h1>
-                    <h1>{this.state.companyID}</h1>
+                    <h5>{this.state.stuname}=>{this.state.comname}</h5>
                     <Form>
                         <Form.Group controlId="exampleForm.SelectCustom">
-                            <Form.Label>Custom select</Form.Label>
-
-                                <select value={this.state.companyID} onChange={this.handlechange}>
-                                    {this.state.comapnyList.map((option)=>(
-                                        <option value={option._id}>{option.name}</option>
-                                        )
-                                    )
-                                    }
+                            <Form.Label>Select company</Form.Label>
+                                <select  className="form-control" id="drop" value={this.state.companyID} onChange={this.handlechange}>
+                                    {this.Dropdownlist()}
                                 </select>
 
                         </Form.Group>
