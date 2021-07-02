@@ -59,7 +59,10 @@ const studentSchema = new Schema({
     type:String,
     default:"Pending",
   },
-
+  staffintemail:{
+    type:Boolean,
+    default:false
+  },
   staffintmarks:{
     type:String,
     default:"Pending",

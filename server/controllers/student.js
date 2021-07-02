@@ -1,7 +1,7 @@
 import Student from "../models/student.js"
 import Allocatecompany from "../models/allocated.js"
 import generator from "generate-password";
-import {sendMail} from "../controllers/sendcredentials.js";
+import {sendMail,Staffinteviewemail} from "../controllers/sendcredentials.js";
 
 export const getStudent = async (req, res) => {
   try {
@@ -31,7 +31,7 @@ export const createstudentarray = async (req, res) => {
   const studentlist = req.body;
   console.log(studentlist);
   studentlist.forEach(async (user)=> {
-      const newuser =
+     const newuser =
           {
               name: user.name,
               stuno: user.stuno,
@@ -128,4 +128,19 @@ export const staffInterview=(req,res)=> {
         if (err) res.json(err)
         else res.json("updated")
     })
+}
+export const staffinterviewupdate=(req,res)=>{
+    const updatedList=req.body;
+    console.log(updatedList)
+    const successmsg="Congratulations...!!!, You have successfully completed staff interview."
+   updatedList.forEach(async(item)=>{
+      await Student.findOneAndUpdate({_id: item.id},{staffInterview:item.interview,staffintmarks:item.staffintmarks},{new:true},(err,docs)=>{
+          if(err) console.log(err)
+          else {
+              console.log(docs)
+
+          }
+      })
+   })
+    res.status(200).json("updated")
 }
