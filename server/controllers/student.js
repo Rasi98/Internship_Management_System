@@ -117,18 +117,18 @@ export const studentUpdate = (req, res) => {
 };
 
 //Add staff interview marks | obj{stuid,mark} | success res=> "updated"
-export const intMarks=(req,res)=>{
-    Student.findByIdAndUpdate(req.body.stuid,{staffintmarks:req.body.mark},function (err,docs) {
-        if(err) res.json(err)
-        else res.json("updated")
-    })
-}
-export const staffInterview=(req,res)=> {
-    Student.findByIdAndUpdate(req.params.stuid, {staffInterview: "Completed"}, function (err) {
-        if (err) res.json(err)
-        else res.json("updated")
-    })
-}
+// export const intMarks=(req,res)=>{
+//     Student.findByIdAndUpdate(req.body.stuid,{staffintmarks:req.body.mark},function (err,docs) {
+//         if(err) res.json(err)
+//         else res.json("updated")
+//     })
+// }
+// export const staffInterview=(req,res)=> {
+//     Student.findByIdAndUpdate(req.params.stuid, {staffInterview: "Completed"}, function (err) {
+//         if (err) res.json(err)
+//         else res.json("updated")
+//     })
+// }
 export const staffinterviewupdate=(req,res)=>{
     const updatedList=req.body;
     console.log(updatedList)
@@ -141,6 +141,14 @@ export const staffinterviewupdate=(req,res)=>{
 
           }
       })
+       if(item.interview==="Completed"){
+           const stu=await Student.findById(item.id)
+           if(stu.staffintemail===false){
+               Staffinteviewemail(item.email,successmsg);
+               stu.staffintemail=true
+               await stu.save();
+           }
+       }
    })
     res.status(200).json("updated")
 }

@@ -50,8 +50,8 @@ export const Staffinteviewemail = (email,msg) => {
     let mailOptions = {
         from: '"MIT | Internship Portal" lakshanmit17@gmail.com', // sender address
         to: email, // list of receivers
-        subject: "Access Credentials", // Subject line
-        text: "Please find the given credentials to access the system.", // plain text body
+        subject: "Staff Interview", // Subject line
+        text: "", // plain text body
         html: body1, // html body
     };
 
