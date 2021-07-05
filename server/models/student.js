@@ -66,6 +66,9 @@ const studentSchema = new Schema({
   staffintmarks:{
     type:String,
     default:"Pending",
+  },
+  gpa:{
+    type:
   }
 });
 

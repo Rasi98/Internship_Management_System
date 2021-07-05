@@ -12,7 +12,7 @@ import ITAA from "./components/admin/usercontrol/itaa";
 import ITPC from "./components/admin/usercontrol/itpc";
 import HRM from "./components/admin/usercontrol/hrm";
 import Student from "./components/admin/usercontrol/student";
-import AllocateCompany from "./components/admin/allocateCompany";
+import AllocateCompany from "./components/admin/StudentallocatedDetails";
 import AllocateITAA from "./components/admin/allocateITAA";
 import Report from "./components/admin/strategicReport";
 import SignIn from "./components/login/login";
