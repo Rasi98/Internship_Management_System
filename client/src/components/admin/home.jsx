@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./Navbar";
 import Image from "../resources/dash.jpg";
+const jwt = localStorage.getItem("token");
+
 
 class Home extends Component {
   constructor(props) {

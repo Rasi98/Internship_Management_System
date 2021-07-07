@@ -13,6 +13,9 @@ import validator from "validator";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import {Form} from "react-bootstrap";
+
 
 function Copyright() {
   return (
@@ -63,26 +66,55 @@ function SignIn() {
     const validData = {
       username: validuname,
       password: data.password,
+        role:data.role,
     };
     console.log(validData);
 
-    axios.post("http://localhost:5000/login", validData).then((res) => {
-      console.log(res);
+    axios.post("http://localhost:5000/login", validData)
+        .then((res) => {
+         console.log(res);
+         localStorage.setItem("token", res.data.jwt);
+         alert(res.data.msg)
+            // if(res.data.msg==="success"){
+            //     window.location="/admin"
+            // }
 
-      if (res.data.msg == "successadmin") {
-        history.push("/admin");
-        //window.location = "/admin";
-      } else if (res.data.msg == "successstudent") {
-        //window.location = "/profile";
-        history.push("/profile");
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: res.data.msg,
-        });
-      }
-    });
+          // if (res.data.msg == "successadmin") {
+      //   history.push("/admin");
+      //   //window.location = "/admin";
+      // } else if (res.data.msg == "successstudent") {
+      //   //window.location = "/profile";
+      //   history.push("/profile");
+      // } else {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "Oops...",
+      //     text: res.data.msg,
+      //   });
+      // }
+
+    })
+        // .then(() => {
+        //   const jwt = localStorage.getItem("token");
+        //   let email = jwtDecode(jwt).email;
+        //     console.log(email);
+
+          // if(type === "Customer"){
+          //   //history.push("/");
+          //   window.location = "/";
+          // }
+          // else if(type === "Admin"){
+          //   //history.push("/owner-main-page");
+          //   window.location = "/owner-main-page";
+          // }
+          // else if(type === "Delivery Staff"){
+          //   //history.push("/owner-main-page");
+          //   window.location = "/deliveryStaff-main-page";
+          // }
+
+
+       // })
+
   };
 
   return (
@@ -122,6 +154,24 @@ function SignIn() {
             id="password"
             autoComplete="current-password"
           />
+            <Form.Group controlId="exampleForm.SelectCustom">
+                <Form.Label>Role</Form.Label>
+                <Form.Control
+                    as="select"
+                    {...register("role")}
+                    required
+                    variant="outlined"
+                    margin="normal"
+                    custom
+                    id="role"
+                    name="role"
+                >
+                    <option value={"Student"} selected>STUDENT</option>
+                    <option value={"itpc"}>ITPC</option>
+                    <option value={"itaa"}>ITAA</option>
+                    <option value={"ita"}>ITA</option>
+                </Form.Control>
+            </Form.Group>
           <Button
             type="submit"
             fullWidth

@@ -4,6 +4,14 @@ import { Navbar, NavDropdown, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 class AdminNavbar extends Component {
+
+
+  logout(){
+    localStorage.clear();
+    window.location="/";
+  }
+
+
   render() {
     return (
       <Navbar
@@ -80,9 +88,10 @@ class AdminNavbar extends Component {
             <LinkContainer to="/admin/usercontrol/itpc">
               <Nav.Link>ADMINISTRATOR</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/">
-              <Nav.Link>LOGOUT</Nav.Link>
-            </LinkContainer>
+            {/*<LinkContainer>*/}
+            {/*  <Nav.Link onSelect={this.logout}>LOGOUT</Nav.Link>*/}
+            {/*</LinkContainer>*/}
+            <button onClick={this.logout}>check</button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
