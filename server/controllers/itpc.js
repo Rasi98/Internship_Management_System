@@ -41,6 +41,7 @@ export const updateitpc = (req, res) => {
       itpc.name = req.body.name;
       itpc.email = req.body.email;
       itpc.phone = req.body.phone;
+      itpc.role="itpc";
       itpc
         .save()
         .then(() => res.json({ result: "updated" }))

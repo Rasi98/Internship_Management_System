@@ -4,7 +4,7 @@ const companyAllocate=express.Router();
 
 //companyAllocate.get("/",getAllAllocation);
 companyAllocate.post("/add",allocateCompany);
-companyAllocate.get("/:studentid",getAllocate)
+companyAllocate.get("/:stuId",getAllocate)
 companyAllocate.post("/status",setStatus);
 companyAllocate.delete("/deletecompany/:id",deletecompany);
 

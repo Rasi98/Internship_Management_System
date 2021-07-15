@@ -28,6 +28,7 @@ class Additpc extends Component {
       phone: this.state.phone,
       username: this.state.username,
       password: this.state.password,
+      role:"itpc"
     };
 
     axios.post("http://localhost:5000/itpc/additpc", itpc).then((res) => {

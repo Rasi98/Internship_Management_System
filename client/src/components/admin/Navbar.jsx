@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Navbar, NavDropdown, Nav } from "react-bootstrap";
+import {Navbar, NavDropdown, Nav, Button} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import jwtDecode from "jwt-decode";
 
 class AdminNavbar extends Component {
 
-
-  logout(){
+  logout=()=>{
     localStorage.clear();
     window.location="/";
+
   }
 
 
   render() {
+    const jwt=localStorage.getItem("token")
+    const name=jwtDecode(jwt).name;
     return (
       <Navbar
         collapseOnSelect
@@ -86,12 +89,9 @@ class AdminNavbar extends Component {
           </Nav>
           <Nav>
             <LinkContainer to="/admin/usercontrol/itpc">
-              <Nav.Link>ADMINISTRATOR</Nav.Link>
+              <Nav.Link>{name}</Nav.Link>
             </LinkContainer>
-            {/*<LinkContainer>*/}
-            {/*  <Nav.Link onSelect={this.logout}>LOGOUT</Nav.Link>*/}
-            {/*</LinkContainer>*/}
-            <button onClick={this.logout}>check</button>
+            <Button variant="outline-info" className="m-1" onClick={this.logout}>LOGOUT</Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

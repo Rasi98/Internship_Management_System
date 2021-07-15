@@ -27,8 +27,8 @@ export const allocateCompany=async (req,res)=>{
 }
 
 export const getAllocate=(req,res)=>{
-    console.log('Req', req.params.studentid)
-    Allocate.find({student:req.params.studentid}).populate("company").populate("student")
+    console.log('Req', req.params.stuId)
+    Allocate.find({student:req.params.stuId}).populate("company").populate("student")
         .then((obj)=>{
             res.json(obj);
         })

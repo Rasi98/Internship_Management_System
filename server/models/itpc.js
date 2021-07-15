@@ -24,6 +24,10 @@ const itpcSchema = new Schema({
     type: String,
     required: true,
   },
+  role:{
+    type:String,
+    required:true
+  }
 });
 
 const ITPC = mongoose.model("itpc", itpcSchema);
