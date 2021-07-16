@@ -2,11 +2,20 @@ import MaterialTable from "material-table";
 import React, {useEffect, useState} from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
-import {Col, Container, ListGroup, Row} from "react-bootstrap";
+import {Button, Col, Container, ListGroup, Row} from "react-bootstrap";
+import {Checkbox, FormControlLabel, MenuItem, Select} from "@material-ui/core";
+import Modal from 'react-modal'
+import AnimeList from "./allocatecommodel";
+import RefreshIcon from '@material-ui/icons/Refresh';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 
 export default function Editable() {
     const [ students,setStudents]  =useState([]) ;
+    const [selectedStudent,setselectedStudent]=useState([]);
+    const [selectedstuId,setselectedstuId]=useState('')
+    const [showpopup,setshowpopup]=useState(false);
+    const [filter,setfilter]=useState(false)
 
 
     useEffect(()=>{
@@ -22,8 +31,19 @@ export default function Editable() {
 
     const [data, setColumns] = useState()
         const columns=[
-        { title: 'Company', field: 'name'},
-        { title: 'Status', field: 'status',lookup:{1:'Allocated',2:'CV Sent'} ,render:(row)=>statuscolor(row)},
+        { title: 'Company', field: 'name',filtering: false,editable:false},
+        { title: 'Status', field: 'status',filtering:true,lookup:{'allocate':'Allocated','cvsent':'CV Sent','shortlisted':'Shortlisted','interviewed':'Interviewed','notselected':'Notselected','paused':'Paused','stopped':'Stopped'} ,
+            render:(row)=>
+               ( <Select value={row.status}>
+                    <MenuItem value="allocate">Allocated</MenuItem>
+                    <MenuItem value="cvsent">CV Sent</MenuItem>
+                    <MenuItem value="shortlisted">Shortlisted</MenuItem>
+                    <MenuItem value="interviewed">Interviewed</MenuItem>
+                    <MenuItem value="notselected">Not selected</MenuItem>
+                    <MenuItem value="paused">Paused</MenuItem>
+                    <MenuItem value="stopped">Stopped</MenuItem>
+                </Select>,statuscolor(row))
+        },
     ];
 
     function statuscolor(row) {
@@ -48,6 +68,8 @@ export default function Editable() {
     function getAllocatedCompanies(stu){
         let arry=[];
         const stuId=stu._id;
+        setselectedStudent(stu)
+        setselectedstuId(stuId)
         axios.get('http://localhost:5000/companyallocate/'+stuId)
             .then((res)=>{
                 if(res.data.length===0){
@@ -84,9 +106,50 @@ export default function Editable() {
             })
 
     }
+    function updateRow(newdata) {
+        console.log(newdata.id)
+        const obj={
+            id:newdata.id,
+            status:newdata.status
+        }
+        axios.post("http://localhost:5000/companyallocate/status",obj)
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+    }
+    const setModalIsOpenToTrue =()=>{
+        setshowpopup(true)
+
+    }
+    const setModalIsOpenToFalse =()=>{
+        setshowpopup(false)
+    }
+    const customStyles = {
+        zIndex:'1000',
+        fontcolor : 'black',
+        content : {
+            top                   : '50%',
+            left                  : '50%',
+            right                 : 'auto',
+            bottom                : 'auto',
+            transform             : 'translate(-50%, -50%)',
+            marginRight           : '-50%',
+            backgroundColor       : '#E5E7E9',
+        }
+    };
+
+    const handleChange=()=> {
+        setfilter(!filter)
+    }
+    const refresh=()=>{
+        getAllocatedCompanies(selectedStudent);
+    }
 
     return (
-        <React.Fragment>
+    <React.Fragment>
             <Navbar/>
             <div className="container mt-4">
                 <h3 className="text-center m-3">Internship Allocation</h3>
@@ -103,26 +166,56 @@ export default function Editable() {
                         ))}
                     </ListGroup>
                 </Col>
+
                 <Col className=" mt-1 mb-1"   sm={8}>
                     <MaterialTable
-                        title="Allocated companies"
+                        title={selectedStudent.name}
                         columns={columns}
                         data={data}
                         options={{
-                            filtering:true,
-                            doubleHorizontalScroll:true,
+                            filtering:filter,
                             actionsColumnIndex:-1,
-                            addRowPosition:"first"
+                            addRowPosition:"first",
+                            headerStyle:{
+                                zIndex:'0'
+                            }
+
                         }}
+                        actions={[
+                            {
+                                icon:()=><FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={filter}
+                                            onChange={handleChange}
+                                            name="checkedB"
+                                            color="primary"
+                                        />
+                                    }
+                                    label="Filter"
+                                />,tooltip:"Hide/Show Filter",
+                                isFreeAction:true
+                            },
+                            {
+                                icon:()=> <Button
+                                    className="btn-sm"
+                                    onClick={setModalIsOpenToTrue}
+                                    style={{position:'relative',margin:'1px'}}
+                                >
+                                  <PersonAddIcon/>
+                                </Button>,tooltip:"Allocate new company",
+                                isFreeAction:true
+                            },
+                            {
+                                icon:()=><Button
+                                    style={{position:'absolute',margin:'1px'}}
+                                    className="btn-sm btn-success"
+                                    onClick={refresh}
+                                ><RefreshIcon/></Button>,tooltip:'Refresh',
+                                isFreeAction:true
+                            }
+                        ]}
                         editable={{
-                            onRowAdd:(newRow)=>new Promise((resolve,reject)=>{
-                                const updateddata=[...data,newRow]
-                                setTimeout(()=>{
-                                    setColumns(updateddata)
-                                    resolve()
-                                },2000)
-                                console.log(newRow)
-                            }),
                             onRowDelete:selectedRow=>new Promise((resolve, reject)=>{
                                 const index=selectedRow.tableData.id
                                 const updatedRow=[...data]
@@ -132,14 +225,27 @@ export default function Editable() {
                                     setColumns(updatedRow)
                                     resolve()
                                 },1000)
-
-
-                            })
+                            }),
+                            onRowUpdate: (newData, oldData) =>
+                                new Promise((resolve, reject) => {
+                                    setTimeout(() => {
+                                        const dataUpdate = [...data];
+                                        const index = oldData.tableData.id;
+                                        dataUpdate[index] = newData;
+                                        updateRow(newData)
+                                        setColumns([...dataUpdate]);
+                                        resolve();
+                                    }, 1000);
+                                }),
                         }}
                     />
                 </Col>
                 </Row>
             </div>
-        </React.Fragment>
+        <Modal isOpen={showpopup} style={customStyles} onRequestClose={()=> setModalIsOpenToFalse()}>
+            <AnimeList student={selectedStudent}/>
+        </Modal>
+
+    </React.Fragment>
     )
 }

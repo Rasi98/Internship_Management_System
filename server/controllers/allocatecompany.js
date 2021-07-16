@@ -38,7 +38,7 @@ export const getAllocate=(req,res)=>{
 }
 
 export const setStatus=async(req,res)=>{
-    const allocateobj=await Allocate.findOne({student:req.body.studentid,company:req.body.companyid})
+    const allocateobj=await Allocate.findOne({_id:req.body.id})
         if(req.body.status==="selected"){
            // const otherobj=await allocateobj.find({student: req.body.studentid, company: {$ne: req.body.companyid}})
             //res.json(otherobj);

@@ -207,7 +207,7 @@ class allocateCompany extends Component {
                   </Col>
               </Row>
           </Container>
-                <AllocateCompanyModel data={this.state.selestudentid} stuname={this.state.stuname}  show={this.state.showpopup} onHide={popupclose}/>
+                <AllocateCompanyModel data={this.state.selestudentid} stuname={this.state.stuname}  show={this.state.showpopup} />
             </div>
       </React.Fragment>
 
