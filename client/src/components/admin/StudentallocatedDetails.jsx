@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import {Button, Col, Container, ListGroup, Row} from "react-bootstrap";
-import {Checkbox, FormControlLabel, MenuItem, Select} from "@material-ui/core";
+import {Checkbox, Divider, FormControlLabel, MenuItem, Paper, Select, TextField} from "@material-ui/core";
 import Modal from 'react-modal'
 import AnimeList from "./allocatecommodel";
 import RefreshIcon from '@material-ui/icons/Refresh';
@@ -16,13 +16,14 @@ export default function Editable() {
     const [selectedstuId,setselectedstuId]=useState('')
     const [showpopup,setshowpopup]=useState(false);
     const [filter,setfilter]=useState(false)
+    const [filterinput,setfilterinput]=useState('')
 
 
     useEffect(()=>{
         axios.get("http://localhost:5000/student/")
             .then((res)=>{
                 setStudents(res.data)
-                console.log(students)
+                console.log(res.data)
             })
             .catch(err=>{
                 console.log(err)
@@ -106,6 +107,7 @@ export default function Editable() {
             })
 
     }
+    //Update a Row
     function updateRow(newdata) {
         console.log(newdata.id)
         const obj={
@@ -120,6 +122,11 @@ export default function Editable() {
                 console.log(err);
             })
     }
+
+    const handleFilterInput=(e)=>{
+        setfilterinput(e.target.value)
+    }
+
     const setModalIsOpenToTrue =()=>{
         setshowpopup(true)
 
@@ -148,16 +155,25 @@ export default function Editable() {
         getAllocatedCompanies(selectedStudent);
     }
 
+    let filterstudent=students.filter((stu)=>{
+        return stu.staffintmarks.toLowerCase().includes(filterinput.toLowerCase())
+    })
+
     return (
     <React.Fragment>
             <Navbar/>
             <div className="container mt-4">
                 <h3 className="text-center m-3">Internship Allocation</h3>
+                <Paper elevation={3} style={{padding:'1px'}}>
                 <Row className="m-2">
                 <Col className=" border mt-1 mb-1" style={{overflowY:"auto",maxHeight:"500px",borderRadius:"10px"}}  sm={4}>
+                    <div className='text-center'>
+                    <TextField onChange={handleFilterInput} id="outlined-search" label="Filter" style={{marginTop:'8px',marginBottom:'2px'}} type="search" size="small" variant="outlined" />
+                    <Divider style={{margin:'3px'}}/>
+                    </div>
                     <ListGroup  style={{padding:"3px"}}>
-                        {students.map((student)=>(
-                            <Container id={student._id} className="border m-1" style={{borderRadius:"5px"}}>
+                        {filterstudent.map((student)=>(
+                            <Container id={student._id}  className="border m-1" style={{borderRadius:"5px"}}>
                                 <div style={{cursor:"pointer"}} onClick={()=>getAllocatedCompanies(student)}>
                                 <Row className="pl-2 pt-2"> <h6>{student.name}</h6></Row>
                                 <Row className="pl-2 pb-2"><span style={{fontSize:"12px"}}>{student.stuno} | {student.staffintmarks}</span></Row>
@@ -241,6 +257,7 @@ export default function Editable() {
                     />
                 </Col>
                 </Row>
+                </Paper>
             </div>
         <Modal isOpen={showpopup} style={customStyles} onRequestClose={()=> setModalIsOpenToFalse()}>
             <AnimeList student={selectedStudent}/>

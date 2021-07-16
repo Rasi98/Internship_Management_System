@@ -6,6 +6,7 @@ import {Type } from 'react-bootstrap-table2-editor';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import axios from "axios";
 import {Button, Col, Container, Row} from "react-bootstrap";
+import {Paper} from "@material-ui/core";
 
 
 class StaffInterview extends Component {
