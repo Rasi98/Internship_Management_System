@@ -73,7 +73,7 @@ export default function Allocatecommodel (props) {
 
     return (
         <React.Fragment>
-            <div style={{width: '800px'}}>
+            <div style={{width: '600px'}}>
                 <h4>Allocate a new company</h4>
                 <h6>{props.student.name} => {comname}</h6>
                 <Form>

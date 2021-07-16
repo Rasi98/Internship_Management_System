@@ -51,9 +51,22 @@ export const setStatus=async(req,res)=>{
            await student.save();
            res.json("status updated!")
         }
-            allocateobj.status=req.body.status;
+        else if(req.body.status==="interviewed"){
+            const selectedstu=await Allocate.findById(req.body.id).populate("student").populate("company")
+            const stuId=selectedstu.student._id
+            const student=await Student.findById(stuId)
+            student.interviewCount++
+            await student.save();
+            allocateobj.status = req.body.status
+            await allocateobj.save()
+            res.json("status & Interview count updated!")
+
+        }
+        else {
+            allocateobj.status = req.body.status;
             await allocateobj.save();
             res.json("status updated!")
+        }
 
 }
 

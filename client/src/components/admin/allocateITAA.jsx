@@ -1,19 +1,25 @@
 import React, {Component, useEffect, useState} from "react";
 import Navbar from "./Navbar";
 import {Paper} from "@material-ui/core";
-import {Col, Container, ListGroup, Row} from "react-bootstrap";
+import {Button, Col, Container, ListGroup, Row} from "react-bootstrap";
 import axios from "axios";
 import MaterialTable from "material-table";
+import Allocateitaamodel  from "./allocateItaaModel.jsx";
+import Modal from "react-modal";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
 export default function AllocateITAA(){
     const [data, setColumns] = useState()
     const [itaa,setitaa]=useState([])
     const [selecteditaa,setselecteditaa]=useState([])
+    const [showpopup,setshowpopup]=useState(false);
+
 
     const columns=[
         { title: 'Name', field: 'name'},
         { title: 'Stu.No', field: 'stuno'},
-        { title: 'Company', field: 'selectedCompany'},
+        { title: 'Selected Company', field: 'selectedCompany'},
     ]
 
     useEffect(()=>{
@@ -28,7 +34,6 @@ export default function AllocateITAA(){
     },[])
 
     function getAllocatedStudents(itaa) {
-
         let arry=[]
         const itaaId=itaa._id
         setselecteditaa(itaa)
@@ -56,8 +61,45 @@ export default function AllocateITAA(){
             .catch((err)=>{
                 console.log(err)
             })
-      
+
     }
+    function deleteRow(id) {
+        console.log(id)
+        axios.delete("http://localhost:5000/itaaallocate/delete/"+id)
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+    }
+
+    const setModalIsOpenToTrue =()=>{
+        setshowpopup(true)
+
+    }
+    const setModalIsOpenToFalse =()=>{
+        setshowpopup(false)
+    }
+
+    const refresh=()=>{
+        getAllocatedStudents(selecteditaa);
+    }
+
+    const customStyles = {
+        zIndex:'1000',
+        fontcolor : 'black',
+        content : {
+            top                   : '50%',
+            left                  : '50%',
+            right                 : 'auto',
+            bottom                : 'auto',
+            transform             : 'translate(-50%, -50%)',
+            marginRight           : '-50%',
+            backgroundColor       : '#E5E7E9',
+        }
+    };
+
 
     return(
         <React.Fragment>
@@ -82,13 +124,55 @@ export default function AllocateITAA(){
                             <MaterialTable
                                 title={selecteditaa.name}
                                 columns={columns}
-                                data={data}/>
+                                data={data}
+                                options={{
+                                    actionsColumnIndex:-1,
+                                    headerStyle: {
+                                        zIndex: '0'
+                                    }
+                                }}
+                                actions={[
+                                    {
+                                        icon:()=><Button
+                                            className="btn-sm"
+                                            onClick={setModalIsOpenToTrue}
+                                            style={{position:'relative',margin:'1px'}}
+                                        >
+                                            <PersonAddIcon/>
+                                        </Button>,tooltip:"Allocate new student",
+                                        isFreeAction:true
+                                    },
+                                    {
+                                        icon:()=><Button
+                                            style={{position:'absolute',margin:'1px'}}
+                                            className="btn-sm btn-success"
+                                            onClick={refresh}
+                                        ><RefreshIcon/></Button>,tooltip:'Refresh',
+                                        isFreeAction:true
+                                    }
+                                ]}
+                                editable={{
+                                    onRowDelete:selectedRow=>new Promise((resolve, reject)=>{
+                                        const index=selectedRow.tableData.id
+                                        const updatedRow=[...data]
+                                        updatedRow.splice(index,1)
+                                        setTimeout(()=>{
+                                            deleteRow(selectedRow.id)
+                                            setColumns(updatedRow)
+                                            resolve()
+                                        },1000)
+                                    })
+                                }}
+                            />
+
                         </Col>
 
                     </Row>
                 </Paper>
             </div>
-
+            <Modal isOpen={showpopup} style={customStyles} onRequestClose={()=> setModalIsOpenToFalse()}>
+                <Allocateitaamodel itaa={selecteditaa}/>
+            </Modal>
         </React.Fragment>
     )
 }
