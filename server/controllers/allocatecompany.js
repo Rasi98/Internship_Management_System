@@ -1,4 +1,5 @@
 import Allocate from "../models/allocated.js"
+import Student from "../models/student.js";
 
 export const allocateCompany=async (req,res)=>{
     const existobj=await Allocate.findOne({student:req.body.studentid,company:req.body.companyid})
@@ -40,8 +41,15 @@ export const getAllocate=(req,res)=>{
 export const setStatus=async(req,res)=>{
     const allocateobj=await Allocate.findOne({_id:req.body.id})
         if(req.body.status==="selected"){
-           // const otherobj=await allocateobj.find({student: req.body.studentid, company: {$ne: req.body.companyid}})
-            //res.json(otherobj);
+           const selectedstu=await Allocate.findById(req.body.id).populate("student").populate("company")
+            const stuId=selectedstu.student._id
+            const selectedcom=selectedstu.company.name
+            const student=await Student.findById(stuId)
+            student.selectedCompany=selectedcom;
+           allocateobj.status = req.body.status
+            await allocateobj.save()
+           await student.save();
+           res.json("status updated!")
         }
             allocateobj.status=req.body.status;
             await allocateobj.save();

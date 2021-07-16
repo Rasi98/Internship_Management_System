@@ -4,7 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 
-export default function AnimeList (props) {
+export default function Allocatecommodel (props) {
 
     const [companylist, setcompanylist] = useState([])
     const [comId,setcomId]=useState('')

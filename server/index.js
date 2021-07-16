@@ -19,6 +19,7 @@ import itaRouter from "./routes/usercontrol/itacontrol.js";
 import hrmRouter from "./routes/usercontrol/hrm.js";
 import stu_profile_router from "./routes/StudentRoutes/profile.js";
 import allocatecompany from "./routes/allocations/companyAllocate.js"
+import itaaAllocate from "./routes/allocations/itaaAllocate.js";
 
 app.use("/company", companyRouter);
 app.use("/user", userRouter);
@@ -30,6 +31,7 @@ app.use("/ita", itaRouter);
 app.use("/hrm", hrmRouter);
 app.use("/studentprofile", stu_profile_router);
 app.use("/companyallocate",allocatecompany);
+app.use("/itaaallocate",itaaAllocate)
 
 const port = process.env.port || 5000;
 const uri =

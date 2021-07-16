@@ -5,7 +5,7 @@ import axios from "axios";
 import {Button, Col, Container, ListGroup, Row} from "react-bootstrap";
 import {Checkbox, Divider, FormControlLabel, MenuItem, Paper, Select, TextField} from "@material-ui/core";
 import Modal from 'react-modal'
-import AnimeList from "./allocatecommodel";
+import Allocatecommodel from "./allocatecommodel";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
@@ -33,7 +33,7 @@ export default function Editable() {
     const [data, setColumns] = useState()
         const columns=[
         { title: 'Company', field: 'name',filtering: false,editable:false},
-        { title: 'Status', field: 'status',filtering:true,lookup:{'allocate':'Allocated','cvsent':'CV Sent','shortlisted':'Shortlisted','interviewed':'Interviewed','notselected':'Notselected','paused':'Paused','stopped':'Stopped'} ,
+        { title: 'Status', field: 'status',filtering:true,lookup:{'allocate':'Allocated','cvsent':'CV Sent','shortlisted':'Shortlisted','interviewed':'Interviewed','notselected':'Notselected','testfaced':'Test Faced','selected':'Selected'} ,
             render:(row)=>
                ( <Select value={row.status}>
                     <MenuItem value="allocate">Allocated</MenuItem>
@@ -41,8 +41,8 @@ export default function Editable() {
                     <MenuItem value="shortlisted">Shortlisted</MenuItem>
                     <MenuItem value="interviewed">Interviewed</MenuItem>
                     <MenuItem value="notselected">Not selected</MenuItem>
-                    <MenuItem value="paused">Paused</MenuItem>
-                    <MenuItem value="stopped">Stopped</MenuItem>
+                    <MenuItem value="testfaced">Test Faced</MenuItem>
+                    <MenuItem value="selected">Selected</MenuItem>
                 </Select>,statuscolor(row))
         },
     ];
@@ -54,15 +54,15 @@ export default function Editable() {
         else if(state==="cvsent")
             return <div className={row.status} style={{backgroundColor:"#FAD7A0",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>CV Sent</span></div>
         else if(state==="shortlisted")
-            return <div className={row.status} style={{backgroundColor:"#82E0AA",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>Shortlisted</span></div>
+            return <div className={row.status} style={{backgroundColor:"#27AE60",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>Shortlisted</span></div>
         else if(state==="interviewed")
             return <div className={row.status} style={{backgroundColor:"#85C1E9",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>Interviewed</span></div>
         else if(state==="notselected")
             return <div className={row.status} style={{backgroundColor:"#F1948A",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>Notselected</span></div>
-        else if(state==="paused")
-            return <div className={row.status} style={{backgroundColor:"#AEB6BF",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>Paused</span></div>
-        else if(state==="stopped")
-            return <div className={row.status} style={{backgroundColor:"#D2B4DE",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>Stopped</span></div>
+        else if(state==="testfaced")
+            return <div className={row.status} style={{backgroundColor:"#FF00FF",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>Test Faced</span></div>
+        else if(state==="selected")
+            return <div className={row.status} style={{backgroundColor:"#82E0AA",width:"fit-content",padding:"0 5px",borderRadius:"2px"}}><span>Selected</span></div>
     }
 
     //Get allocations when click on student name
@@ -109,7 +109,7 @@ export default function Editable() {
     }
     //Update a Row
     function updateRow(newdata) {
-        console.log(newdata.id)
+        console.log(newdata)
         const obj={
             id:newdata.id,
             status:newdata.status
@@ -260,7 +260,7 @@ export default function Editable() {
                 </Paper>
             </div>
         <Modal isOpen={showpopup} style={customStyles} onRequestClose={()=> setModalIsOpenToFalse()}>
-            <AnimeList student={selectedStudent}/>
+            <Allocatecommodel student={selectedStudent}/>
         </Modal>
 
     </React.Fragment>
