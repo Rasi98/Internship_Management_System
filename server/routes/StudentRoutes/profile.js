@@ -3,7 +3,7 @@ const stu_profile_router = express.Router();
 import {
   Addpersonaldetail,
   Getpersonaldetail,
-  findprofile,
+  findprofile, updateProfile,
 } from "../../controllers/studentController/profile.js";
 import {
   studentProfileValidatorResult,
@@ -16,7 +16,8 @@ stu_profile_router.post(
   studentProfileValidatorResult,
   Addpersonaldetail
 );
+stu_profile_router.post("/updatestudentprofile",studentProfileValidator,studentProfileValidatorResult,updateProfile)
 stu_profile_router.get("/", Getpersonaldetail);
-stu_profile_router.get("/:email", findprofile);
+stu_profile_router.post("/get", findprofile);
 
 export default stu_profile_router;

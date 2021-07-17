@@ -139,3 +139,9 @@ export const staffinterviewupdate=(req,res)=>{
    })
     res.status(200).json("updated")
 }
+
+export const CVStatusUpdate=async (req,res)=>{
+    console.log(req.body.id)
+        await Student.findByIdAndUpdate({_id: req.body.id}, {cv: "submit"})
+        res.json({result: "submit"})
+}

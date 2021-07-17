@@ -156,11 +156,12 @@ function SignIn() {
                     custom
                     id="role"
                     name="role"
+                    style={{fontSize:"15px"}}
                 >
                     <option value={"student"} selected>STUDENT</option>
-                    <option value={"itpc"}>ITPC</option>
-                    <option value={"itaa"}>ITAA</option>
-                    <option value={"ita"}>ITA</option>
+                    <option value={"itpc"}>PLACEMENT COORDINATOR</option>
+                    <option value={"itaa"}>ACADEMIC ADVISOR</option>
+                    <option value={"ita"}>TRAINING ADVISOR</option>
                 </Form.Control>
             </Form.Group>
           <Button

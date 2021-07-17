@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const studentprofileSchema = new Schema({
   // Personal Profile Details...
+  studentId:{type:String,required:true},
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   email: { type: String, required: true },
@@ -55,6 +56,15 @@ const studentprofileSchema = new Schema({
   interest4: { type: String },
   interest5: { type: String },
   interest6: { type: String },
+  //Referee
+  refname1:{type:String},
+  refpos1:{type:String},
+  refemail1:{type:String},
+  refphone1:{type:String},
+  refname2:{type:String},
+  refpos2:{type:String},
+  refemail2:{type:String},
+  refphone2:{type:String},
 });
 
 const StudentProfile = mongoose.model("studentProfile", studentprofileSchema);

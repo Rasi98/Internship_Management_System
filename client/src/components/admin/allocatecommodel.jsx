@@ -85,7 +85,6 @@ export default function Allocatecommodel (props) {
                     </Form.Group>
                     <Button onClick={onAllocate}>Allocate</Button>
                 </Form>
-
             </div>
         </React.Fragment>
     )

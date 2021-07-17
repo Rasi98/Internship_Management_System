@@ -43,7 +43,7 @@ class Navbarstd extends Component {
               <LinkContainer to="/student/profile">
                 <NavDropdown.Item>MAKE/EDIT</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/student/preview/:email">
+              <LinkContainer to="/student/preview/">
                 <NavDropdown.Item>VIEW</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>

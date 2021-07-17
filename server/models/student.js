@@ -66,6 +66,10 @@ const studentSchema = new Schema({
   staffintmarks:{
     type:String,
     default:"Pending",
+  },
+  cv:{
+    type:String,
+    default:"Pending"
   }
 });
 

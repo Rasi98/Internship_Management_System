@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/ita" component={HomeIta}/>
           {/*student routes*/}
           <Route path="/student/itasection" component={ITAsection}/>
-          <Route path="/student/preview/:email" component={Profileview} />
+          <Route path="/student/preview/" component={Profileview} />
           <Route path="/student/interview" component={Interview} />
           <Route path="/student/internship" component={Internship} />
           <Route path="/student/profile" component={Profile} />
