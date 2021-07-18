@@ -50,12 +50,6 @@ class Navbarstd extends Component {
             <LinkContainer to="/student/interview">
               <Nav.Link>INTERVIEW</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/student/internship">
-              <Nav.Link>INTERNSHIP</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/student/itasection">
-              <Nav.Link>ITA</Nav.Link>
-            </LinkContainer>
           </Nav>
           <Nav>
             <LinkContainer to="/student">

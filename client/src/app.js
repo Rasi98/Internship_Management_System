@@ -27,13 +27,10 @@ import StaffInterview from "./components/admin/staffinterview";
 
 
 //Student components
-import ITAsection from "./components/student/itasection";
 import Profileview from './components/student/Resume/profileview.jsx'
 import HomeStudent from './components/student/home.jsx'
 import Profile from "./components/student/profile.jsx";
-import Internship from "./components/student/internship";
 import Interview from "./components/student/interview";
-import PreviewProfile from "./components/student/Resume/preview";
 
 //ITA Component
 import HomeIta from './components/ita/home.jsx';
@@ -51,10 +48,8 @@ const App = () => {
           {/*ITA routes*/}
           <Route path="/ita" component={HomeIta}/>
           {/*student routes*/}
-          <Route path="/student/itasection" component={ITAsection}/>
           <Route path="/student/preview/" component={Profileview} />
           <Route path="/student/interview" component={Interview} />
-          <Route path="/student/internship" component={Internship} />
           <Route path="/student/profile" component={Profile} />
           <Route path="/student" component={HomeStudent}/>
           {/*admin routes*/}

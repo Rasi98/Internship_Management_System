@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
-import {Button,Row,Col,Container,InputGroup,FormControl} from "react-bootstrap"
+import {Button, Row, Col, Container, InputGroup, FormControl, Form} from "react-bootstrap"
 import Swal from "sweetalert2";
 import generator from "generate-password";
 
@@ -18,12 +18,16 @@ class Editita extends Component {
       company: "",
       username: "",
       password: "",
+      stuname:"",
+      stuid:"",
+      stuarry:[]
       // newusername:"",
       // newpassword:"",
     };
   }
 
   componentDidMount() {
+    this.getStudentData()
     axios
       .get("http://localhost:5000/ita/" + this.props.match.params.id)
       .then((Response) => {
@@ -35,11 +39,36 @@ class Editita extends Component {
           company: Response.data.company,
           username: Response.data.username,
           password: Response.data.password,
-          // newusername:Response.data.username,
-          // newpassword:Response.data.password,
+          stuname:Response.data.stuname,
+          stuid:Response.data.stuid
         });
       });
   }
+
+  getStudentData(){
+    axios.get("http://localhost:5000/student/")
+        .then((res) => {
+          console.log("res",res)
+          let arry=[]
+          res.data.forEach((a)=>{
+            if(a.selectedCompany!==""){
+              arry.push(a)
+            }
+          })
+          this.setState({stuarry:arry})
+          console.log("arry",this.state.stuarry)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+  }
+  handlestudentchange=(e)=>{
+    const stuid=e.target.value;
+    const com = document.getElementById("drop");
+    const strUser = com.options[com.selectedIndex].text;
+    this.setState({stuname:strUser,stuid:stuid})
+  };
+
   handlechange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -56,6 +85,8 @@ class Editita extends Component {
       phone: this.state.phone,
       username: this.state.username,
       password: this.state.password,
+      stuname:this.state.stuname,
+      stuid:this.state.stuid
     };
 
       axios
@@ -105,6 +136,13 @@ class Editita extends Component {
     });
     this.setState({ ...this.state, password: genpassword });
   };
+  StudentList() {
+    return this.state.stuarry.map((student) => {
+      return (
+          <option value={student._id}>{student.name}</option>
+      );
+    });
+  }
 
 
   render() {
@@ -184,6 +222,14 @@ class Editita extends Component {
                   onChange={this.handlechange}
                 ></input>
               </div>
+                </Col>
+                <Col>
+                  <Form.Group controlId="exampleForm.SelectCustom">
+                    <Form.Label>Allocate Intern</Form.Label>
+                    <select className="form-control" value={this.state.stuid} id='drop' onChange={this.handlestudentchange}>
+                      {this.StudentList()}
+                    </select>
+                  </Form.Group>
                 </Col>
               </Row>
               <Row>

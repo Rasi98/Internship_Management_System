@@ -35,6 +35,14 @@ const itaSchema = new Schema({
     type: String,
     required: true,
   },
+  stuname:{
+    type:String,
+    default:''
+  },
+  stuid:{
+    type:String,
+    default:''
+  }
 });
 
 const ITA = mongoose.model("ita", itaSchema);

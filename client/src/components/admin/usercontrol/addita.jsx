@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button,Container,Row,Col,InputGroup,FormControl } from "react-bootstrap";
+import {Modal, Button, Container, Row, Col, InputGroup, FormControl, Form} from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,28 @@ class Addita extends Component {
       company: "",
       username: "",
       password: "",
+      stuname:"",
+      stuid:"",
+      stuarry:[]
     };
+  }
+
+  componentDidMount() {
+    axios.get("http://localhost:5000/student/")
+        .then((res) => {
+          console.log("res",res)
+          let arry=[]
+          res.data.forEach((a)=>{
+            if(a.selectedCompany!==""){
+              arry.push(a)
+            }
+          })
+          this.setState({stuarry:arry})
+          console.log("arry",this.state.stuarry)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
   }
 
   handlenamechange = (e) => {
@@ -38,10 +59,17 @@ class Addita extends Component {
   handlepasswordchange = (e) => {
     this.setState({ password: e.target.value });
   };
-
+  handlestudentchange=(e)=>{
+    const stuid=e.target.value;
+    const com = document.getElementById("drop");
+    const strUser = com.options[com.selectedIndex].text;
+    this.setState({stuname:strUser,stuid:stuid})
+  };
   handlecompanychange = (e) => {
     this.setState({ company: e.target.value });
   };
+
+
   handlesubmit = (e) => {
     const ita = {
       name: this.state.name,
@@ -51,6 +79,8 @@ class Addita extends Component {
       company: this.state.company,
       username: this.state.username,
       password: this.state.password,
+      stuname:this.state.stuname,
+      stuid:this.state.stuid,
       role:"ita",
     };
 
@@ -97,8 +127,26 @@ class Addita extends Component {
       company: "",
       username: "",
       password: "",
+      stuname:"",
+      stuid:""
     });
   };
+
+  // StudentList(){
+  //   return this.state.stuarry.map((stu) =>{
+  //     return(
+  //         <option value={stu._id}>{stu.name} | {stu.selectedCompany}</option>
+  //     )
+  //   }
+  // )
+  // }
+  StudentList() {
+    return this.state.stuarry.map((student) => {
+      return (
+          <option value={student._id}>{student.name}</option>
+      );
+    });
+  }
 
   passwordGen = () => {
     var genpassword = generator.generate({
@@ -186,6 +234,8 @@ class Addita extends Component {
             </div>
               </Col>
             </Row>
+            <Row>
+            <Col>
             <div className="form-group">
               <label htmlFor="company">Company</label>
               <br></br>
@@ -199,6 +249,16 @@ class Addita extends Component {
                 onChange={this.handlecompanychange}
               ></input>
             </div>
+            </Col>
+            <Col>
+                <Form.Group controlId="exampleForm.SelectCustom">
+                  <Form.Label>Allocate Intern</Form.Label>
+                  <select className="form-control" id='drop' onChange={this.handlestudentchange}>
+                    {this.StudentList()}
+                  </select>
+                </Form.Group>
+            </Col>
+            </Row>
             <Row>
               <Col>
             <div className="form-group">

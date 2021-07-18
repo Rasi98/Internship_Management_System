@@ -14,7 +14,7 @@ const ITA = (props) => (
     <td>{props.ita.email}</td>
     <td>{props.ita.phone}</td>
     <td>{props.ita.company}</td>
-    <td>{props.ita.username}</td>
+    <td>{props.ita.stuname}</td>
     <td>
       <Link
         to={"/admin/usercontrol/ita/edit/" + props.ita._id}
@@ -165,7 +165,7 @@ class userIta extends Component {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Company</th>
-                <th>Username</th>
+                <th>Intern</th>
                 <th>Action</th>
               </tr>
             </thead>

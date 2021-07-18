@@ -5,7 +5,7 @@ import {
   addita,
   deleteita,
   updateita,
-  deleteall,
+  deleteall, getitaforstu,
 } from "../../controllers/ita.js";
 import {
   itaValidator,
@@ -19,5 +19,6 @@ itaRouter.post("/addita", itaValidator, itaValidatorResult, addita);
 itaRouter.delete("/:id", deleteita);
 itaRouter.post("/update/:id", itaValidator, itaValidatorResult, updateita);
 itaRouter.post("/deleteall", deleteall);
+itaRouter.post("/getita",getitaforstu)
 
 export default itaRouter;

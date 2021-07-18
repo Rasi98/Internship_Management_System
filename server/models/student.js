@@ -87,6 +87,10 @@ const studentSchema = new Schema({
   interview:{
     type:String,
     default:"Pending"
+  },
+  gpa:{
+    type:String,
+    default:''
   }
 });
 

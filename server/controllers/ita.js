@@ -57,6 +57,8 @@ export const updateita = (req, res) => {
       ita.email = req.body.email;
       ita.phone = req.body.phone;
       ita.company = req.body.company;
+      ita.stuname=req.body.stuname;
+      ita.stuid=req.body.stuid;
       ita
         .save()
         .then(() => res.json({ result: "updated" }))
@@ -64,3 +66,16 @@ export const updateita = (req, res) => {
     })
     .catch((err) => res.status(400).json("Error:" + err));
 };
+
+export const getitaforstu=async (req,res)=>{
+    console.log("stuid",req.body.stuid)
+    const ita=await ITA.find({stuid:req.body.stuid})
+    console.log(ita);
+    if(ita.length===0){
+        res.json({result:"N/A"})
+    }
+    else{
+        res.json({result:ita})
+    }
+
+}

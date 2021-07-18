@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from "react";
 import Navbarstd from "../student/Navbar";
-import {Checkbox, Divider, Paper} from "@material-ui/core";
+import {Checkbox, Divider, Paper, TextField} from "@material-ui/core";
 import {Row, Col, Form, Button, Container} from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -14,6 +14,7 @@ export default function Interview(){
     const [interest,setinterest]=useState([]);
     const [disable,setdisable]=useState(false);
     const [alert,setalert]=useState("none");
+    const [gpa,setgpa]=useState('')
 
     useEffect(()=>{
         getdata()
@@ -39,7 +40,7 @@ export default function Interview(){
     function onsubmit(){
       Swal.fire({
           title: 'Are you sure?',
-          text: "You won't be able to change these once you submit.",
+          text: "This is a onetime submission.You won't be able to change this once you submit.",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -53,6 +54,7 @@ export default function Interview(){
                   thirdyearexit:thirdyearexit,
                   specializearea:specializearea,
                   interest:interest,
+                  gpa:gpa,
                   stuid:stuId
               }
               console.log(obj)
@@ -93,7 +95,7 @@ export default function Interview(){
               <Container className='mt-4'>
                 <Form>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                        <h6>Are you taking the Third year exit?{thirdyearexit}</h6>
+                        <h6>Are you taking the Third year exit?</h6>
                         <select name='drop' disabled={disable} className="form-control" onChange={(e)=>{
                             const selected=e.target.value
                             setthirdyearexit(selected)
@@ -104,7 +106,7 @@ export default function Interview(){
                     </Form.Group>
                     <Divider style={{margin:'1%'}}/>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                        <h6>Area of Specialization{specializearea}</h6>
+                        <h6>Area of Specialization?</h6>
                         <select name='drop' disabled={disable} className="form-control" onChange={(e)=>{
                             const selected=e.target.value
                             setspecializearea(selected)
@@ -115,6 +117,14 @@ export default function Interview(){
                             <option value="IS">IS</option>
                         </select>
                     </Form.Group>
+                    <Divider style={{margin:'1%'}}/>
+                    <Form>
+                        <h6>Current GPA?</h6>
+                        <Form.Control  disabled={disable} type="number" placeholder="GPA" value={gpa} onChange={(e)=>{
+                            const value=e.target.value
+                            setgpa(value)
+                        }} />
+                    </Form>
                     <Divider style={{margin:'1%'}}/>
                     <h6>Interest Area/s</h6>
                     <label style={{margin:'3%'}}>

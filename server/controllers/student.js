@@ -21,6 +21,7 @@ export const Addinterview=async (req,res)=>{
     student.thirdyrexit=req.body.thirdyearexit
     student.specialization=req.body.specializearea
     student.interest=req.body.interest
+    student.gpa=req.body.gpa
     student.interview="submit"
 
     try {
