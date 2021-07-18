@@ -1,22 +1,42 @@
-import React, { Component } from "react";
+import React, {Component, useEffect, useState} from "react";
 import Navbarstd from "../student/Navbar";
-import {Divider, Paper} from "@material-ui/core";
+import {Checkbox, Divider, Paper} from "@material-ui/core";
 import {Row, Col, Form, Button, Container} from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 import jwtDecode from "jwt-decode";
+import {Alert} from "@material-ui/lab";
 
-class Interview extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        thirdyearexit:'',
-        specializearea:'',
-        interest:[]
-    };
-  }
+export default function Interview(){
 
-  onsubmit(){
+    const [thirdyearexit,setthirdyearexit]=useState('');
+    const [specializearea,setspecializearea]=useState('');
+    const [interest,setinterest]=useState([]);
+    const [disable,setdisable]=useState(false);
+    const [alert,setalert]=useState("none");
+
+    useEffect(()=>{
+        getdata()
+    })
+    function getdata()
+    {
+        const jwt = localStorage.getItem("token")
+        const stuId = jwtDecode(jwt)._id
+        axios.get("http://localhost:5000/student/" + stuId)
+            .then((res) => {
+                console.log(res.data)
+                if (res.data.interview === "submit") {
+                    setalert("flex")
+                    setdisable(true)
+                } else {
+                    document.getElementById("alert").style.display = "none";
+                    setdisable(false)
+                }
+            })
+    }
+
+
+    function onsubmit(){
       Swal.fire({
           title: 'Are you sure?',
           text: "You won't be able to change these once you submit.",
@@ -30,14 +50,16 @@ class Interview extends Component {
               const jwt=localStorage.getItem("token")
               const stuId=jwtDecode(jwt)._id
               const obj={
-                  thirdyearexit:this.state.thirdyearexit,
-                  specializearea:this.state.specializearea,
-                  interest:this.state.interest,
+                  thirdyearexit:thirdyearexit,
+                  specializearea:specializearea,
+                  interest:interest,
                   stuid:stuId
               }
-              axios.post("",obj)
+              console.log(obj)
+              axios.post("http://localhost:5000/student/interview",obj)
                   .then((res)=>{
                       console.log(res)
+                      getdata()
                   })
                   .catch((err)=>{
                       console.log(err)
@@ -51,20 +73,30 @@ class Interview extends Component {
       })
   }
 
-  render() {
+    const handleChange=(event)=>{
+        let newArray = [...interest, event.target.id];
+        if (interest.includes(event.target.id)) {
+            newArray = newArray.filter(item => item !== event.target.id);
+        }
+        setinterest(newArray)
+    }
+
     return (
       <React.Fragment>
           <Navbarstd />
         <h1 className='text-center'>Interview</h1>
           <div className='container' style={{width:'50%'}}>
           <Paper elevation={3} style={{padding:'2%'}}>
-              <Container>
+              <Alert id='alert' variant="filled" severity="error" style={{display:alert}}>
+                  Can't change this.You have already submitted !
+              </Alert>
+              <Container className='mt-4'>
                 <Form>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                        <h6>Are you taking the Third year exit?</h6>
-                        <select className="form-control" onChange={(e)=>{
+                        <h6>Are you taking the Third year exit?{thirdyearexit}</h6>
+                        <select name='drop' disabled={disable} className="form-control" onChange={(e)=>{
                             const selected=e.target.value
-                            this.setState({thirdyearexit:selected})
+                            setthirdyearexit(selected)
                         }}>
                             <option value="no">No</option>
                             <option value="yes">Yes</option>
@@ -72,10 +104,10 @@ class Interview extends Component {
                     </Form.Group>
                     <Divider style={{margin:'1%'}}/>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                        <h6>Area of Specialization</h6>
-                        <select className="form-control" onChange={(e)=>{
+                        <h6>Area of Specialization{specializearea}</h6>
+                        <select name='drop' disabled={disable} className="form-control" onChange={(e)=>{
                             const selected=e.target.value
-                            this.setState({specializearea:selected})
+                            setspecializearea(selected)
                         }}>
                             <option value="BSE">BSE</option>
                             <option value="IT">IT</option>
@@ -85,48 +117,61 @@ class Interview extends Component {
                     </Form.Group>
                     <Divider style={{margin:'1%'}}/>
                     <h6>Interest Area/s</h6>
-                    <Form.Group>
-                    <Form.Check
-                        inline
-                        label="SE"
-                        name="group1"
-                        type="checkbox"
-                        id="inline-checkbox-1"
-                    />
-                    <Form.Check
-                        inline
-                        label="HRM"
-                        name="group1"
-                        type="checkbox"
-                        id="inline-checkbox-2"
-                    />
-                        <Form.Check
-                            inline
-                            label="OSCM"
-                            name="group1"
+                    <label style={{margin:'3%'}}>
+                        <input
+                            disabled={disable}
+                            id='SE'
                             type="checkbox"
-                            id="inline-checkbox-3"
+                            onChange={handleChange}
+                            value='SE'
                         />
-                        <Form.Check
-                            inline
-                            label="BA"
-                            name="group1"
+                        SE
+                    </label>
+                    <label  style={{margin:'3%'}}>
+                        <input
+                            disabled={disable}
+                            id='QA'
                             type="checkbox"
-                            id="inline-checkbox-4"
+                            onChange={handleChange}
+                            value='QA'
                         />
-                        <Form.Check
-                            inline
-                            label="QA"
-                            name="group1"
+                        QA
+                    </label>
+                    <label  style={{margin:'3%'}}>
+                        <input
+                            disabled={disable}
+                            id='HRM'
                             type="checkbox"
-                            id="inline-checkbox-5"
+                            onChange={handleChange}
+                            value='HRM'
                         />
-                    </Form.Group>
+                        HRM
+                    </label>
+                    <label  style={{margin:'3%'}}>
+                        <input
+                            disabled={disable}
+                            id='OSCM'
+                            type="checkbox"
+                            onChange={handleChange}
+                            value='OSCM'
+                        />
+                        OSCM
+                    </label>
+                    <label  style={{margin:'3%'}}>
+                        <input
+                            disabled={disable}
+                            id='BA'
+                            type="checkbox"
+                            onChange={handleChange}
+                            value='BA'
+                        />
+                        BA
+                    </label>
                     <Divider style={{margin:'1%'}}/>
                     <p>I hereby certify that "I have read and understood the Industrial Handbook and ready to accept any internship oppertunity allocated by the department".</p>
                 </Form>
                   <div className='text-center'>
-                      <Button onClick={this.onsubmit}>Submit</Button>
+                      <Button disabled={disable} onClick={onsubmit}>Submit</Button>
                   </div>
               </Container>
           </Paper>
@@ -134,6 +179,5 @@ class Interview extends Component {
       </React.Fragment>
     );
   }
-}
 
-export default Interview;
+

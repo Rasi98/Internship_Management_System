@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Navbarstd from "../student/Navbar";
-import {Paper} from "@material-ui/core";
+import {Divider, Paper} from "@material-ui/core";
 import {Container, Row} from "react-bootstrap";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
@@ -60,6 +60,7 @@ class Internship extends Component {
           <div className='container' style={{width:'50%'}}>
           <Paper elevation={3} style={{padding:'10px'}}>
                   <span>Total No of Allocations : {this.state.totalallo}</span>
+              <Divider style={{margin:'2%'}}/>
               <Row>
             <Container>{this.state.comlist.map((com)=>(
                 <Container id={com._id}  className="border m-1" style={{borderRadius:"5px",backgroundColor:this.colorchange(com.status)}}>

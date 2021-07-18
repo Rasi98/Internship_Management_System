@@ -80,7 +80,6 @@ class StudentCV extends Component{
         const stuId = {
             id: this.props.stuid
         }
-        console.log(stuId)
         axios.post("http://localhost:5000/studentprofile/get", stuId)
             .then((res) => {
                 console.log(res)

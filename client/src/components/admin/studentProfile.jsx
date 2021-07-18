@@ -8,15 +8,20 @@ import StudentCV from "./studentCV";
 export default function StudentProfile() {
   const [ students,setStudents]  =useState([]) ;
   const [selectedstudent,setselectedstudent]=useState("");
-  // const [cvvisible,setcvvisible]=useState(false)
-    const [cvvisible,setcvvisible]=useState("")
 
 
   useEffect(()=>{
+      const arry=[]
     axios.get("http://localhost:5000/student/")
         .then((res)=>{
           setStudents(res.data)
           console.log(res.data)
+            res.data.forEach((item)=>{
+                if(item.cv==="submit"){
+                    arry.push(item)
+                }
+            })
+            setStudents(arry)
         })
         .catch(err=>{
           console.log(err)
@@ -25,7 +30,6 @@ export default function StudentProfile() {
 
     const showcv=(student)=>{
         setselectedstudent(student._id)
-        setcvvisible(student._id)
     }
 
 
@@ -50,7 +54,7 @@ export default function StudentProfile() {
                 </ListGroup>
               </Col>
               <Col className=" mt-1 mb-1"  sm={9}>
-                  {selectedstudent && <StudentCV show={cvvisible} stuid={selectedstudent}/>}
+                  {<StudentCV stuid={selectedstudent}/>}
               </Col>
             </Row>
           </Paper>

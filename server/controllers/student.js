@@ -15,8 +15,8 @@ export const getStudent = async (req, res) => {
 
 export const Addinterview=async (req,res)=>{
     const Id=req.body.stuid
-    console.log(Id)
-    const student=await Student.findById({Id})
+    console.log(req.body)
+    const student=await Student.findById({_id:Id})
     console.log(student)
     student.thirdyrexit=req.body.thirdyearexit
     student.specialization=req.body.specializearea

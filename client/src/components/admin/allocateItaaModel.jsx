@@ -84,7 +84,7 @@ export default function Allocateitaamodel (props) {
                 <Form>
                     <Form.Group controlId="exampleForm.SelectCustom">
                         <Form.Label>Select a student</Form.Label>
-                        <select className="form-control" id="drop" value={stuId} onChange={handlechange}>
+                        <select className="form-control" defaultValue={stuId} id="drop" onChange={handlechange}>
                             {StudentList}
                         </select>
                     </Form.Group>

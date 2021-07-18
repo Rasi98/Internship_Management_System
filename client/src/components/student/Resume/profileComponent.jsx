@@ -86,7 +86,8 @@ class ProfileComponent extends Component {
       refemail2:"",
       refphone2:"",
       disable: true,
-      exist:false
+      exist:false,
+      disablepre:true
     };
   }
 
@@ -244,7 +245,7 @@ class ProfileComponent extends Component {
             if (response == "success") {
               console.log("success");
               this.setState({disable: false});
-              console.log(this.state.disable);
+              this.setState({disablepre:false})
               const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -278,6 +279,7 @@ class ProfileComponent extends Component {
             if (response == "success") {
               console.log("success");
               this.setState({disable: false});
+              this.setState({disablepre:false})
               console.log(this.state.disable);
               const Toast = Swal.mixin({
                 toast: true,
@@ -320,8 +322,27 @@ class ProfileComponent extends Component {
     }
     axios.post("http://localhost:5000/student/cvstatus", stuId)
         .then((res)=>{
-          console.log(res.data)
+          console.log(res.data.result)
+          if(res.data.result==="submit"){
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Your profile Submitted successfully",
+            });
+          }
         })
+    this.setState({disable:true})
   }
 
 
@@ -1427,7 +1448,7 @@ class ProfileComponent extends Component {
                     to="/student/preview/"
                   >
                     <Button
-                      disabled={this.state.disable}
+                      disabled={this.state.disablepre}
                       id="previewbtn"
                       variant="contained"
                       color="primary"
