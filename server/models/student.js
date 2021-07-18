@@ -70,6 +70,23 @@ const studentSchema = new Schema({
   cv:{
     type:String,
     default:"Pending"
+  },
+  thirdyrexit:{
+    type:String,
+    default:"Pending"
+  },
+  specialization:{
+    type:String,
+    default:"Pending"
+  },
+  interest:{
+    type:[{
+      type:String
+    }]
+  },
+  interview:{
+    type:String,
+    default:"Pending"
   }
 });
 

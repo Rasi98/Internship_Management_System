@@ -13,6 +13,24 @@ export const getStudent = async (req, res) => {
   }
 };
 
+export const Addinterview=async (req,res)=>{
+    const Id=req.body.stuid
+    console.log(Id)
+    const student=await Student.findById({Id})
+    console.log(student)
+    student.thirdyrexit=req.body.thirdyearexit
+    student.specialization=req.body.specializearea
+    student.interest=req.body.interest
+    student.interview="submit"
+
+    try {
+        await student.save()
+        res.json({result: "submit"})
+    }catch (e) {
+        console.log(e)
+    }
+}
+
 export const createstudent = async (req, res) => {
   const studentData = req.body;
   const newStudent = new Student(studentData);
