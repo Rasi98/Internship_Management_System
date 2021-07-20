@@ -26,6 +26,8 @@
     "mailgen": "^2.0.14",
     "mongoose": "^5.11.16",
     "nodemailer": "^6.5.0",
+    "puppeteer": "^10.1.0",
+    "puppeteer-core": "^10.1.0",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {

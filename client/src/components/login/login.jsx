@@ -62,6 +62,7 @@ function SignIn() {
   const history = useHistory();
 
   const onSubmit = (data) => {
+      // pdfgen()
     const validuname = validator.trim(data.username);
     const validData = {
       username: validuname,
@@ -107,6 +108,19 @@ function SignIn() {
 
 
   };
+
+    // function pdfgen(){
+    //     const obj={
+    //         url:window.location.href
+    //     }
+    //     axios.post("http://localhost:5000/pdf/pdfgen",obj)
+    //         .then((res)=>{
+    //             console.log(res)
+    //         })
+    //         .catch((err)=>{
+    //             console.log(err)
+    //         })
+    // }
 
   return (
     <Container component="main" maxWidth="xs">

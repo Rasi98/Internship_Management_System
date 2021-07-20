@@ -29,6 +29,7 @@ import jwtDecode from "jwt-decode";
 class ProfileComponent extends Component {
   constructor(props) {
     super(props);
+    this.preview=this.preview.bind(this)
     this.state = {
       firstname: "",
       lastname: "",
@@ -87,16 +88,18 @@ class ProfileComponent extends Component {
       refphone2:"",
       disable: true,
       exist:false,
-      disablepre:true
+      disablepre:true,
+      studId:""
     };
   }
 
   componentDidMount() {
     const jwt=localStorage.getItem("token")
+    const id=jwtDecode(jwt)._id
     const stuId={
-      id:jwtDecode(jwt)._id
+      id:id
     }
-    console.log(stuId)
+    this.setState({studId:id})
     axios.post("http://localhost:5000/studentprofile/get",stuId)
         .then((res)=>{
           console.log(res)
@@ -343,6 +346,11 @@ class ProfileComponent extends Component {
           }
         })
     this.setState({disable:true})
+  }
+
+  preview(){
+    console.log(this.state.studId)
+    window.open("http://localhost:3000/student/preview/60f280df69f0311ae0520181")
   }
 
 
@@ -1443,19 +1451,16 @@ class ProfileComponent extends Component {
                   </Button>
                 </Col>
                 <Col xs={2}>
-                  <LinkContainer
-                    id="preview"
-                    to="/student/preview/"
-                  >
+
                     <Button
                       disabled={this.state.disablepre}
                       id="previewbtn"
                       variant="contained"
                       color="primary"
+                      onClick={this.preview}
                     >
                       Preview
                     </Button>
-                  </LinkContainer>
                 </Col>
                 <Col xs={4} />
               </Row>

@@ -12,15 +12,8 @@ import Swal from "sweetalert2";
 //Card component
 const Itpc = (props) => (
   <Card style={{ width: "20rem", position: "relative", margin: "auto" }}>
-    <div className="text-center">
-      <Card.Img
-        variant="top"
-        src="https://reactivitymedia.com/wp-content/uploads/2014/08/professional-woman-5.jpg"
-        style={{ width: "15rem", position: "relative" }}
-      />
-    </div>
     <Card.Body>
-      <Card.Title>{props.itpc.name}</Card.Title>
+      <Card.Title className='text-center'>{props.itpc.name}</Card.Title>
     </Card.Body>
     <ListGroup className="list-group-flush">
       <ListGroupItem>Email : {props.itpc.email}</ListGroupItem>
@@ -112,7 +105,7 @@ class userITPC extends Component {
           <Fab color="primary" aria-label="add" size="medium">
             <AddIcon onClick={() => this.setState({ showpopup: true })} />
           </Fab>
-          <h2 className="text-center m-3" style={{ fontSize: "1.5rem" }}>
+          <h2 className="text-center m-1" style={{ fontSize: "1.5rem" }}>
             Internship Placement Coordinators
           </h2>
           <div className="row d-flex justify-content-center">

@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import { Button, Container, Row, Col, Table } from "react-bootstrap";
+import {Button, Container, Row, Col, Table, FormControl} from "react-bootstrap";
 import Addstudent from "./addstudent";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Tabletop from "tabletop";
+import {TextField} from "@material-ui/core";
 
 const Student = (props) => (
   <tr className="text-center">
@@ -47,6 +48,7 @@ class userStudent extends Component {
     this.state = {
       showpopup: false,
       studentlist: [],
+      searchbox:''
     };
   }
 
@@ -98,15 +100,33 @@ class userStudent extends Component {
       }
     });
   }
-
+  //
+  // studentList() {
+  //   return this.state.studentlist.map((currentstudent) => {
+  //     return (
+  //       <Student
+  //         student={currentstudent}
+  //         deletestu={this.deleteStudent}
+  //         key={currentstudent._id}
+  //       />
+  //     );
+  //   });
+  // }
   studentList() {
-    return this.state.studentlist.map((currentstudent) => {
+    return this.state.studentlist.filter((val)=>{
+      if(this.state.searchbox==""){
+        return val
+      }
+      else if(val.name.toLowerCase().includes(this.state.searchbox.toLowerCase())){
+        return val
+      }
+    }).map((currentstudent) => {
       return (
-        <Student
-          student={currentstudent}
-          deletestu={this.deleteStudent}
-          key={currentstudent._id}
-        />
+          <Student
+              student={currentstudent}
+              deletestu={this.deleteStudent}
+              key={currentstudent._id}
+          />
       );
     });
   }
@@ -230,6 +250,8 @@ class userStudent extends Component {
           <Container>
             <Row style={{ float: "right", marginBottom: "10px" }}>
               <Col>
+                <FormControl size="sm" type="searchbox" placeholder="Search..." onChange={(e)=>{this.setState({searchbox:e.target.value})}} />
+              </Col>
                 <Button
                   className="btn-sm"
                   style={{ margin: "2px", width: "80px" }}
@@ -256,7 +278,6 @@ class userStudent extends Component {
                 >
                   Delete all
                 </Button>
-              </Col>
             </Row>
           </Container>
           <Table bordered hover>

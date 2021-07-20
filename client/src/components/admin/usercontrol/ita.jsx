@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import{Button,Container,Row,Col,Table} from "react-bootstrap"
+import {Button, Container, Row, Col, Table, FormControl} from "react-bootstrap"
 import Addita from "./addita";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
@@ -45,6 +45,7 @@ class userIta extends Component {
     this.state = {
       ita: [],
       showpopup: false,
+      searchbox:''
     };
   }
 
@@ -82,7 +83,14 @@ class userIta extends Component {
   }
 
   itaList() {
-    return this.state.ita.map((currentita) => {
+    return this.state.ita.filter((val)=>{
+      if(this.state.searchbox==""){
+        return val
+      }
+      else if(val.name.toLowerCase().includes(this.state.searchbox.toLowerCase())){
+        return val
+      }
+    }).map((currentita) => {
       return (
         <ITA ita={currentita} deleteita={this.deleteita} key={currentita._id} />
       );
@@ -136,6 +144,8 @@ class userIta extends Component {
           <Container>
             <Row style={{ float: "right", marginBottom: "15px" }}>
               <Col>
+                <FormControl size="sm" type="searchbox" placeholder="Search..." onChange={(e)=>{this.setState({searchbox:e.target.value})}} />
+              </Col>
                 <Button
                     className="btn-sm"
                     style={{ margin: "2px", width: "80px" }}
@@ -154,7 +164,6 @@ class userIta extends Component {
                 >
                   Delete all
                 </Button>
-              </Col>
             </Row>
           </Container>
           <Table bordered hover>

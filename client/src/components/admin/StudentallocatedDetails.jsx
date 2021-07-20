@@ -23,6 +23,7 @@ export default function Editable() {
         axios.get("http://localhost:5000/student/")
             .then((res)=>{
                 setStudents(res.data)
+                console.log(res.data)
             })
             .catch(err=>{
                 console.log(err)
@@ -154,9 +155,14 @@ export default function Editable() {
         getAllocatedCompanies(selectedStudent);
     }
 
-    let filterstudent=students.filter((stu)=>{
-        return stu.staffintmarks.toLowerCase().includes(filterinput.toLowerCase())
-
+    let filterstudent=students.filter((stu)=> {
+        if (filterinput === "") {
+            return stu
+        } else{
+            let arrylist=stu.interest.find((e)=>e.toLowerCase()===filterinput.toLowerCase())
+            return arrylist
+        }
+        //return stu.staffintmarks.toLowerCase().includes(filterinput.toLowerCase())
     })
 
     return (

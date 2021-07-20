@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Navbar from "../Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import {Button,Container,Row,Col,Table} from "react-bootstrap";
+import {Button, Container, Row, Col, Table, FormControl} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Addhrm from "./addhrm";
 import Swal from "sweetalert2";
@@ -43,6 +43,7 @@ class userHrm extends Component {
     this.state = {
       hrm: [],
       showpopup: false,
+      searchbox:''
     };
   }
 
@@ -80,7 +81,14 @@ class userHrm extends Component {
   }
 
   hrmList() {
-    return this.state.hrm.map((currenthrm) => {
+    return this.state.hrm.filter((val)=>{
+      if(this.state.searchbox==""){
+        return val
+      }
+      else if(val.name.toLowerCase().includes(this.state.searchbox.toLowerCase())){
+        return val
+      }
+    }).map((currenthrm) => {
       return (
         <HRM hrm={currenthrm} deletehrm={this.deletehrm} key={currenthrm._id} />
       );
@@ -134,6 +142,8 @@ class userHrm extends Component {
           <Container>
             <Row style={{ float: "right", marginBottom: "15px" }}>
               <Col>
+                <FormControl size="sm" type="searchbox" placeholder="Search..." onChange={(e)=>{this.setState({searchbox:e.target.value})}} />
+              </Col>
                 <Button
                     className="btn-sm"
                     style={{ margin: "2px", width: "80px" }}
@@ -152,7 +162,6 @@ class userHrm extends Component {
                 >
                   Delete all
                 </Button>
-              </Col>
             </Row>
           </Container>
           <Table bordered hover>

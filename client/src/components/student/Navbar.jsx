@@ -17,6 +17,7 @@ class Navbarstd extends Component {
   render() {
     const jwt=localStorage.getItem("token")
     const name=jwtDecode(jwt).name;
+    const stuid=jwtDecode(jwt)._id;
     return (
       <Navbar
         collapseOnSelect
@@ -43,7 +44,7 @@ class Navbarstd extends Component {
               <LinkContainer to="/student/profile">
                 <NavDropdown.Item>MAKE/EDIT</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/student/preview/">
+              <LinkContainer to={"/student/preview/"+stuid}>
                 <NavDropdown.Item>VIEW</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>

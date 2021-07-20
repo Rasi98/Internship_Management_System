@@ -48,7 +48,7 @@ const App = () => {
           {/*ITA routes*/}
           <Route path="/ita" component={HomeIta}/>
           {/*student routes*/}
-          <Route path="/student/preview/" component={Profileview} />
+          <Route path="/student/preview/:id" component={Profileview} />
           <Route path="/student/interview" component={Interview} />
           <Route path="/student/profile" component={Profile} />
           <Route path="/student" component={HomeStudent}/>
