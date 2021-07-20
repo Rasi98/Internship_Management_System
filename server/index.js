@@ -20,6 +20,7 @@ import hrmRouter from "./routes/usercontrol/hrm.js";
 import stu_profile_router from "./routes/StudentRoutes/profile.js";
 import allocatecompany from "./routes/allocations/companyAllocate.js"
 import itaaAllocate from "./routes/allocations/itaaAllocate.js";
+import pdfgen from "./routes/pdfgen.js";
 
 
 app.use("/company", companyRouter);
@@ -33,6 +34,7 @@ app.use("/hrm", hrmRouter);
 app.use("/studentprofile", stu_profile_router);
 app.use("/companyallocate",allocatecompany);
 app.use("/itaaallocate",itaaAllocate);
+app.use("/pdf",pdfgen);
 
 const port = process.env.port || 5000;
 const uri =

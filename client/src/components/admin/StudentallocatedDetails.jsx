@@ -23,7 +23,6 @@ export default function Editable() {
         axios.get("http://localhost:5000/student/")
             .then((res)=>{
                 setStudents(res.data)
-                console.log(res.data)
             })
             .catch(err=>{
                 console.log(err)
@@ -157,6 +156,7 @@ export default function Editable() {
 
     let filterstudent=students.filter((stu)=>{
         return stu.staffintmarks.toLowerCase().includes(filterinput.toLowerCase())
+
     })
 
     return (
@@ -169,14 +169,17 @@ export default function Editable() {
                 <Col className=" border mt-1 mb-1" style={{overflowY:"auto",maxHeight:"500px",borderRadius:"10px"}}  sm={4}>
                     <div className='text-center'>
                     <TextField onChange={handleFilterInput} id="outlined-search" label="Filter" style={{marginTop:'8px',marginBottom:'2px'}} type="search" size="small" variant="outlined" />
-                    <Divider style={{margin:'3px'}}/>
+                        <Divider style={{margin:'3px'}}/>
                     </div>
                     <ListGroup  style={{padding:"3px"}}>
                         {filterstudent.map((student)=>(
                             <Container id={student._id}  className="border m-1" style={{borderRadius:"5px"}}>
                                 <div style={{cursor:"pointer"}} onClick={()=>getAllocatedCompanies(student)}>
                                 <Row className="pl-2 pt-2"> <h6>{student.name}</h6></Row>
-                                <Row className="pl-2 pb-2"><span style={{fontSize:"12px"}}>{student.stuno} | {student.staffintmarks}</span></Row>
+                                <Row className="pl-2 pb-2"><span style={{fontSize:"12px"}}>{student.stuno} | {student.staffintmarks} |  {student.interest.map((i)=>(
+                                    <span className="pr-2" style={{fontSize:"12px"}}>{i}</span>
+                                ))}</span></Row>
+
                                 </div>
                             </Container>
                         ))}

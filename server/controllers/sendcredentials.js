@@ -66,3 +66,34 @@ export const Staffinteviewemail = (email,msg) => {
         }
     });
 }
+export const Email = (email,msg,subject) => {
+    const body1 =msg;
+    let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "lakshanmit17@gmail.com", // generated ethereal user
+            pass: "Rasingollamit17/18", // generated ethereal password
+        },
+        tls: {
+            rejectUnauthorized: false,
+        },
+    });
+    let mailOptions = {
+        from: '"MIT | Internship Portal" lakshanmit17@gmail.com', // sender address
+        to: email, // list of receivers
+        subject: subject, // Subject line
+        text: "", // plain text body
+        html: body1, // html body
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        } else {
+            console.log("Message sent: %s", info.messageId);
+            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+            res.status(201).json({result:"sent"});
+
+        }
+    });
+}

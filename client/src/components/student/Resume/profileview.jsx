@@ -11,9 +11,10 @@ import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 import PersonIcon from '@material-ui/icons/Person';
 import WorkIcon from '@material-ui/icons/Work';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {Avatar, ListItem, ListItemAvatar, ListItemText, Paper} from "@material-ui/core";
+import {ListItem, ListItemText, Paper} from "@material-ui/core";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
+
 
 class Profileview extends Component{
     constructor(props) {
@@ -148,12 +149,39 @@ class Profileview extends Component{
             })
     }
 
+
+    // pdfgen(){
+    //     const obj={
+    //         url:window.location.href
+    //     }
+    //     axios.post("http://localhost:5000/pdf/pdfgen",obj)
+    //         .then((res)=>{
+    //             console.log(res)
+    //         })
+    //         .catch((err)=>{
+    //             console.log(err)
+    //         })
+    // }
+    // printDocument() {
+    //     const input = document.getElementById('cv');
+    //     html2canvas(input)
+    //         .then((canvas) => {
+    //             const imgData = canvas.toDataURL('image/png');
+    //             const pdf = new jsPDF();
+    //             pdf.addImage(imgData, 'JPEG',0,0,200,200);
+    //             // pdf.output('dataurlnewwindow');
+    //             pdf.save("download.pdf");
+    //         })
+    //     ;
+    // }
+
     render() {
         return(
             <React.Fragment>
                 <Navbar/>
                 <h3 className='text-center'>MY CV</h3>
-                <Container id='cv' className="mt-4 border" style={{padding:"15px",borderRadius:"10px"}}>
+                   <Button onClick={this.createPDF}>PDF</Button>
+                <Container id='cv' className="mt-4 border " style={{borderRadius:"10px"}}>
                     {/*<Row className='m-3'>*/}
                     {/*    <Row>*/}
                     {/*    <Avatar alt="Remy Sharp" src="https://thumbs.dreamstime.com/b/corporate-profile-photo-professional-businessman-executive-arms-folded-boardroom-45082954.jpg" style={{width:'100px',height:'100px'}} />*/}

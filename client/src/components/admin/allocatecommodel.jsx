@@ -34,8 +34,10 @@ export default function Allocatecommodel (props) {
     }
    const onAllocate=(e)=> {
        const allocateobj={
-           studentid:props.student._id,//change stuid
+           studentid:props.student._id,
            companyid:comId,
+           companyname:comname,
+           stuemail:props.student.email
        }
        console.log(allocateobj)
        axios.post("http://localhost:5000/companyallocate/add",allocateobj)

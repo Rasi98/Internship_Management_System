@@ -1,9 +1,15 @@
 import Allocate from "../models/allocated.js"
 import Student from "../models/student.js";
+import {Email} from "./sendcredentials.js"
 
 export const allocateCompany=async (req,res)=>{
     const existobj=await Allocate.findOne({student:req.body.studentid,company:req.body.companyid})
     console.log(existobj);
+    console.log(req.body)
+    const stuemail=req.body.stuemail
+    const comname=req.body.companyname
+    const msg="You have Alloacted for "+comname+". Visit MIT Internship Portal for more information."
+    const subject="New Internship Allocation"
     if(existobj==null){
             const allocateobj = new Allocate({
                 student: req.body.studentid,
@@ -12,6 +18,7 @@ export const allocateCompany=async (req,res)=>{
             try{
                await allocateobj.save()
                     .then(() => {
+                        Email(stuemail,msg,subject)
                         res.status(200).json({result:"allocated"});
                     })
             }
