@@ -6,6 +6,8 @@ import {Button, Container, Row, Col, Table, FormControl} from "react-bootstrap"
 import Addita from "./addita";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import {CSVLink} from "react-csv";
+
 
 const ITA = (props) => (
   <tr className="text-center">
@@ -45,15 +47,32 @@ class userIta extends Component {
     this.state = {
       ita: [],
       showpopup: false,
-      searchbox:''
+      searchbox:'',
+      datalist:[]
     };
   }
 
   componentDidMount() {
+    let arry=[]
     axios
       .get("http://localhost:5000/ita/")
       .then((Response) => {
         this.setState({ ita: Response.data });
+        console.log(Response.data)
+        if(Response.data.length!==0){
+          Response.data.forEach((item)=>{
+            const obj={
+              Name:item.name,
+              Email:item.email,
+              Phone:item.phone,
+              Company:item.company,
+              Position:item.designation,
+              Allocated_Intern:item.stuname
+            }
+            arry.push(obj)
+          })
+          this.setState({datalist:arry})
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -140,7 +159,7 @@ class userIta extends Component {
       <div>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">ITA List</h3>
+          <h3 style={{fontFamily: 'Assistant'}}>Training Advisor</h3>
           <Container>
             <Row style={{ float: "right", marginBottom: "15px" }}>
               <Col>
@@ -156,7 +175,8 @@ class userIta extends Component {
                 >
                   Add
                 </Button>
-                <Button
+              <CSVLink data={this.state.datalist} style={{ margin: "2px", width: "80px" }} className="btn btn-sm btn-info"  filename={"ITAList.csv"}>Download</CSVLink>
+              <Button
                     className="btn-sm"
                     style={{ margin: "2px", width: "80px" }}
                     onClick={this.deleteall}

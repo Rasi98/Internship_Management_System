@@ -122,7 +122,14 @@ class Contactcompany extends Component {
 
 
   hrmList() {
-    return this.state.hrm.map((currenthrm) => {
+    return this.state.hrm.filter((val)=>{
+      if(this.state.input1===""){
+        return val
+      }
+      else if(val.status.toLowerCase().includes(this.state.input1.toLowerCase())){
+        return val
+      }
+    }).map((currenthrm) => {
       return (
         <HRM
           hrm={currenthrm}
@@ -149,7 +156,9 @@ class Contactcompany extends Component {
                 <th>Company</th>
                 <th>Department</th>
                 <th><span>Status</span><br/><div>
-                  <TextField onChange={this.oninputchange} id="outlined-search" label="Filter" style={{marginTop:'8px',marginBottom:'2px'}} type="search" size="small" variant="outlined" />
+                  <TextField onChange={(e)=>{
+                    this.setState({input1:e.target.value})
+                  }} id="outlined-search" label="Filter" style={{marginTop:'8px',marginBottom:'2px'}} type="search" size="small" variant="outlined" />
                 </div></th>
                 <th>Actions</th>
               </tr>

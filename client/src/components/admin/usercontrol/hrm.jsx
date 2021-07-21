@@ -6,6 +6,8 @@ import {Button, Container, Row, Col, Table, FormControl} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Addhrm from "./addhrm";
 import Swal from "sweetalert2";
+import {CSVLink} from "react-csv";
+
 
 const HRM = (props) => (
   <tr className="text-center">
@@ -43,15 +45,32 @@ class userHrm extends Component {
     this.state = {
       hrm: [],
       showpopup: false,
-      searchbox:''
+      searchbox:'',
+      datalist:[]
     };
   }
 
   componentDidMount() {
+    let arry=[]
     axios
       .get("http://localhost:5000/hrm/")
       .then((Response) => {
         this.setState({ hrm: Response.data });
+        console.log(Response.data)
+        if(Response.data.length!==0){
+          Response.data.forEach((item)=>{
+            const obj={
+              Name:item.name,
+              Email:item.email,
+              Phone:item.phone,
+              Company:item.company,
+              Department:item.department,
+              Position:item.designation
+            }
+            arry.push(obj)
+          })
+          this.setState({datalist:arry})
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -138,7 +157,7 @@ class userHrm extends Component {
       <div>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">HRM List</h3>
+          <h3 style={{fontFamily: 'Assistant'}}>HR Manager</h3>
           <Container>
             <Row style={{ float: "right", marginBottom: "15px" }}>
               <Col>
@@ -154,7 +173,8 @@ class userHrm extends Component {
                 >
                   Add
                 </Button>
-                <Button
+              <CSVLink data={this.state.datalist} style={{ margin: "2px", width: "80px" }} className="btn btn-sm btn-info"  filename={"ContactPersonList.csv"}>Download</CSVLink>
+              <Button
                     className="btn-sm"
                     style={{ margin: "2px", width: "80px" }}
                     variant="danger"

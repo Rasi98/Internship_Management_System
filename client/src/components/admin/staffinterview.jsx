@@ -7,10 +7,12 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 import axios from "axios";
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {Paper} from "@material-ui/core";
+import {CSVLink} from "react-csv";
 
 
 class StaffInterview extends Component {
     state ={
+        datalist:[],
         btnval:"Update",
         data:[],
         columns : [{
@@ -70,6 +72,7 @@ class StaffInterview extends Component {
 
     componentDidMount() {
         this.state.data=[]
+        let arry=[]
         axios.get("http://localhost:5000/student/")
             .then((res)=>{
                 console.log(res.data)
@@ -84,11 +87,21 @@ class StaffInterview extends Component {
                         interview:a.staffInterview,
                         staffintmarks:a.staffintmarks,
                 }
+                const obj={
+                        Name:a.name,
+                    Stu_NO:a.stuno,
+                    Email:a.email,
+                    Interview:a.staffInterview,
+                    Marks:a.staffintmarks
+                }
+                arry.push(obj)
                 preall.push(interview)
                     this.setState({
                         data:preall
                     })
+
                 })
+                this.setState({datalist:arry})
 
             })
             .catch((err)=>{
@@ -152,11 +165,13 @@ class StaffInterview extends Component {
             <div>
                 <Navbar/>
                 <div className="container mt-4">
-                <h3 className="text-center" style={{marginBottom:"20px"}}>Staff Interview</h3>
+                <h3 className="text-center" style={{marginBottom:"20px",fontFamily: 'Assistant'}}>Staff Interview</h3>
                     <Container>
                         <Row style={{ float: "right", marginBottom: "15px" }}>
                             <Col>
-                            <Button id="updatebtn" onClick={this.onbtnclick}>{this.state.btnval}</Button>
+                            <Button className="btn btn-sm btn-primary" id="updatebtn" onClick={this.onbtnclick}>{this.state.btnval}</Button>
+                                <CSVLink data={this.state.datalist} style={{ margin: "2px", width: "80px" }} className="btn btn-sm btn-info"  filename={"StaffInterview.csv"}>Download</CSVLink>
+
                             </Col>
                         </Row>
                     </Container>

@@ -7,7 +7,9 @@ import Addstudent from "./addstudent";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Tabletop from "tabletop";
+import {CSVLink} from "react-csv";
 import {TextField} from "@material-ui/core";
+
 
 const Student = (props) => (
   <tr className="text-center">
@@ -48,19 +50,40 @@ class userStudent extends Component {
     this.state = {
       showpopup: false,
       studentlist: [],
-      searchbox:''
+      searchbox:'',
+      datalist:[]
     };
   }
 
   componentDidMount() {
+   this.getStudentData()
+  }
+  getStudentData(){
+    let arry=[]
     axios
-      .get("http://localhost:5000/student/")
-      .then((Response) => {
-        this.setState({ studentlist: Response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .get("http://localhost:5000/student/")
+        .then((Response) => {
+          this.setState({ studentlist: Response.data });
+              if(Response.data.length!==0){
+          Response.data.forEach((item)=>{
+            const obj={
+              Name:item.name,
+              Stu_No:item.stuno,
+              Email:item.email,
+              DOB:item.dob,
+              Address:item.address,
+              Phone:item.mobile,
+              Gender:item.gender
+            }
+            arry.push(obj)
+          })
+          this.setState({datalist:arry})
+          console.log("test",this.state.datalist)
+              }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }
 
   deleteStudent(id) {
@@ -100,21 +123,10 @@ class userStudent extends Component {
       }
     });
   }
-  //
-  // studentList() {
-  //   return this.state.studentlist.map((currentstudent) => {
-  //     return (
-  //       <Student
-  //         student={currentstudent}
-  //         deletestu={this.deleteStudent}
-  //         key={currentstudent._id}
-  //       />
-  //     );
-  //   });
-  // }
+
   studentList() {
     return this.state.studentlist.filter((val)=>{
-      if(this.state.searchbox==""){
+      if(this.state.searchbox===""){
         return val
       }
       else if(val.name.toLowerCase().includes(this.state.searchbox.toLowerCase())){
@@ -239,6 +251,8 @@ class userStudent extends Component {
     });
   }
 
+
+
   render() {
     let popupclose = () => this.setState({ showpopup: false });
 
@@ -246,7 +260,7 @@ class userStudent extends Component {
       <div>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">Student List</h3>
+          <h3 style={{fontFamily: 'Assistant'}}>Student</h3>
           <Container>
             <Row style={{ float: "right", marginBottom: "10px" }}>
               <Col>
@@ -270,6 +284,15 @@ class userStudent extends Component {
                 >
                   Import
                 </Button>
+              {/*<Button*/}
+              {/*    className="btn-sm"*/}
+              {/*    style={{ margin: "2px", width: "80px" }}*/}
+              {/*    variant="success"*/}
+              {/*    onClick={this.createPDF}*/}
+              {/*>*/}
+              {/*  Download*/}
+              {/*</Button>*/}
+              <CSVLink data={this.state.datalist} style={{ margin: "2px", width: "80px" }} className="btn btn-sm btn-info"  filename={"StudentList.csv"}>Download</CSVLink>
                 <Button
                   className="btn-sm"
                   style={{ margin: "2px", width: "80px" }}
@@ -280,7 +303,7 @@ class userStudent extends Component {
                 </Button>
             </Row>
           </Container>
-          <Table bordered hover>
+          <Table id='stutable' bordered hover>
             <thead>
               <tr className="text-center">
                 <th>Name</th>

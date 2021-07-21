@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-// import Navbar from '../Navbar.jsx'
 import {Button, Col, Container, Row} from "react-bootstrap";
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
@@ -154,40 +153,28 @@ class Profileview extends Component{
         }
         axios.post("http://localhost:5000/pdf/pdfgen",obj)
             .then((res)=>{
-                console.log(res)
+
             })
             .catch((err)=>{
                 console.log(err)
             })
     }
-    // printDocument() {
-    //     const input = document.getElementById('cv');
-    //     html2canvas(input)
-    //         .then((canvas) => {
-    //             const imgData = canvas.toDataURL('image/png');
-    //             const pdf = new jsPDF();
-    //             pdf.addImage(imgData, 'JPEG',0,0,200,200);
-    //             // pdf.output('dataurlnewwindow');
-    //             pdf.save("download.pdf");
-    //         })
-    //     ;
-    // }
+
 
     render() {
         return(
             <React.Fragment>
-                {/*<Navbar/>*/}
-                <h3 className='text-center'>MY CV</h3>
-                   <Button onClick={this.pdfgen}>PDF</Button>
-                <div id='#cv'>
+                   <Button id="printbutton" onClick={this.pdfgen}>PDF</Button>
+                <div >
                 <Container className='border' style={{borderRadius:"10px"}}>
                     <h3 className='text-center m-3' style={{color:"#2E86C1"}}>{this.state.firstname} {this.state.lastname}</h3>
-                    <Row>
+                    <Row  id='mycv'>
                         <Col>
                             <center>
                             <Paper elevation={3} style={{padding:"1px",margin:'5px',width:"400px",height:"auto"}}>
+                                <div className='border' style={{borderRadius:'10px'}}>
                                 <h5 style={{color:"#2E86C1",margin:'3px'}} className='text-center'>Profile</h5>
-                                <Divider  style={{margin:'2%'}}/>
+                                <hr  style={{margin:'2%'}}/>
                                 <ListItem>
                                     <EmailIcon color="primary"/>
                                     <ListItemText style={{marginLeft:'5px'}} primary={this.state.email}/>
@@ -208,11 +195,12 @@ class Profileview extends Component{
                                     <LinkedInIcon color="primary"/>
                                     <ListItemText style={{marginLeft:'5px'}} primary={this.state.linkedin}/>
                                 </ListItem>
-
+                                </div>
                             </Paper>
                             <Paper elevation={3} style={{padding:"1px",margin:'5px',width:"400px",height:"auto"}}>
+                                <div className='border' style={{borderRadius:'10px'}}>
                                 <h5 style={{color:"#2E86C1",margin:'3px'}} className='text-center'>Academic Qualifications</h5>
-                                <Divider  style={{margin:'2%'}}/>
+                                <hr  style={{margin:'2%'}}/>
                                 <ListItem>
                                     <SchoolIcon color="primary"/>
                                     <ListItemText style={{marginLeft:'5px'}} primary={this.state.college} secondary={
@@ -233,11 +221,12 @@ class Profileview extends Component{
                                         </div>
                                     }/>
                                 </ListItem>
-
+                                </div>
                             </Paper>
                             <Paper elevation={3} style={{padding:"1px",margin:'5px',width:"400px",height:"auto"}}>
+                                <div className='border' style={{borderRadius:'10px'}}>
                                 <h5 style={{color:"#2E86C1",margin:'3px'}} className='text-center'>Referees</h5>
-                                <Divider  style={{margin:'2%'}}/>
+                                <hr  style={{margin:'2%'}}/>
                                 <ListItem>
                                     <PersonIcon color="primary"/>
                                     <ListItemText style={{marginLeft:'5px'}} primary={this.state.refname1} secondary={
@@ -258,14 +247,16 @@ class Profileview extends Component{
                                         </div>
                                     }/>
                                 </ListItem>
+                                </div>
                             </Paper>
                             </center>
                         </Col>
                         <Col>
                             <center>
                             <Paper elevation={3} style={{padding:"1px",margin:'5px',width:"400px",height:"auto"}}>
+                                <div className='border' style={{borderRadius:'10px'}}>
                                 <h5 style={{color:"#2E86C1",margin:'3px'}} className='text-center'>Work Experience</h5>
-                                <Divider  style={{margin:'2%'}}/>
+                                <hr  style={{margin:'2%'}}/>
                                 <ListItem>
                                     <WorkIcon color="primary"/>
                                     <ListItemText style={{marginLeft:'5px'}} primary={this.state.institute1} secondary={
@@ -286,11 +277,12 @@ class Profileview extends Component{
                                         </div>
                                     }/>
                                 </ListItem>
-
+                                </div>
                             </Paper>
                             <Paper elevation={3} style={{padding:"1px",margin:'5px',width:"400px",height:"auto"}}>
+                                <div className='border' style={{borderRadius:'10px'}}>
                                 <h5 style={{color:"#2E86C1",margin:'3px'}} className='text-center'>Projects</h5>
-                                <Divider  style={{margin:'2%'}}/>
+                                <hr  style={{margin:'2%'}}/>
                                 <ListItem>
                                     <AssignmentIcon color="primary"/>
                                     <ListItemText style={{marginLeft:'5px'}} primary={this.state.title1} secondary={
@@ -318,11 +310,12 @@ class Profileview extends Component{
                                         </div>
                                     }/>
                                 </ListItem>
-
+                                </div>
                             </Paper>
                             <Paper elevation={3} style={{padding:"1px",margin:'5px',width:"400px",height:"auto"}}>
+                                <div className='border' style={{borderRadius:'10px'}}>
                                 <h5 style={{color:"#2E86C1",margin:'3px'}} className='text-center'>Skills</h5>
-                                <Divider  style={{margin:'2%'}}/>
+                                <hr  style={{margin:'2%'}}/>
                                 <Row>
                                 <Col>
                                     <h6 className='text-center' style={{color:"#2E86C1"}} >Soft skills</h6>
@@ -347,6 +340,7 @@ class Profileview extends Component{
                                     </ul>
                                 </Col>
                                 </Row>
+                                </div>
                             </Paper>
                             </center>
                         </Col>

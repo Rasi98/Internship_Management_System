@@ -4,6 +4,19 @@ const Schema = mongoose.Schema;
 
 const studentprofileSchema = new Schema({
   // Personal Profile Details...
+  comment:{
+    type:[{
+      type:String
+    }]
+  },
+  newlength:{
+    type:Number,
+    default:0
+  },
+  pastlength:{
+    type:Number,
+    default:0
+  },
   studentId:{type:String,required:true},
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },

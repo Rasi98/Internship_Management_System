@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, FormControl, FormGroup, FormLabel, Row} from "react-bootstrap";
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import HomeIcon from '@material-ui/icons/Home';
@@ -17,6 +17,7 @@ class StudentCV extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            comment:'',
             firstname: "",
             lastname: "",
             email: "",
@@ -216,6 +217,21 @@ class StudentCV extends Component{
         }
     }
 
+    sendcomment=()=>{
+        const obj={
+            id:this.props.stuid,
+            comment:this.state.comment
+        }
+        console.log(obj)
+        axios.post("http://localhost:5000/student/comment",obj)
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+    }
+
 
     render() {
         return(
@@ -392,6 +408,19 @@ class StudentCV extends Component{
                                 </Row>
                             </Paper>
                         </Col>
+                    </Row>
+                    <Row>
+                        <div  style={{width:'50%'}}>
+                        <FormGroup className="mb-3"  controlId="exampleForm.ControlTextarea1">
+                                <FormLabel>Comment</FormLabel>
+                                <FormControl as="textarea" onChange={(e)=>{
+                                    this.setState({comment:e.target.value})
+                                }} rows={4} />
+                        </FormGroup>
+                            <div className='text-center'>
+                                <Button onClick={this.sendcomment}>Send</Button>
+                            </div>
+                        </div>
                     </Row>
                 </Container>
             </React.Fragment>

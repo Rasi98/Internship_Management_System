@@ -1,4 +1,5 @@
 import Student from "../models/student.js"
+import StudentProfile from "../models/studentprofile.js";
 import Allocatecompany from "../models/allocated.js"
 import generator from "generate-password";
 import {sendMail,Staffinteviewemail} from "../controllers/sendcredentials.js";
@@ -163,4 +164,20 @@ export const CVStatusUpdate=async (req,res)=>{
     console.log(req.body.id)
         await Student.findByIdAndUpdate({_id: req.body.id}, {cv: "submit"})
         res.json({result: "submit"})
+}
+
+export const Addcomment=async (req,res)=>{
+    console.log(req.body)
+    const profile=await StudentProfile.find({studentId: req.body.id})
+    console.log(profile.firstname)
+
+
+
+
+    // if(profile.length!==0){
+    //     res.status(200).json(profile)
+    // }
+    // else if(profile.length===0){
+    //     res.status(202).json({msg:"no"})
+    // }
 }

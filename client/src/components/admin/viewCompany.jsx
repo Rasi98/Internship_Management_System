@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Swal from "sweetalert2";
-import {Button,Table} from "react-bootstrap";
+import {Button, Container, Row, Table} from "react-bootstrap";
+import {CSVLink} from "react-csv";
+
 
 const Company = (props) => (
   <tr className="text-center">
@@ -41,15 +43,30 @@ class Viewcompany extends Component {
     this.deleteCompany = this.deleteCompany.bind(this);
     this.state = {
       companies: [],
+      datalist:[]
     };
   }
 
   componentDidMount() {
+    let arry=[]
     axios
       .get("http://localhost:5000/company/")
       .then((Response) => {
         this.setState({ companies: Response.data });
-        console.log(Response);
+        console.log(Response.data);
+        if(Response.data.length!==0){
+          Response.data.forEach((a)=>{
+            const obj={
+              Name:a.name,
+              Email:a.email,
+              Address:a.address,
+              Phone:a.phone,
+              Type:a.type
+            }
+            arry.push(obj)
+          })
+          this.setState({datalist:arry})
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -95,9 +112,14 @@ class Viewcompany extends Component {
       <div>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center" style={{marginBottom:"20px"}}>
+          <h3 className="text-center" style={{marginBottom:"20px",fontFamily: 'Assistant'}}>
             Company List
           </h3>
+          <Container>
+            <Row style={{ float: "right", marginBottom: "10px" }}>
+              <CSVLink data={this.state.datalist} style={{ margin: "2px", width: "80px" }} className="btn btn-sm btn-info"  filename={"CompanyList.csv"}>Download</CSVLink>
+            </Row>
+          </Container>
 
           <Table bordered hover>
             <thead>

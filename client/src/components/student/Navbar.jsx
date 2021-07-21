@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {Navbar, Nav, NavDropdown, Button} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import jwtDecode from "jwt-decode";
+import MailIcon from '@material-ui/icons/Mail';
+import Badge from '@material-ui/core/Badge';
 
 class Navbarstd extends Component {
   constructor(props) {
@@ -53,8 +55,11 @@ class Navbarstd extends Component {
             </LinkContainer>
           </Nav>
           <Nav>
+            <Badge className='mt-2 mr-2' badgeContent={4} color="error">
+              <MailIcon style={{ color:'white'}} />
+            </Badge>
             <LinkContainer to="/student">
-              <Nav.Link>{name}</Nav.Link>
+              <Nav.Link className='mr-1'>{name}</Nav.Link>
             </LinkContainer>
             <Button variant="outline-info" className="m-1" onClick={this.logout}>LOGOUT</Button>
           </Nav>
