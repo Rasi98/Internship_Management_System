@@ -55,7 +55,12 @@ class Home extends Component {
         axios.post("http://localhost:5000/ita/getita",obj)
             .then((res)=>{
                 console.log(res.data.result)
-                this.setState({italist:res.data.result})
+                if(res.data.result==="false"){
+                    this.setState({italist:[]})
+                }
+                else{
+                    this.setState({italist:res.data.result})
+                }
             })
             .catch((err)=>{
                 console.log(err)
@@ -127,6 +132,34 @@ class Home extends Component {
             return"#FF00FF"
         else if(state==="selected")
             return "#82E0AA"
+    }
+
+    ITAList=()=>{
+        if(this.state.italist.length!==0){
+            return this.state.italist.map((ita) => {
+                return (
+                    <Container id={ita._id}  className="border mb-2" style={{borderRadius:"5px"}}>
+                        <div>
+                            <Row className="pl-2 pt-2">
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <PersonIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary={ita.name} secondary={
+                                        <div>
+                                            <div>{ita.designation}</div>
+                                            <div>{ita.company}</div>
+                                            <div>{ita.email}</div>
+                                            <div>{ita.phone}</div>
+                                        </div>
+                                    } />
+                                </ListItem>
+                            </Row>
+                        </div>
+                    </Container>
+                );
+            });
+        }
     }
 
     render() {
@@ -265,31 +298,11 @@ class Home extends Component {
                                 <h5 className='text-center'>Training Advisor</h5>
                                 <Divider style={{margin:'3%'}}/>
                                 <Row>
-                                    <Container>{this.state.italist.map((ita)=>(
-                                        <Container id={ita._id}  className="border mb-2" style={{borderRadius:"5px"}}>
-                                            <div>
-                                                <Row className="pl-2 pt-2">
-                                                    <ListItem>
-                                                        <ListItemIcon>
-                                                            <PersonIcon />
-                                                        </ListItemIcon>
-                                                        <ListItemText primary={ita.name} secondary={
-                                                            <div>
-                                                                <div>{ita.designation}</div>
-                                                                <div>{ita.company}</div>
-                                                                <div>{ita.email}</div>
-                                                                <div>{ita.phone}</div>
-                                                            </div>
-                                                        } />
-                                                    </ListItem>
-                                                </Row>
-                                            </div>
-                                        </Container>
-                                    ))}
+                                    <Container>
+                                        {/*{this.ITAList()}*/}
                                     </Container>
                                 </Row>
                             </Paper>
-
                         </Col>
                     </Row>
                 </div>

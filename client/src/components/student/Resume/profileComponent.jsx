@@ -29,7 +29,7 @@ import jwtDecode from "jwt-decode";
 class ProfileComponent extends Component {
   constructor(props) {
     super(props);
-    this.preview=this.preview.bind(this)
+    this.preview = this.preview.bind(this);
     this.state = {
       firstname: "",
       lastname: "",
@@ -78,92 +78,95 @@ class ProfileComponent extends Component {
       interest4: "",
       interest5: "",
       interest6: "",
-      refname1:"",
-      refpos1:"",
-      refemail1:"",
-      refphone1:"",
-      refname2:"",
-      refpos2:"",
-      refemail2:"",
-      refphone2:"",
+      refname1: "",
+      refpos1: "",
+      refemail1: "",
+      refphone1: "",
+      refname2: "",
+      refpos2: "",
+      refemail2: "",
+      refphone2: "",
       disable: true,
-      exist:false,
-      disablepre:true,
-      studId:""
+      exist: false,
+      disablepre: true,
+      studId: "",
     };
   }
 
   componentDidMount() {
-    const jwt=localStorage.getItem("token")
-    const id=jwtDecode(jwt)._id
-    const stuId={
-      id:id
-    }
-    this.setState({studId:id})
-    axios.post("http://localhost:5000/studentprofile/get",stuId)
-        .then((res)=>{
-          console.log(res)
-          if(res.status===200){
+    const jwt = localStorage.getItem("token");
+    const id = jwtDecode(jwt)._id;
+    const stuId = {
+      id: id,
+    };
+    this.setState({ studId: id });
+    axios
+      .post("http://localhost:5000/studentprofile/get", stuId)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          res.data.msg.forEach((item) => {
             this.setState({
-              exist:true,
-              firstname: res.data[0].firstname,
-              lastname: res.data[0].lastname,
-              email: res.data[0].email,
-              phone: res.data[0].phone,
-              address: res.data[0].address,
-              github: res.data[0].github,
-              linkedin: res.data[0].linkedin,
-              career: res.data[0].career,
-              college: res.data[0].college,
-              fromyear1: res.data[0].fromyear1,
-              toyear1: res.data[0].toyear1,
-              qualification1: res.data[0].qualification1,
-              description1: res.data[0].description1,
-              school: res.data[0].school,
-              fromyear2: res.data[0].fromyear2,
-              toyear2: res.data[0].toyear2,
-              qualification2: res.data[0].qualification2,
-              description2: res.data[0].description2,
-              title1: res.data[0].title1,
-              link1: res.data[0].link1,
-              projectDescription1: res.data[0].projectDescription1,
-              title2: res.data[0].title2,
-              link2: res.data[0].link2,
-              projectDescription2: res.data[0].projectDescription2,
-              title3: res.data[0].title3,
-              link3: res.data[0].link3,
-              projectDescription3: res.data[0].projectDescription3,
-              institute1: res.data[0].institute1,
-              position1: res.data[0].position1,
-              duration1: res.data[0].duration1,
-              experienceDescription1: res.data[0].experienceDescription1,
-              institute2: res.data[0].institute2,
-              position2: res.data[0].position2,
-              duration2: res.data[0].duration2,
-              experienceDescription2: res.data[0].experienceDescription2,
-              skill1: res.data[0].skill1,
-              skill2: res.data[0].skill2,
-              skill3: res.data[0].skill3,
-              skill4: res.data[0].skill4,
-              skill5: res.data[0].skill5,
-              skill6: res.data[0].skill6,
-              interest1: res.data[0].interest1,
-              interest2: res.data[0].interest2,
-              interest3: res.data[0].interest3,
-              interest4: res.data[0].interest4,
-              interest5: res.data[0].interest5,
-              interest6: res.data[0].interest6,
-              refname1:res.data[0].refname1,
-              refpos1:res.data[0].refpos1,
-              refemail1:res.data[0].refemail1,
-              refphone1:res.data[0].refphone1,
-              refname2:res.data[0].refname2,
-              refpos2:res.data[0].refpos2,
-              refemail2:res.data[0].refemail2,
-              refphone2:res.data[0].refphone2,
+              exist: true,
+              firstname: item.firstname,
+              lastname: item.lastname,
+              email: item.email,
+              phone: item.phone,
+              address: item.address,
+              github: item.github,
+              linkedin: item.linkedin,
+              career: item.career,
+              college: item.college,
+              fromyear1: item.fromyear1,
+              toyear1: item.toyear1,
+              qualification1: item.qualification1,
+              description1: item.description1,
+              school: item.school,
+              fromyear2: item.fromyear2,
+              toyear2: item.toyear2,
+              qualification2: item.qualification2,
+              description2: item.description2,
+              title1: item.title1,
+              link1: item.link1,
+              projectDescription1: item.projectDescription1,
+              title2: item.title2,
+              link2: item.link2,
+              projectDescription2: item.projectDescription2,
+              title3: item.title3,
+              link3: item.link3,
+              projectDescription3: item.projectDescription3,
+              institute1: item.institute1,
+              position1: item.position1,
+              duration1: item.duration1,
+              experienceDescription1: item.experienceDescription1,
+              institute2: item.institute2,
+              position2: item.position2,
+              duration2: item.duration2,
+              experienceDescription2: item.experienceDescription2,
+              skill1: item.skill1,
+              skill2: item.skill2,
+              skill3: item.skill3,
+              skill4: item.skill4,
+              skill5: item.skill5,
+              skill6: item.skill6,
+              interest1: item.interest1,
+              interest2: item.interest2,
+              interest3: item.interest3,
+              interest4: item.interest4,
+              interest5: item.interest5,
+              interest6: item.interest6,
+              refname1: item.refname1,
+              refpos1: item.refpos1,
+              refemail1: item.refemail1,
+              refphone1: item.refphone1,
+              refname2: item.refname2,
+              refpos2: item.refpos2,
+              refemail2: item.refemail2,
+              refphone2: item.refphone2,
             });
-          }
-        })
+          });
+        }
+      });
   }
 
   handleChange = (event) => {
@@ -173,8 +176,8 @@ class ProfileComponent extends Component {
   };
 
   onsave = (e) => {
-    const jwt=localStorage.getItem("token")
-    const stuid=jwtDecode(jwt)._id;
+    const jwt = localStorage.getItem("token");
+    const stuid = jwtDecode(jwt)._id;
     const Studentprofile = {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
@@ -223,110 +226,32 @@ class ProfileComponent extends Component {
       interest4: this.state.interest4,
       interest5: this.state.interest5,
       interest6: this.state.interest6,
-      refname1:this.state.refname1,
-      refpos1:this.state.refpos1,
-      refemail1:this.state.refemail1,
-      refphone1:this.state.refphone1,
-      refname2:this.state.refname2,
-      refpos2:this.state.refpos2,
-      refemail2:this.state.refemail2,
-      refphone2:this.state.refphone2,
-      action:"save",
-      studentId:stuid
+      refname1: this.state.refname1,
+      refpos1: this.state.refpos1,
+      refemail1: this.state.refemail1,
+      refphone1: this.state.refphone1,
+      refname2: this.state.refname2,
+      refpos2: this.state.refpos2,
+      refemail2: this.state.refemail2,
+      refphone2: this.state.refphone2,
+      action: "save",
+      studentId: stuid,
     };
 
-    if(this.state.exist===false) {
+    if (this.state.exist === false) {
       axios
-          .post(
-              "http://localhost:5000/studentprofile/addstudentprofile",
-              Studentprofile
-          )
-          .then((res) => {
-            const response = res.data.result;
-            console.log(response);
+        .post(
+          "http://localhost:5000/studentprofile/addstudentprofile",
+          Studentprofile
+        )
+        .then((res) => {
+          const response = res.data.result;
+          console.log(response);
 
-            if (response == "success") {
-              console.log("success");
-              this.setState({disable: false});
-              this.setState({disablepre:false})
-              const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener("mouseenter", Swal.stopTimer);
-                  toast.addEventListener("mouseleave", Swal.resumeTimer);
-                },
-              });
-
-              Toast.fire({
-                icon: "success",
-                title: "Your profile Saved successfully",
-              });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: response,
-              });
-            }
-          });
-    }
-    else {
-      axios.post("http://localhost:5000/studentprofile/updatestudentprofile", Studentprofile)
-          .then((res)=>{
-            console.log(res)
-            const response = res.data.result;
-            if (response == "success") {
-              console.log("success");
-              this.setState({disable: false});
-              this.setState({disablepre:false})
-              console.log(this.state.disable);
-              const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener("mouseenter", Swal.stopTimer);
-                  toast.addEventListener("mouseleave", Swal.resumeTimer);
-                },
-              });
-
-              Toast.fire({
-                icon: "success",
-                title: "Your profile Saved successfully",
-              });
-              this.componentDidMount();
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: response,
-              });
-            }
-
-
-          })
-          .catch((err)=>{
-            console.log(err)
-          })
-
-    }
-  };
-
-  onsubmit=(e)=>{
-    const jwt=localStorage.getItem("token")
-    const stuId={
-      id:jwtDecode(jwt)._id
-    }
-    axios.post("http://localhost:5000/student/cvstatus", stuId)
-        .then((res)=>{
-          console.log(res.data.result)
-          if(res.data.result==="submit"){
+          if (response == "success") {
+            console.log("success");
+            this.setState({ disable: false });
+            this.setState({ disablepre: false });
             const Toast = Swal.mixin({
               toast: true,
               position: "top-end",
@@ -341,18 +266,96 @@ class ProfileComponent extends Component {
 
             Toast.fire({
               icon: "success",
-              title: "Your profile Submitted successfully",
+              title: "Your profile Saved successfully",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: response,
+            });
+          }
+        });
+    } else {
+      axios
+        .post(
+          "http://localhost:5000/studentprofile/updatestudentprofile",
+          Studentprofile
+        )
+        .then((res) => {
+          console.log(res);
+          const response = res.data.result;
+          if (response == "success") {
+            console.log("success");
+            this.setState({ disable: false });
+            this.setState({ disablepre: false });
+            console.log(this.state.disable);
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Your profile Saved successfully",
+            });
+            this.componentDidMount();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: response,
             });
           }
         })
-    this.setState({disable:true})
-  }
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
-  preview(){
-    console.log(this.state.studId)
-    window.open("http://localhost:3000/student/preview/60f280df69f0311ae0520181")
-  }
+  onsubmit = (e) => {
+    const jwt = localStorage.getItem("token");
+    const stuId = {
+      id: jwtDecode(jwt)._id,
+    };
+    axios.post("http://localhost:5000/student/cvstatus", stuId).then((res) => {
+      console.log(res.data.result);
+      if (res.data.result === "submit") {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
 
+        Toast.fire({
+          icon: "success",
+          title: "Your profile Submitted successfully",
+        });
+      }
+    });
+    this.setState({ disable: true });
+  };
+
+  preview() {
+    console.log(this.state.studId);
+    window.open(
+      "http://localhost:3000/student/preview/60f280df69f0311ae0520181"
+    );
+  }
 
   render() {
     return (
@@ -1322,150 +1325,147 @@ class ProfileComponent extends Component {
                 <CardHeader title="Referee Details" />
               </Card>
               <CardContent style={{ marginbottom: "20px" }}>
-            <Container>
-              <Row>
-                <h5>
-                  <CheckCircleIcon />
-                  <span className="pl-3">Referee 1</span>
-                </h5>
-                <Col>
-                  <TextField
-                      margin="dense"
-                      variant="outlined"
-                      name="refname1"
-                      label="Name"
-                      style={{ width: "80%" }}
-                      required
-                      value={this.state.refname1}
-                      onChange={this.handleChange}
-                  />
-                  <TextField
-                      margin="dense"
-                      variant="outlined"
-                      name="refemail1"
-                      label="Email"
-                      style={{ width: "80%" }}
-                      required
-                      value={this.state.refemail1}
-                      onChange={this.handleChange}
-                  />
-                </Col>
-                <Col>
-                  <TextField
-                      margin="dense"
-                      variant="outlined"
-                      name="refpos1"
-                      label="Designation"
-                      style={{ width: "80%" }}
-                      required
-                      value={this.state.refpos1}
-                      onChange={this.handleChange}
-                  />
-                  <TextField
-                      margin="dense"
-                      variant="outlined"
-                      name="refphone1"
-                      label="Phone No."
-                      style={{ width: "80%" }}
-                      required
-                      value={this.state.refphone1}
-                      onChange={this.handleChange}
-                  />
-
-                </Col>
-              </Row>
-              <Divider style={{margin:'10px'}}/>
-              <Row>
-                <h5>
-                  <CheckCircleIcon />
-                  <span className="pl-3">Referee 2</span>
-                </h5>
-                <Col>
-                  <TextField
-                      margin="dense"
-                      variant="outlined"
-                      name="refname2"
-                      label="Name"
-                      style={{ width: "80%" }}
-                      required
-                      value={this.state.refname2}
-                      onChange={this.handleChange}
-                  />
-                  <TextField
-                      margin="dense"
-                      variant="outlined"
-                      name="refemail2"
-                      label="Email"
-                      style={{ width: "80%" }}
-                      required
-                      value={this.state.refemail2}
-                      onChange={this.handleChange}
-                  />
-                </Col>
-                <Col>
-                  <TextField
-                      margin="dense"
-                      variant="outlined"
-                      name="refpos2"
-                      label="Designation"
-                      style={{ width: "80%" }}
-                      required
-                      value={this.state.refpos2}
-                      onChange={this.handleChange}
-                  />
-                  <TextField
-                      margin="dense"
-                      variant="outlined"
-                      name="refphone2"
-                      label="Phone No."
-                      style={{ width: "80%" }}
-                      required
-                      value={this.state.refphone2}
-                      onChange={this.handleChange}
-                  />
-
-                </Col>
-              </Row>
-            </Container>
-                <Divider style={{margin:'10px'}}/>
-            <Container>
-              <Row>
-                <Col xs={4} />
-                <Col xs={2}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.onsave}
-                  >
-                    Save
-                  </Button>
-                </Col>
-                <Col xs={2}>
-                  <Button
-                      disabled={this.state.disable}
-                      variant="contained"
-                      color="secondary"
-                      onClick={this.onsubmit}
-                  >
-                    Submit
-                  </Button>
-                </Col>
-                <Col xs={2}>
-
-                    <Button
-                      disabled={this.state.disablepre}
-                      id="previewbtn"
-                      variant="contained"
-                      color="primary"
-                      onClick={this.preview}
-                    >
-                      Preview
-                    </Button>
-                </Col>
-                <Col xs={4} />
-              </Row>
-              <br />
-            </Container>
+                <Container>
+                  <Row>
+                    <h5>
+                      <CheckCircleIcon />
+                      <span className="pl-3">Referee 1</span>
+                    </h5>
+                    <Col>
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        name="refname1"
+                        label="Name"
+                        style={{ width: "80%" }}
+                        required
+                        value={this.state.refname1}
+                        onChange={this.handleChange}
+                      />
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        name="refemail1"
+                        label="Email"
+                        style={{ width: "80%" }}
+                        required
+                        value={this.state.refemail1}
+                        onChange={this.handleChange}
+                      />
+                    </Col>
+                    <Col>
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        name="refpos1"
+                        label="Designation"
+                        style={{ width: "80%" }}
+                        required
+                        value={this.state.refpos1}
+                        onChange={this.handleChange}
+                      />
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        name="refphone1"
+                        label="Phone No."
+                        style={{ width: "80%" }}
+                        required
+                        value={this.state.refphone1}
+                        onChange={this.handleChange}
+                      />
+                    </Col>
+                  </Row>
+                  <Divider style={{ margin: "10px" }} />
+                  <Row>
+                    <h5>
+                      <CheckCircleIcon />
+                      <span className="pl-3">Referee 2</span>
+                    </h5>
+                    <Col>
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        name="refname2"
+                        label="Name"
+                        style={{ width: "80%" }}
+                        required
+                        value={this.state.refname2}
+                        onChange={this.handleChange}
+                      />
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        name="refemail2"
+                        label="Email"
+                        style={{ width: "80%" }}
+                        required
+                        value={this.state.refemail2}
+                        onChange={this.handleChange}
+                      />
+                    </Col>
+                    <Col>
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        name="refpos2"
+                        label="Designation"
+                        style={{ width: "80%" }}
+                        required
+                        value={this.state.refpos2}
+                        onChange={this.handleChange}
+                      />
+                      <TextField
+                        margin="dense"
+                        variant="outlined"
+                        name="refphone2"
+                        label="Phone No."
+                        style={{ width: "80%" }}
+                        required
+                        value={this.state.refphone2}
+                        onChange={this.handleChange}
+                      />
+                    </Col>
+                  </Row>
+                </Container>
+                <Divider style={{ margin: "10px" }} />
+                <Container>
+                  <Row>
+                    <Col xs={4} />
+                    <Col xs={2}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.onsave}
+                      >
+                        Save
+                      </Button>
+                    </Col>
+                    <Col xs={2}>
+                      <Button
+                        disabled={this.state.disable}
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.onsubmit}
+                      >
+                        Submit
+                      </Button>
+                    </Col>
+                    <Col xs={2}>
+                      <Button
+                        disabled={this.state.disablepre}
+                        id="previewbtn"
+                        variant="contained"
+                        color="primary"
+                        onClick={this.preview}
+                      >
+                        Preview
+                      </Button>
+                    </Col>
+                    <Col xs={4} />
+                  </Row>
+                  <br />
+                </Container>
               </CardContent>
             </Paper>
           </Paper>

@@ -6,13 +6,17 @@ import {
   studentUpdate,
   findstudent,
   createstudentarray,
-  deleteall, staffinterviewupdate, CVStatusUpdate, Addinterview, Addcomment
+  deleteall,
+  staffinterviewupdate,
+  CVStatusUpdate,
+  Addinterview,
+  Addcomment, ReadComment,
 } from "../../controllers/student.js";
 import {
   studentValidator,
   studentValidatorResult,
 } from "../../validators/studentValidator.js";
-import {allocateItaa} from "../../controllers/allocateitaa.js";
+import { allocateItaa } from "../../controllers/allocateitaa.js";
 const studentRouter = express.Router();
 
 studentRouter.get("/", getStudent);
@@ -32,12 +36,11 @@ studentRouter.post(
   studentUpdate
 );
 studentRouter.post("/deleteall", deleteall);
-studentRouter.post("/allocateitaa",allocateItaa)
-// studentRouter.post("/staffintmark",intMarks)
-// studentRouter.post("/staffinterview/:stuid",staffInterview)
-studentRouter.post("/staffinterview",staffinterviewupdate)
-studentRouter.post("/cvstatus",CVStatusUpdate)
-studentRouter.post("/interview",Addinterview)
-studentRouter.post("/comment",Addcomment)
+studentRouter.post("/allocateitaa", allocateItaa);
+studentRouter.post("/staffinterview", staffinterviewupdate);
+studentRouter.post("/cvstatus", CVStatusUpdate);
+studentRouter.post("/interview", Addinterview);
+studentRouter.post("/comment", Addcomment);
+studentRouter.post("/readcomment",ReadComment)
 
 export default studentRouter;

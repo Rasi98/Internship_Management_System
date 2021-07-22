@@ -4,20 +4,20 @@ const Schema = mongoose.Schema;
 
 const studentprofileSchema = new Schema({
   // Personal Profile Details...
-  comment:{
-    type:[{
-      type:String
-    }]
+  comment: [
+    {
+      type: String,
+    },
+  ],
+  newlength: {
+    type: Number,
+    default: 0,
   },
-  newlength:{
-    type:Number,
-    default:0
+  pastlength: {
+    type: Number,
+    default: 0,
   },
-  pastlength:{
-    type:Number,
-    default:0
-  },
-  studentId:{type:String,required:true},
+  studentId: { type: String, required: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   email: { type: String, required: true },
@@ -70,14 +70,14 @@ const studentprofileSchema = new Schema({
   interest5: { type: String },
   interest6: { type: String },
   //Referee
-  refname1:{type:String},
-  refpos1:{type:String},
-  refemail1:{type:String},
-  refphone1:{type:String},
-  refname2:{type:String},
-  refpos2:{type:String},
-  refemail2:{type:String},
-  refphone2:{type:String},
+  refname1: { type: String },
+  refpos1: { type: String },
+  refemail1: { type: String },
+  refphone1: { type: String },
+  refname2: { type: String },
+  refpos2: { type: String },
+  refemail2: { type: String },
+  refphone2: { type: String },
 });
 
 const StudentProfile = mongoose.model("studentProfile", studentprofileSchema);

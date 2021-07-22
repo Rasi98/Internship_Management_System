@@ -72,7 +72,7 @@ export const getitaforstu=async (req,res)=>{
     const ita=await ITA.find({stuid:req.body.stuid})
     console.log(ita);
     if(ita.length===0){
-        res.json({result:"N/A"})
+        res.json({result:"false"})
     }
     else{
         res.json({result:ita})

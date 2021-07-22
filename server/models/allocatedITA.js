@@ -7,5 +7,5 @@ const AllocateITA = new Schema({
     ita: { type: mongoose.Schema.Types.ObjectId, ref: "ita" },
 });
 
-const AllocateITA = mongoose.model("allocateITA", AllocateITA);
-export default AllocateITA;
+const AllocatedITA = mongoose.model("allocateITA", AllocateITA);
+export default AllocatedITA;
