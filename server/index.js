@@ -18,10 +18,9 @@ import itaaRouter from "./routes/usercontrol/itaacontrol.js";
 import itaRouter from "./routes/usercontrol/itacontrol.js";
 import hrmRouter from "./routes/usercontrol/hrm.js";
 import stu_profile_router from "./routes/StudentRoutes/profile.js";
-import allocatecompany from "./routes/allocations/companyAllocate.js"
+import allocatecompany from "./routes/allocations/companyAllocate.js";
 import itaaAllocate from "./routes/allocations/itaaAllocate.js";
 import pdfgen from "./routes/pdfgen.js";
-
 
 app.use("/company", companyRouter);
 app.use("/user", userRouter);
@@ -32,18 +31,18 @@ app.use("/itaa", itaaRouter);
 app.use("/ita", itaRouter);
 app.use("/hrm", hrmRouter);
 app.use("/studentprofile", stu_profile_router);
-app.use("/companyallocate",allocatecompany);
-app.use("/itaaallocate",itaaAllocate);
-app.use("/pdf",pdfgen);
+app.use("/companyallocate", allocatecompany);
+app.use("/itaaallocate", itaaAllocate);
+app.use("/pdf", pdfgen);
 
 const port = process.env.port || 5000;
 const uri =
-  "mongodb+srv://Rasingolla1998:Rasingolla1998@internshipdata.cshfe.mongodb.net/company?retryWrites=true&w=majority";
+  "mongodb://localhost:27017/project?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
 mongoose
   .connect(uri, {
     useNewUrlParser: true,
     useCreateIndex: true,
-      useFindAndModify: false,
+    useFindAndModify: false,
     useUnifiedTopology: true,
   })
   .then(() =>
