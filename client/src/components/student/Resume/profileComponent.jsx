@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField, Button, Container, Divider } from "@material-ui/core";
+import {TextField, Button, Container, Divider} from "@material-ui/core";
 import { Card, CardHeader, CardContent } from "@material-ui/core";
 import EmailIcon from "@material-ui/icons/Email";
 import SchoolIcon from "@material-ui/icons/School";
@@ -17,7 +17,7 @@ import LinkIcon from "@material-ui/icons/Link";
 import TitleIcon from "@material-ui/icons/Title";
 import PersonIcon from "@material-ui/icons/Person";
 import HomeIcon from "@material-ui/icons/Home";
-import { Row, Col } from "react-bootstrap";
+import {Row, Col, FormGroup, FormLabel, FormControl} from "react-bootstrap";
 import { Paper, Grid } from "@material-ui/core";
 import axios from "axios";
 import "date-fns";
@@ -90,7 +90,7 @@ class ProfileComponent extends Component {
       exist: false,
       disablepre: true,
       studId: "",
-    };
+    }
   }
 
   componentDidMount() {
@@ -174,6 +174,7 @@ class ProfileComponent extends Component {
       [event.target.name]: event.target.value,
     });
   };
+
 
   onsave = (e) => {
     const jwt = localStorage.getItem("token");
@@ -277,6 +278,15 @@ class ProfileComponent extends Component {
           }
         });
     } else {
+      let img=document.getElementById("myfile").files[0]
+      console.log("imagenew",img)
+      axios.post("http://localhost:5000/studentprofile/addphoto",img)
+          .then((res)=>{
+            console.log(res)
+          }).catch((err)=>{
+        console.log(err)
+      })
+
       axios
         .post(
           "http://localhost:5000/studentprofile/updatestudentprofile",
@@ -353,7 +363,7 @@ class ProfileComponent extends Component {
   preview() {
     console.log(this.state.studId);
     window.open(
-      "http://localhost:3000/student/preview/60f280df69f0311ae0520181"
+      "http://localhost:3000/student/preview/"+this.state.studId
     );
   }
 
@@ -512,6 +522,13 @@ class ProfileComponent extends Component {
                         ),
                       }}
                     />
+                  </Grid>
+
+                  {/*photo upload*/}
+
+                  <Grid item lg={6} xs={12} sm={12} md={6}>
+                    <label className='mr-2'>Photo</label>
+                    <input type="file" className='border'  style={{borderRadius:'3px'}} id="myfile" name="myfile"/>
                   </Grid>
                 </Grid>
               </div>

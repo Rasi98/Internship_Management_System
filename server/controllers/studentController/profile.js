@@ -2,6 +2,7 @@ import studentProfile from "../../models/studentprofile.js";
 import Student from "../../models/student.js";
 
 export const Addpersonaldetail = async (req, res) => {
+    console.log("data",req.body)
   const profile = req.body;
   const action = profile.action;
   const stuId = profile.studentId;
@@ -28,6 +29,7 @@ export const Addpersonaldetail = async (req, res) => {
   }
 };
 export const updateProfile = async (req, res) => {
+    console.log("data",req.body)
   try {
     await studentProfile.findOneAndUpdate(
       { studentId: req.body.studentId },
@@ -116,3 +118,7 @@ export const findprofile = async (req, res) => {
     res.status(202).json({ msg: "no" });
   }
 };
+
+export const Addphoto=(req,res)=>{
+    console.log(req.body)
+}

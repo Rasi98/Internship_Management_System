@@ -20,6 +20,7 @@ const studentprofileSchema = new Schema({
   studentId: { type: String, required: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
+  photo:{type:Buffer},
   email: { type: String, required: true },
   phone: { type: String, required: true },
   address: { type: String, requried: true },
