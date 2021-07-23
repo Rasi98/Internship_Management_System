@@ -71,6 +71,7 @@ class StaffInterview extends Component {
     };
 
     componentDidMount() {
+        document.body.style='background: #E5E7E9;'
         this.state.data=[]
         let arry=[]
         axios.get("http://localhost:5000/student/")
@@ -178,6 +179,7 @@ class StaffInterview extends Component {
                     <BootstrapTable
                         keyField="id"
                         hover
+                        headerWrapperClasses={{backgroundColor:'white'}}
                         rowStyle={{backgroundColor:'white'}}
                         ref={ n => this.node = n }
                         data={ this.state.data }

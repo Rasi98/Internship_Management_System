@@ -27,6 +27,7 @@ class Editita extends Component {
   }
 
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     this.getStudentData()
     axios
       .get("http://localhost:5000/ita/" + this.props.match.params.id)

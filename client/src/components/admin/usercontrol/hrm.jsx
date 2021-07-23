@@ -51,6 +51,7 @@ class userHrm extends Component {
   }
 
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     let arry=[]
     axios
       .get("http://localhost:5000/hrm/")
@@ -151,7 +152,10 @@ class userHrm extends Component {
   }
 
   render() {
-    let popupclose = () => this.setState({ showpopup: false });
+    let popupclose = () => {
+      this.setState({showpopup: false})
+      this.componentDidMount()
+    };
 
     return (
       <div>
@@ -199,7 +203,7 @@ class userHrm extends Component {
             <tbody style={{backgroundColor:'white'}}>{this.hrmList()}</tbody>
           </Table>
         </div>
-        <Addhrm show={this.state.showpopup} onHide={popupclose} />
+        <Addhrm show={this.state.showpopup} onHide={popupclose} backdrop="static" />
       </div>
     );
   }

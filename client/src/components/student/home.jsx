@@ -42,6 +42,7 @@ class Home extends Component {
         };
     }
     componentDidMount() {
+        document.body.style='background: #E5E7E9;'
         this.getstudentdata()
         this.getallocationdata()
         this.getITAData()

@@ -105,8 +105,7 @@ class Addita extends Component {
           icon: "success",
           title: "ITA added successfully",
         });
-        //this.props.history.push("/usercontrol/ita");
-        window.location="/admin/usercontrol/ita";
+        this.handleClear()
       } else {
         //alert("Error occured !");
         Swal.fire({

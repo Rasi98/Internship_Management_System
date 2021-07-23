@@ -48,7 +48,7 @@ class Viewcompany extends Component {
   }
 
   componentDidMount() {
-    //document.body.style='background: #E5E7E9;'
+    document.body.style='background: #E5E7E9;'
     let arry=[]
     axios
       .get("http://localhost:5000/company/")
@@ -123,7 +123,7 @@ class Viewcompany extends Component {
           </Container>
 
           <Table bordered hover>
-            <thead>
+            <thead style={{backgroundColor:'white'}}>
               <tr className="text-center">
                 <th>Name</th>
                 <th>Type</th>
@@ -133,7 +133,7 @@ class Viewcompany extends Component {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>{this.companiesList()}</tbody>
+            <tbody style={{backgroundColor:'white'}}>{this.companiesList()}</tbody>
           </Table>
         </div>
       </div>

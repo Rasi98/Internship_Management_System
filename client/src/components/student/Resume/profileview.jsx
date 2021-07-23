@@ -75,6 +75,7 @@ class Profileview extends Component {
     };
   }
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     const stuId = {
       id: this.props.match.params.id,
     };

@@ -53,6 +53,7 @@ class userIta extends Component {
   }
 
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     let arry=[]
     axios
       .get("http://localhost:5000/ita/")
@@ -153,7 +154,10 @@ class userIta extends Component {
   }
 
   render() {
-    let popupclose = () => this.setState({ showpopup: false });
+    let popupclose = () => {
+      this.setState({showpopup: false})
+      this.componentDidMount()
+    };
 
     return (
       <div>
@@ -201,7 +205,7 @@ class userIta extends Component {
             <tbody style={{backgroundColor:'white'}}>{this.itaList()}</tbody>
           </Table>
         </div>
-        <Addita show={this.state.showpopup} onHide={popupclose} />
+        <Addita show={this.state.showpopup} onHide={popupclose} backdrop="static" />
       </div>
     );
   }

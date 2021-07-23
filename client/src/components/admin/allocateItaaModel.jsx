@@ -27,7 +27,7 @@ export default function Allocateitaamodel (props) {
             })
     }, [])
 
-    const StudentList = studentList.map((stu) =>
+    const StudentList = studentList.map((stu,index) =>
         <option value={stu._id}>{stu.name} | {stu.selectedCompany}</option>
     );
 

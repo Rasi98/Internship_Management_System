@@ -18,6 +18,7 @@ class Edititpc extends Component {
   }
 
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     axios
       .get("http://localhost:5000/itpc/" + this.props.match.params.id)
       .then((Response) => {

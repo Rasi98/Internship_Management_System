@@ -94,6 +94,7 @@ class ProfileComponent extends Component {
   }
 
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     const jwt = localStorage.getItem("token");
     const id = jwtDecode(jwt)._id;
     const stuId = {

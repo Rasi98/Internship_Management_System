@@ -17,6 +17,7 @@ export default function Interview(){
     const [gpa,setgpa]=useState('')
 
     useEffect(()=>{
+        document.body.style='background: #E5E7E9;'
         getdata()
     })
     function getdata()
@@ -86,7 +87,7 @@ export default function Interview(){
     return (
       <React.Fragment>
           <Navbarstd />
-        <h1 className='text-center'>Interview</h1>
+          <h3 className="text-center my-3 mb-3" style={{fontFamily: 'Assistant'}}>Interview</h3>
           <div className='container' style={{width:'50%'}}>
           <Paper elevation={3} style={{padding:'2%'}}>
               <Alert id='alert' variant="filled" severity="error" style={{display:alert}}>

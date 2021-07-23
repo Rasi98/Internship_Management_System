@@ -31,6 +31,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        document.body.style='background: #E5E7E9;'
         this.getITAAData()
         this.getAllocateData()
     }

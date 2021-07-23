@@ -37,8 +37,9 @@ class Home extends Component {
     }
 
     componentDidMount(){
+        document.body.style='background: #E5E7E9;'
         this.getITAData()
-        //this.getStudentData()
+        this.getStudentData()
     }
 
     getITAData(){
@@ -57,44 +58,43 @@ class Home extends Component {
                     stuname:res.data.stuname,
                 })
             })
-            .then(()=>{
-                console.log(this.state.stuid)
-                axios.get("http://localhost:5000/student/"+this.state.stuid)
-                    .then((res)=>{
-                        console.log(res.data)
-                        this.setState({
-                            stuemail:res.data.email,
-                            stuaddress:res.data.address,
-                            stupath:res.data.specialization,
-                            studob:res.data.dob,
-                            stuphone:res.data.mobile,
-                            stugender:res.data.gender,
-                            stuinterest:res.data.interest
-                        })
-                    })
-                    .catch((err)=>{
-                        console.log(err)
-                    })
-            })
-            .catch((err)=>{
-                console.log(err)
+            .catch((error)=>{
+                console.log(error)
             })
     }
-    // getStudentData(){
-    //     console.log(this.state.stuid)
-    //     axios.get("http://localhost:5000/student/"+this.state.stuid)
-    //         .then((res)=>{
-    //             console.log(res.data)
-    //         })
-    //         .catch((err)=>{
-    //             console.log(err)
-    //         })
-    // }
+
+    getStudentData(){
+        console.log(this.state.stuid)
+        const arry=[]
+        if(!this.state.stuid){
+            this.setState({stuinterest:arry})
+        }
+        else {
+            axios.get("http://localhost:5000/student/" + this.state.stuid)
+                .then((res) => {
+                    console.log(res.data)
+                    this.setState({
+                        stuemail: res.data.email,
+                        stuaddress: res.data.address,
+                        stupath: res.data.specialization,
+                        studob: res.data.dob,
+                        stuphone: res.data.mobile,
+                        stugender: res.data.gender,
+                        stuinterest: res.data.interest
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+
+    }
+
     render() {
         return (
             <React.Fragment>
                 <Navbarita/>
-                <h1 className="text-center">Training Advisor</h1>
+                <h3 className="text-center my-3" style={{marginBottom:"20px",fontFamily: 'Assistant'}}>Training Advisor</h3>
                 <Container>
                     <Row>
                         <Col sm={8}>

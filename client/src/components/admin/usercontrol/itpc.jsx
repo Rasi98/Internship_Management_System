@@ -50,7 +50,8 @@ class userITPC extends Component {
   }
 
   componentDidMount() {
-    axios
+      document.body.style='background: #E5E7E9;'
+      axios
       .get("http://localhost:5000/itpc/")
       .then((Response) => {
         this.setState({ itpc: Response.data });

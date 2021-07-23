@@ -245,7 +245,7 @@ export default function Editable() {
                             },
                             {
                                 icon:()=><Button
-                                    style={{position:'inherit',margin:'1px'}}
+                                    style={{position:'absolute',margin:'1px'}}
                                     className="btn-sm btn-success"
                                     onClick={refresh}
                                 ><RefreshIcon/></Button>,tooltip:'Refresh',

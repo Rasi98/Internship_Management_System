@@ -10,8 +10,11 @@ class Home extends Component {
     super(props);
     this.state = {};
   }
+  componentDidMount() {
+      document.body.style='background: #E5E7E9;'
+  }
 
-  render() {
+    render() {
     return (
       <div>
         <Navbar />

@@ -23,6 +23,7 @@ export default function AllocateITAA(){
     ]
 
     useEffect(()=>{
+        document.body.style='background: #E5E7E9;'
         axios.get("http://localhost:5000/itaa/")
             .then((res)=>{
                 setitaa(res.data)
@@ -105,7 +106,7 @@ export default function AllocateITAA(){
         <React.Fragment>
             <Navbar/>
             <div className='container mt-4'>
-                <h3 className="text-center m-3">ITAA Allocation</h3>
+                <h3 className="text-center my-3 mb-3" style={{fontFamily: 'Assistant'}}>ITAA Allocation</h3>
                 <Paper elevation={3} style={{padding:'1px'}}>
                     <Row className='m-2'>
                         <Col className=" border mt-1 mb-1" style={{overflowY:"auto",maxHeight:"500px",borderRadius:"10px"}}  sm={4}>

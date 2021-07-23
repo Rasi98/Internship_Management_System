@@ -39,6 +39,7 @@ class Contactcompany extends Component {
   }
 
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     axios
       .get("http://localhost:5000/hrm/")
       .then((Response) => {
@@ -145,9 +146,9 @@ class Contactcompany extends Component {
       <div>
         <Navbar />
         <div className="container mt-4">
-          <h3 className="text-center" style={{marginBottom:"20px"}}>HRM List</h3>
+          <h3 className="text-center" style={{marginBottom:"20px",fontFamily: 'Assistant'}}>HRM List</h3>
           <Table bordered hover>
-            <thead>
+            <thead style={{backgroundColor:'white'}}>
               <tr className="text-center">
                 <th>Name</th>
                 <th>Designation</th>
@@ -163,7 +164,7 @@ class Contactcompany extends Component {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>{this.hrmList()}</tbody>
+            <tbody style={{backgroundColor:'white'}}>{this.hrmList()}</tbody>
           </Table>
         </div>
       </div>

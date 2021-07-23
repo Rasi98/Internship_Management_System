@@ -5,6 +5,7 @@ import { Button,Container,Row,Col } from "react-bootstrap";
 import Swal from "sweetalert2";
 import Navbar from "./Navbar";
 import {Form} from "react-bootstrap";
+import {Paper} from "@material-ui/core";
 
 class Addcompany extends Component {
   constructor(props) {
@@ -16,6 +17,10 @@ class Addcompany extends Component {
       phone: "",
       type:"",
     };
+  }
+
+  componentDidMount() {
+    document.body.style='background: #E5E7E9;'
   }
 
   handlenamechange = (e) => {
@@ -92,8 +97,9 @@ class Addcompany extends Component {
       <React.Fragment>
         <Navbar></Navbar>
         <div className="container mt-4">
-          <h3 className="text-center">Add Company</h3>
-          <form  className="border" style={{ borderRadius: "10px" }}>
+          <h3 className="text-center my-3 mb-3" style={{fontFamily: 'Assistant'}}>Add Company</h3>
+          <Paper elevation={3} className='mx-3 my-2' style={{padding:'1px'}}>
+          <form  style={{ backgroundColor:'white' }}>
             <Container style={{ padding: "15px" }}>
               <Row>
                 <Col>
@@ -200,6 +206,7 @@ class Addcompany extends Component {
               </Row>
             </Container>
           </form>
+          </Paper>
         </div>
       </React.Fragment>
     );

@@ -27,6 +27,7 @@ class EditStudent extends Component {
   }
 
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     axios
       .get("http://localhost:5000/student/" + this.props.match.params.id)
       .then((Response) => {

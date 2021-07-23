@@ -255,7 +255,10 @@ class userStudent extends Component {
 
 
   render() {
-    let popupclose = () => this.setState({ showpopup: false });
+    let popupclose = () => {
+      this.setState({showpopup: false})
+      this.componentDidMount()
+    };
 
     return (
       <div>
@@ -320,7 +323,7 @@ class userStudent extends Component {
             <tbody style={{backgroundColor:'white'}}>{this.studentList()}</tbody>
           </Table>
         </div>
-        <Addstudent show={this.state.showpopup} onHide={popupclose} />
+        <Addstudent show={this.state.showpopup} onHide={popupclose} backdrop="static"/>
       </div>
     );
   }

@@ -11,6 +11,7 @@ export default function StudentProfile() {
 
 
   useEffect(()=>{
+      document.body.style='background: #E5E7E9;'
       const arry=[]
     axios.get("http://localhost:5000/student/")
         .then((res)=>{

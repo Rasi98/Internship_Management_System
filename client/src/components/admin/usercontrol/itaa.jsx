@@ -49,6 +49,7 @@ class userItaa extends Component {
   }
 
   componentDidMount() {
+    document.body.style='background: #E5E7E9;'
     let arry=[]
     axios
       .get("http://localhost:5000/itaa/")
@@ -167,7 +168,10 @@ class userItaa extends Component {
 
 
   render() {
-    let popupclose = () => this.setState({ showpopup: false });
+    let popupclose = () => {
+      this.setState({showpopup: false})
+      this.componentDidMount()
+    };
 
     return (
       <div>
@@ -213,7 +217,7 @@ class userItaa extends Component {
             <tbody style={{backgroundColor:'white'}}>{this.itaaList()}</tbody>
           </Table>
         </div>
-        <Additaa show={this.state.showpopup} onHide={popupclose} />
+        <Additaa show={this.state.showpopup} onHide={popupclose} backdrop="static"/>
       </div>
     );
   }

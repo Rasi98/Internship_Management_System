@@ -3,12 +3,17 @@ import Navbar from "./Navbar";
 
 class strategicReport extends Component {
   state = {};
-  render() {
+
+  componentDidMount() {
+      document.body.style='background: #E5E7E9;'
+  }
+
+    render() {
     return (
-      <div>
+      <React.Fragment>
         <Navbar></Navbar>
-        <h1>Strategic Report</h1>
-      </div>
+          <h3 className="text-center my-3 mb-3" style={{fontFamily: 'Assistant'}}>Report</h3>
+      </React.Fragment>
     );
   }
 }
