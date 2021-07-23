@@ -178,12 +178,13 @@ class StaffInterview extends Component {
                     <BootstrapTable
                         keyField="id"
                         hover
+                        rowStyle={{backgroundColor:'white'}}
                         ref={ n => this.node = n }
                         data={ this.state.data }
                         columns={ this.state.columns }
                         cellEdit={ cellEditFactory({
                             mode: 'click',
-                            blurToSave: true
+                            blurToSave: true,
                         }) }
                     />
                 </div>

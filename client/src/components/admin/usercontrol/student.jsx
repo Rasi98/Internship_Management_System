@@ -56,7 +56,8 @@ class userStudent extends Component {
   }
 
   componentDidMount() {
-   this.getStudentData()
+    document.body.style='background: #E5E7E9;'
+    this.getStudentData()
   }
   getStudentData(){
     let arry=[]
@@ -303,8 +304,8 @@ class userStudent extends Component {
                 </Button>
             </Row>
           </Container>
-          <Table id='stutable' bordered hover>
-            <thead>
+          <Table id='stutable' bordered hover >
+            <thead style={{backgroundColor:'white'}}>
               <tr className="text-center">
                 <th>Name</th>
                 <th>Stu. No</th>
@@ -316,7 +317,7 @@ class userStudent extends Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{this.studentList()}</tbody>
+            <tbody style={{backgroundColor:'white'}}>{this.studentList()}</tbody>
           </Table>
         </div>
         <Addstudent show={this.state.showpopup} onHide={popupclose} />

@@ -76,7 +76,8 @@ class Additaa extends Component {
           title: "ITAA added successfully",
         });
         //this.props.history.push("/usercontrol/itaa");
-        window.location="/admin/usercontrol/itaa";
+        //window.location="/admin/usercontrol/itaa";
+        this.props.onHide()
       } else {
         //alert("Error occured !");
         Swal.fire({

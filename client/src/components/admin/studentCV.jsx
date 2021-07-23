@@ -274,8 +274,8 @@ class StudentCV extends Component {
   render() {
     return (
       <React.Fragment>
+        <center>
         <Container
-          className="border"
           style={{ padding: "15px", borderRadius: "10px" }}
         >
           {/*<Row className='m-3'>*/}
@@ -556,7 +556,7 @@ class StudentCV extends Component {
                     <h6 className="text-center" style={{ color: "#2E86C1" }}>
                       Soft skills
                     </h6>
-                    <ul>
+                    <ul className='text-left'>
                       <li>{this.state.skill1}</li>
                       <li>{this.state.skill2}</li>
                       <li>{this.state.skill3}</li>
@@ -569,7 +569,7 @@ class StudentCV extends Component {
                     <h6 className="text-center" style={{ color: "#2E86C1" }}>
                       Technical skills
                     </h6>
-                    <ul>
+                    <ul className='text-left'>
                       <li>{this.state.interest1}</li>
                       <li>{this.state.interest2}</li>
                       <li>{this.state.interest3}</li>
@@ -582,28 +582,41 @@ class StudentCV extends Component {
               </Paper>
             </Col>
           </Row>
-          <Row>
-            <div style={{ width: "50%" }}>
+          <hr/>
+          <Row className='mx-4' >
+            <Col style={{ width: "20%" }}>
               <FormGroup
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"
               >
-                <FormLabel>Comment</FormLabel>
-                <FormControl
-                  as="textarea"
-                  value={this.state.comment}
-                  onChange={(e) => {
-                    this.setState({ comment: e.target.value });
-                  }}
-                  rows={4}
-                />
+                <Row>
+                  <Col className='text-left'>
+                    <FormLabel>Comment</FormLabel>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className='text-center'>
+                    <FormControl
+                        as="textarea"
+                        value={this.state.comment}
+                        onChange={(e) => {
+                          this.setState({ comment: e.target.value });
+                        }}
+                        rows={4}
+                    />
+                  </Col>
+                </Row>
+                <Row className='my-2'>
+                  <Col className='text-right'>
+                      <Button onClick={this.sendcomment}>Send</Button>
+                  </Col>
+                </Row>
               </FormGroup>
-              <div className="text-center">
-                <Button onClick={this.sendcomment}>Send</Button>
-              </div>
-            </div>
+
+            </Col>
           </Row>
         </Container>
+        </center>
       </React.Fragment>
     );
   }

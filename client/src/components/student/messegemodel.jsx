@@ -29,7 +29,9 @@ class Messegemodel extends Component {
         })
         this.setState({msgarry:arry})
         console.log("myarry",this.state.msgarry)
-      });
+      }).catch((err)=>{
+      console.log(err)
+    })
 
   }
 

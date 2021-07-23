@@ -187,7 +187,7 @@ class userIta extends Component {
             </Row>
           </Container>
           <Table bordered hover>
-            <thead>
+            <thead style={{backgroundColor:'white'}}>
               <tr className="text-center">
                 <th>Name</th>
                 <th>Designation</th>
@@ -198,7 +198,7 @@ class userIta extends Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{this.itaList()}</tbody>
+            <tbody style={{backgroundColor:'white'}}>{this.itaList()}</tbody>
           </Table>
         </div>
         <Addita show={this.state.showpopup} onHide={popupclose} />

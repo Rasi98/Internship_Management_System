@@ -51,8 +51,7 @@ export const createstudent = async (req, res) => {
 
 export const createstudentarray = async (req, res) => {
   const studentlist = req.body;
-  console.log(studentlist);
-  studentlist.forEach(async (user) => {
+  await studentlist.forEach((user) => {
     const newuser = {
       name: user.name,
       stuno: user.stuno,
@@ -65,11 +64,9 @@ export const createstudentarray = async (req, res) => {
       password: passwordGen(),
       role: "student",
     };
-    var newu = new Student(newuser);
-    console.log(newu);
-    newu.save().then(() => {
+    let newu = new Student(newuser);
+    newu.save()
       sendMail(newuser.email, newuser.username, newuser.password);
-    });
   });
   res.status(201).json({ result: "success" });
 };

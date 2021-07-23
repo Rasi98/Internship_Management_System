@@ -48,6 +48,7 @@ class Viewcompany extends Component {
   }
 
   componentDidMount() {
+    //document.body.style='background: #E5E7E9;'
     let arry=[]
     axios
       .get("http://localhost:5000/company/")

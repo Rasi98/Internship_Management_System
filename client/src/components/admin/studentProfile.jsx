@@ -36,8 +36,8 @@ export default function StudentProfile() {
   return(
       <React.Fragment>
         <AdminNavbar/>
-          <h3 className='text-center m-3'>Student CVs</h3>
-          <Paper elevation={3} style={{padding:'1px'}}>
+          <h3 className="text-center my-3 mb-3" style={{fontFamily: 'Assistant'}}>Student CVs</h3>
+          <Paper elevation={3} className='mx-3 my-2' style={{padding:'1px'}}>
             <Row className='m-2'>
               <Col className=" border mt-1 mb-1" style={{overflowY:"auto",maxHeight:"500px",borderRadius:"10px"}}  sm={3}>
                 <ListGroup  style={{padding:"3px"}}>

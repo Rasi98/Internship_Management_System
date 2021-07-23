@@ -185,7 +185,7 @@ class userHrm extends Component {
             </Row>
           </Container>
           <Table bordered hover>
-            <thead>
+            <thead style={{backgroundColor:'white'}}>
               <tr className="text-center">
                 <th>Name</th>
                 <th>Designation</th>
@@ -196,7 +196,7 @@ class userHrm extends Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{this.hrmList()}</tbody>
+            <tbody style={{backgroundColor:'white'}}>{this.hrmList()}</tbody>
           </Table>
         </div>
         <Addhrm show={this.state.showpopup} onHide={popupclose} />

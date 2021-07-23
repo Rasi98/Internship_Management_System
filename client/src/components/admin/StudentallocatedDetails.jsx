@@ -8,6 +8,7 @@ import Modal from 'react-modal'
 import Allocatecommodel from "./allocatecommodel";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 
 export default function Editable() {
@@ -20,6 +21,7 @@ export default function Editable() {
 
 
     useEffect(()=>{
+        document.body.style='background: #E5E7E9;'
         axios.get("http://localhost:5000/student/")
             .then((res)=>{
                 setStudents(res.data)
@@ -169,7 +171,7 @@ export default function Editable() {
     <React.Fragment>
             <Navbar/>
             <div className="container mt-4">
-                <h3 className="text-center m-3">Internship Allocation</h3>
+                <h3 className="text-center my-3 mb-3" style={{fontFamily: 'Assistant'}}>Internship Allocation</h3>
                 <Paper elevation={3} style={{padding:'1px'}}>
                 <Row className="m-2">
                 <Col className=" border mt-1 mb-1" style={{overflowY:"auto",maxHeight:"500px",borderRadius:"10px"}}  sm={4}>
@@ -207,18 +209,28 @@ export default function Editable() {
 
                         }}
                         actions={[
+                            // {
+                            //     icon:()=><FormControlLabel
+                            //         control={
+                            //             <Checkbox
+                            //                 checked={filter}
+                            //                 onChange={handleChange}
+                            //                 name="checkedB"
+                            //                 color="primary"
+                            //             />
+                            //         }
+                            //         label="Filter"
+                            //     />,tooltip:"Hide/Show Filter",
+                            //     isFreeAction:true
+                            // },
                             {
-                                icon:()=><FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={filter}
-                                            onChange={handleChange}
-                                            name="checkedB"
-                                            color="primary"
-                                        />
-                                    }
-                                    label="Filter"
-                                />,tooltip:"Hide/Show Filter",
+                                icon:()=> <Button
+                                    className="btn-sm btn-info"
+                                    onClick={handleChange}
+                                    style={{position:'absolute',margin:'1px'}}
+                                >
+                                    <FilterListIcon/>
+                                </Button>,tooltip:"Filter by status",
                                 isFreeAction:true
                             },
                             {
@@ -233,7 +245,7 @@ export default function Editable() {
                             },
                             {
                                 icon:()=><Button
-                                    style={{position:'absolute',margin:'1px'}}
+                                    style={{position:'inherit',margin:'1px'}}
                                     className="btn-sm btn-success"
                                     onClick={refresh}
                                 ><RefreshIcon/></Button>,tooltip:'Refresh',

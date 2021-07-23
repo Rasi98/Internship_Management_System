@@ -201,7 +201,7 @@ class userItaa extends Component {
             </Row>
           </Container>
           <Table bordered hover>
-            <thead>
+            <thead style={{backgroundColor:'white'}}>
               <tr className="text-center">
                 <th>Name</th>
                 <th>Email</th>
@@ -210,7 +210,7 @@ class userItaa extends Component {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>{this.itaaList()}</tbody>
+            <tbody style={{backgroundColor:'white'}}>{this.itaaList()}</tbody>
           </Table>
         </div>
         <Additaa show={this.state.showpopup} onHide={popupclose} />
