@@ -90,6 +90,9 @@ class ProfileComponent extends Component {
       exist: false,
       disablepre: true,
       studId: "",
+      fileinput:"",
+      selectedinput:"",
+      previewsource:""
     }
   }
 
@@ -176,6 +179,25 @@ class ProfileComponent extends Component {
     });
   };
 
+  handlephotoupload=(e)=>{
+    const file=e.target.files[0]
+    this.previewphoto(file)
+
+  }
+
+  previewphoto=(file)=>{
+    const reader=new FileReader();
+    reader.readAsDataURL(file)
+    reader.onloadend=()=>{
+      this.setState({previewsource:reader.result})
+    }
+    console.log("64encode",reader.result)
+  }
+
+  uploadImage=(base64EncodedImage) => {
+    console.log(base64EncodedImage)
+  }
+
 
   onsave = (e) => {
     const jwt = localStorage.getItem("token");
@@ -241,6 +263,9 @@ class ProfileComponent extends Component {
     };
 
     if (this.state.exist === false) {
+      if(this.state.previewsource!==""){
+        console.log(this.state.previewsource)
+      }
       axios
         .post(
           "http://localhost:5000/studentprofile/addstudentprofile",
@@ -279,14 +304,15 @@ class ProfileComponent extends Component {
           }
         });
     } else {
-      let img=document.getElementById("myfile").files[0]
-      console.log("imagenew",img)
-      axios.post("http://localhost:5000/studentprofile/addphoto",img)
-          .then((res)=>{
-            console.log(res)
-          }).catch((err)=>{
-        console.log(err)
-      })
+      if(this.state.previewsource!=="") {
+        console.log(this.state.previewsource)
+      }
+      // axios.post("http://localhost:5000/studentprofile/addphoto",img)
+      //     .then((res)=>{
+      //       console.log(res)
+      //     }).catch((err)=>{
+      //   console.log(err)
+      // })
 
       axios
         .post(
@@ -374,12 +400,17 @@ class ProfileComponent extends Component {
         <div>
           <Navbarstd />
         </div>
-        <form>
+        <form onSubmit={this.onsave} className='form'>
           <Paper style={{ marginTop: "20px" }}>
             <Card>
               <CardHeader title="Personal Details" />
             </Card>
             <CardContent>
+              {this.state.previewsource && (
+                  <div>
+                    <img src={this.state.previewsource} alt='CV Photo' style={{height:'100px'}}/>
+                  </div>
+              )}
               <div className="Container text-center">
                 <Grid container spacing={2} alignItems="center" lg={12}>
                   <Grid item md={6} sm={12} xs={12} lg={6}>
@@ -529,7 +560,7 @@ class ProfileComponent extends Component {
 
                   <Grid item lg={6} xs={12} sm={12} md={6}>
                     <label className='mr-2'>Photo</label>
-                    <input type="file" className='border'  style={{borderRadius:'3px'}} id="myfile" name="myfile"/>
+                    <input type="file" value={this.state.fileinput} onChange={this.handlephotoupload} className='form-input'  style={{borderRadius:'3px'}} id="myfile" name="myfile"/>
                   </Grid>
                 </Grid>
               </div>
@@ -1455,12 +1486,14 @@ class ProfileComponent extends Component {
                         variant="contained"
                         color="primary"
                         onClick={this.onsave}
+                        type='submit'
                       >
                         Save
                       </Button>
                     </Col>
                     <Col xs={2}>
                       <Button
+                          type='submit'
                         disabled={this.state.disable}
                         variant="contained"
                         color="secondary"
