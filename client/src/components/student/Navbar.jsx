@@ -133,7 +133,7 @@ class Navbarstd extends Component {
               </LinkContainer>
             </NavDropdown>
             <LinkContainer to="/student/interview">
-              <Nav.Link>INTERVIEW</Nav.Link>
+              <Nav.Link>INTERNSHIP</Nav.Link>
             </LinkContainer>
           </Nav>
           <Nav>

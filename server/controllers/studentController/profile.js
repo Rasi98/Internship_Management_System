@@ -89,6 +89,7 @@ export const updateProfile = async (req, res) => {
         refpos2: req.body.refpos2,
         refemail2: req.body.refemail2,
         refphone2: req.body.refphone2,
+          photo:req.body.photo
       }
     );
     res.status(201).json({ result: "success" });
@@ -119,6 +120,4 @@ export const findprofile = async (req, res) => {
   }
 };
 
-export const Addphoto=(req,res)=>{
-    console.log(req.body)
-}
+

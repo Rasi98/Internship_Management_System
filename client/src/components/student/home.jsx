@@ -61,6 +61,7 @@ class Home extends Component {
                 }
                 else{
                     this.setState({italist:res.data.result})
+                    console.log(this.state.italist)
                 }
             })
             .catch((err)=>{
@@ -139,7 +140,7 @@ class Home extends Component {
         if(this.state.italist.length!==0){
             return this.state.italist.map((ita) => {
                 return (
-                    <Container id={ita._id}  className="border mb-2" style={{borderRadius:"5px"}}>
+                    <Container key={ita._id} id={ita._id}  className="border mb-2" style={{borderRadius:"5px"}}>
                         <div>
                             <Row className="pl-2 pt-2">
                                 <ListItem>
@@ -300,7 +301,7 @@ class Home extends Component {
                                 <Divider style={{margin:'3%'}}/>
                                 <Row>
                                     <Container>
-                                        {/*{this.ITAList()}*/}
+                                        {this.ITAList()}
                                     </Container>
                                 </Row>
                             </Paper>

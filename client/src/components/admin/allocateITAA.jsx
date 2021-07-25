@@ -40,7 +40,7 @@ export default function AllocateITAA(){
         setselecteditaa(itaa)
         axios.get("http://localhost:5000/itaaallocate/"+itaaId)
             .then((res)=>{
-                console.log(res)
+                console.log("allo",res)
                 if(res.data.length===0){
                     let pendingarry=[]
                     setColumns(pendingarry)

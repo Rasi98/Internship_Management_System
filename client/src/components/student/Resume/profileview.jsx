@@ -12,6 +12,7 @@ import WorkIcon from "@material-ui/icons/Work";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { Divider, ListItem, ListItemText, Paper } from "@material-ui/core";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 class Profileview extends Component {
   constructor(props) {
@@ -72,10 +73,10 @@ class Profileview extends Component {
       refpos2: "",
       refemail2: "",
       refphone2: "",
+      photo:""
     };
   }
   componentDidMount() {
-    document.body.style='background: #E5E7E9;'
     const stuId = {
       id: this.props.match.params.id,
     };
@@ -143,6 +144,7 @@ class Profileview extends Component {
               refpos2: item.refpos2,
               refemail2: item.refemail2,
               refphone2: item.refphone2,
+              photo:item.photo
             });
           });
         }
@@ -155,24 +157,51 @@ class Profileview extends Component {
     };
     axios
       .post("http://localhost:5000/pdf/pdfgen", obj)
-      .then((res) => {})
+      .then((res) => {
+        console.log(res.data.result)
+        if(res.data.result==='saved'){
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "success",
+            title: "Your cv downloaded successfully",
+          });
+        }
+      })
       .catch((err) => {
         console.log(err);
       });
   }
 
+
+
   render() {
     return (
       <React.Fragment>
-        <Button id="printbutton" onClick={this.pdfgen}>
-          PDF
-        </Button>
-        <div>
-          <Container className="border" style={{ borderRadius: "10px" }}>
+        <div className="border mx-4 my-4 " style={{ borderRadius: "10px",padding:"2%" }}>
+          <Row className='text-right'>
+            <Col>
+              <Button id="printbutton" className='text-right' onClick={this.pdfgen}>
+                PDF
+              </Button>
+            </Col>
+          </Row>
+          <Container id="mycv" >
+            <img src={this.state.photo} alt='cv photo'/>
             <h3 className="text-center m-3" style={{ color: "#2E86C1" }}>
               {this.state.firstname} {this.state.lastname}
             </h3>
-            <Row id="mycv">
+            <Row>
               <Col>
                 <center>
                   <Paper
@@ -184,7 +213,7 @@ class Profileview extends Component {
                       height: "auto",
                     }}
                   >
-                    <div className="border" style={{ borderRadius: "10px" }}>
+                    <div>
                       <h5
                         style={{ color: "#2E86C1", margin: "3px" }}
                         className="text-center"
@@ -238,7 +267,7 @@ class Profileview extends Component {
                       height: "auto",
                     }}
                   >
-                    <div className="border" style={{ borderRadius: "10px" }}>
+                    <div >
                       <h5
                         style={{ color: "#2E86C1", margin: "3px" }}
                         className="text-center"
@@ -289,7 +318,7 @@ class Profileview extends Component {
                       height: "auto",
                     }}
                   >
-                    <div className="border" style={{ borderRadius: "10px" }}>
+                    <div>
                       <h5
                         style={{ color: "#2E86C1", margin: "3px" }}
                         className="text-center"
@@ -340,7 +369,7 @@ class Profileview extends Component {
                       height: "auto",
                     }}
                   >
-                    <div className="border" style={{ borderRadius: "10px" }}>
+                    <div>
                       <h5
                         style={{ color: "#2E86C1", margin: "3px" }}
                         className="text-center"
@@ -387,7 +416,7 @@ class Profileview extends Component {
                       height: "auto",
                     }}
                   >
-                    <div className="border" style={{ borderRadius: "10px" }}>
+                    <div >
                       <h5
                         style={{ color: "#2E86C1", margin: "3px" }}
                         className="text-center"
@@ -445,7 +474,7 @@ class Profileview extends Component {
                       height: "auto",
                     }}
                   >
-                    <div className="border" style={{ borderRadius: "10px" }}>
+                    <div>
                       <h5
                         style={{ color: "#2E86C1", margin: "3px" }}
                         className="text-center"
@@ -461,7 +490,7 @@ class Profileview extends Component {
                           >
                             Soft skills
                           </h6>
-                          <ul>
+                          <ul className='text-left'>
                             <li>{this.state.skill1}</li>
                             <li>{this.state.skill2}</li>
                             <li>{this.state.skill3}</li>
@@ -477,7 +506,7 @@ class Profileview extends Component {
                           >
                             Technical skills
                           </h6>
-                          <ul>
+                          <ul className='text-left'>
                             <li>{this.state.interest1}</li>
                             <li>{this.state.interest2}</li>
                             <li>{this.state.interest3}</li>

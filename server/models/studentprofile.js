@@ -17,6 +17,9 @@ const studentprofileSchema = new Schema({
     type: Number,
     default: 0,
   },
+  photo:{
+    type:String
+  },
   studentId: { type: String, required: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },

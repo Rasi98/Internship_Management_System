@@ -91,8 +91,9 @@ class ProfileComponent extends Component {
       disablepre: true,
       studId: "",
       fileinput:"",
-      selectedinput:"",
-      previewsource:""
+      url:""
+      // selectedinput:"",
+      // previewsource:""
     }
   }
 
@@ -181,25 +182,54 @@ class ProfileComponent extends Component {
 
   handlephotoupload=(e)=>{
     const file=e.target.files[0]
-    this.previewphoto(file)
-
+    this.setState({fileinput:file})
   }
 
-  previewphoto=(file)=>{
-    const reader=new FileReader();
-    reader.readAsDataURL(file)
-    reader.onloadend=()=>{
-      this.setState({previewsource:reader.result})
-    }
-    console.log("64encode",reader.result)
-  }
+  // postDetails = ()=>{
+  //   const data = new FormData()
+  //   data.append("file",this.state.fileinput)
+  //   data.append("upload_preset","lakshancv")
+  //   data.append("cloud_name","cnq")
+  //   axios.post("https://api.cloudinary.com/v1_1/duohawlgq/image/upload",data)
+  //       .then((res)=> {
+  //         console.log("res",res.data.secure_url)
+  //         const url=res.data.secure_url
+  //         this.setState({url:url})
+  //       })
+  //       .catch(err=>{
+  //         console.log(err)
+  //       })
+  //
+  // }
+  //
+  // previewphoto=(file)=>{
+  //   const reader=new FileReader();
+  //   reader.readAsDataURL(file)
+  //   reader.onloadend=()=>{
+  //     this.setState({previewsource:reader.result})
+  //   }
+  //   console.log("64encode",reader.result)
+  // }
+  //
+  // uploadImage=(base64EncodedImage) => {
+  //   console.log(base64EncodedImage)
+  // }
 
-  uploadImage=(base64EncodedImage) => {
-    console.log(base64EncodedImage)
-  }
 
-
-  onsave = (e) => {
+  onsave = async (e) => {
+    let photourl
+    const data = new FormData()
+    data.append("file",this.state.fileinput)
+    data.append("upload_preset","lakshancv")
+    data.append("cloud_name","cnq")
+    axios.post("https://api.cloudinary.com/v1_1/duohawlgq/image/upload",data)
+        .then((res)=> {
+          console.log("res",res.data.url)
+          photourl=String(res.data.url)
+        })
+        .catch(err=>{
+          console.log(err)
+        })
     const jwt = localStorage.getItem("token");
     const stuid = jwtDecode(jwt)._id;
     const Studentprofile = {
@@ -258,14 +288,13 @@ class ProfileComponent extends Component {
       refpos2: this.state.refpos2,
       refemail2: this.state.refemail2,
       refphone2: this.state.refphone2,
+      photo:photourl,
       action: "save",
       studentId: stuid,
     };
+    console.log("obj",Studentprofile)
 
     if (this.state.exist === false) {
-      if(this.state.previewsource!==""){
-        console.log(this.state.previewsource)
-      }
       axios
         .post(
           "http://localhost:5000/studentprofile/addstudentprofile",
@@ -302,11 +331,14 @@ class ProfileComponent extends Component {
               text: response,
             });
           }
-        });
+        })
+          .catch((err)=>{
+            console.log(err)
+          })
     } else {
-      if(this.state.previewsource!=="") {
-        console.log(this.state.previewsource)
-      }
+      // if(this.state.previewsource!=="") {
+      //   console.log(this.state.previewsource)
+      // }
       // axios.post("http://localhost:5000/studentprofile/addphoto",img)
       //     .then((res)=>{
       //       console.log(res)
@@ -400,17 +432,17 @@ class ProfileComponent extends Component {
         <div>
           <Navbarstd />
         </div>
-        <form onSubmit={this.onsave} className='form'>
+        <form>
           <Paper style={{ marginTop: "20px" }}>
             <Card>
               <CardHeader title="Personal Details" />
             </Card>
             <CardContent>
-              {this.state.previewsource && (
-                  <div>
-                    <img src={this.state.previewsource} alt='CV Photo' style={{height:'100px'}}/>
-                  </div>
-              )}
+              {/*{this.state.previewsource && (*/}
+              {/*    <div>*/}
+              {/*      <img src={this.state.previewsource} alt='CV Photo' style={{height:'100px'}}/>*/}
+              {/*    </div>*/}
+              {/*)}*/}
               <div className="Container text-center">
                 <Grid container spacing={2} alignItems="center" lg={12}>
                   <Grid item md={6} sm={12} xs={12} lg={6}>
@@ -436,7 +468,6 @@ class ProfileComponent extends Component {
                       value={this.state.lastname}
                       onChange={this.handleChange}
                     />
-                    {/* {errormsg.lastname && <p>{errormsg.lastname}</p>} */}
                   </Grid>
 
                   <Grid item md={6} sm={12} xs={12} lg={6}>
@@ -457,7 +488,6 @@ class ProfileComponent extends Component {
                         ),
                       }}
                     />
-                    {/* {errormsg.email && <p>{errormsg.email}</p>} */}
                   </Grid>
 
                   <Grid item lg={6} xs={12} sm={12} md={6}>
@@ -557,10 +587,9 @@ class ProfileComponent extends Component {
                   </Grid>
 
                   {/*photo upload*/}
-
                   <Grid item lg={6} xs={12} sm={12} md={6}>
                     <label className='mr-2'>Photo</label>
-                    <input type="file" value={this.state.fileinput} onChange={this.handlephotoupload} className='form-input'  style={{borderRadius:'3px'}} id="myfile" name="myfile"/>
+                    <input type="file"  onChange={this.handlephotoupload}   style={{borderRadius:'3px'}} id="myfile" name="fileinput"/>
                   </Grid>
                 </Grid>
               </div>
@@ -606,7 +635,7 @@ class ProfileComponent extends Component {
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="start">
-                            <DateRangeIcon />
+                            <DateRangeIcon/>
                           </InputAdornment>
                         ),
                       }}
@@ -1486,14 +1515,12 @@ class ProfileComponent extends Component {
                         variant="contained"
                         color="primary"
                         onClick={this.onsave}
-                        type='submit'
                       >
                         Save
                       </Button>
                     </Col>
                     <Col xs={2}>
                       <Button
-                          type='submit'
                         disabled={this.state.disable}
                         variant="contained"
                         color="secondary"

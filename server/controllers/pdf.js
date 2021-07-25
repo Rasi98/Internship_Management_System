@@ -4,7 +4,7 @@ const pdfgen=async (req,res)=>{
     const url=req.body.url;
     console.log("url",url)
     try {
-        const browser = await puppeteer.launch({defaultViewport:{width:2500,height:1080}});
+        const browser = await puppeteer.launch({defaultViewport:{width:1140,height:800}});
         const page = await browser.newPage();
         const option = {
             path: "pdf/cv.pdf",
@@ -22,6 +22,7 @@ await page.goto(variable, {waitUntil: 'networkidle2'});
 await page.pdf({path: 'pdf/cv.pdf', format: 'a4'});
 
         await browser.close();
+        res.json({result:'saved'})
     }
     catch (e) {
         console.log(e)
