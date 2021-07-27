@@ -2,11 +2,8 @@ import studentProfile from "../../models/studentprofile.js";
 import Student from "../../models/student.js";
 
 export const Addpersonaldetail = async (req, res) => {
-    console.log("data",req.body)
-  const profile = req.body;
-  const action = profile.action;
-  const stuId = profile.studentId;
-  if (action === "save") {
+    console.log("adddata",req.body)
+    const profile = req.body;
     const newprofile = new studentProfile(profile);
     try {
       await newprofile.save();
@@ -14,22 +11,9 @@ export const Addpersonaldetail = async (req, res) => {
     } catch (error) {
       res.status(409).json(error);
     }
-  } else if (action === "submit") {
-    const newprofile = new studentProfile(profile);
-    const student = await Student.findById(stuId);
-    student.cv = "submit";
-    student.save().then(() => {
-      try {
-        newprofile.save();
-        res.status(201).json({ result: "success" });
-      } catch (error) {
-        res.status(409).json(error);
-      }
-    });
-  }
 };
 export const updateProfile = async (req, res) => {
-    console.log("data",req.body.image)
+    console.log("updatedata",req.body.image)
   try {
     await studentProfile.findOneAndUpdate(
       { studentId: req.body.studentId },
@@ -89,7 +73,7 @@ export const updateProfile = async (req, res) => {
         refpos2: req.body.refpos2,
         refemail2: req.body.refemail2,
         refphone2: req.body.refphone2,
-          photo: req.body.image
+          photo: req.body.photo
       }
     );
     res.status(201).json({ result: "success" });

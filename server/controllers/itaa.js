@@ -1,4 +1,5 @@
 import ITAA from "../models/itaa.js";
+import AllocateITAA from "../models/allocatedItaa.js";
 import {sendMail} from "./sendcredentials.js";
 
 export const getitaa = async (req, res) => {
@@ -15,6 +16,7 @@ export const deleteall=(req,res)=>{
     ITAA.db.collection("itaas").drop()
         .then(()=>res.status(201).json("success"))
         .catch((err)=>res.status(400).json("Error:"+err))
+    AllocateITAA.db.collection("allocateitaas").drop();
 }
 
 export const additaa = async (req, res) => {
@@ -41,6 +43,9 @@ export const deleteitaa = (req, res) => {
   ITAA.findByIdAndDelete(req.params.id)
     .then(() => res.json("ITAA deleted."))
     .catch((err) => res.status(400).json("Error: " + err));
+
+  AllocateITAA.deleteMany({itaa:req.params.id})
+
 };
 
 export const updateitaa = (req, res) => {

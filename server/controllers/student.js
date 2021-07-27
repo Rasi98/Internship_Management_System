@@ -2,6 +2,7 @@ import Student from "../models/student.js";
 import StudentProfile from "../models/studentprofile.js";
 import Allocatecompany from "../models/allocated.js";
 import AllocatedITA from "../models/allocatedITA.js";
+import AllocateITAA from "../models/allocatedItaa.js";
 import generator from "generate-password";
 import {
   sendMail,
@@ -100,6 +101,8 @@ export const deleteStudent = (req, res) => {
         console.log("del",res)
         res.delete();
       })
+  AllocateITAA.findOneAndDelete({student:req.params.id})
+
 };
 
 export const deleteall = (req, res) => {
@@ -111,6 +114,7 @@ export const deleteall = (req, res) => {
   Allocatecompany.db.collection("allocations").drop();
   StudentProfile.db.collection("studentprofiles").drop();
   AllocatedITA.db.collection("student").drop();
+  AllocateITAA.db.collection("allocateitaas").drop();
 
 
 };

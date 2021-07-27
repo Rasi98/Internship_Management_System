@@ -173,6 +173,7 @@ class ProfileComponent extends Component {
             });
           });
         }
+        console.log("exist",this.state.exist)
       });
   }
 
@@ -187,6 +188,7 @@ class ProfileComponent extends Component {
   }
 
   postDetails = ()=>{
+    console.log("img",this.state.image)
     if(this.state.image!==null) {
       const data = new FormData()
       data.append("file", this.state.image)
@@ -253,9 +255,8 @@ class ProfileComponent extends Component {
                 refpos2: this.state.refpos2,
                 refemail2: this.state.refemail2,
                 refphone2: this.state.refphone2,
-                action: "save",
                 studentId: stuid,
-                image:this.state.imgurl
+                photo:this.state.imgurl
               };
               this.onsave(Studentprofile)
             })
@@ -323,9 +324,8 @@ class ProfileComponent extends Component {
         refpos2: this.state.refpos2,
         refemail2: this.state.refemail2,
         refphone2: this.state.refphone2,
-        action: "save",
         studentId: stuid,
-        image:this.state.imgurl
+        photo:this.state.imgurl
       };
       this.onsave(Studentprofile)
     }
@@ -337,6 +337,7 @@ class ProfileComponent extends Component {
     console.log("obj",Studentprofile)
 
     if (this.state.exist === false) {
+      console.log("newprofile")
       axios
         .post(
           "http://localhost:5000/studentprofile/addstudentprofile",
@@ -346,7 +347,7 @@ class ProfileComponent extends Component {
           const response = res.data.result;
           console.log(response);
 
-          if (response == "success") {
+          if (response === "success") {
             console.log("success");
             this.setState({ disable: false });
             this.setState({ disablepre: false });
@@ -377,17 +378,8 @@ class ProfileComponent extends Component {
           .catch((err)=>{
             console.log(err)
           })
-    } else {
-      // if(this.state.previewsource!=="") {
-      //   console.log(this.state.previewsource)
-      // }
-      // axios.post("http://localhost:5000/studentprofile/addphoto",img)
-      //     .then((res)=>{
-      //       console.log(res)
-      //     }).catch((err)=>{
-      //   console.log(err)
-      // })
-
+    } else if(this.state.exist===true) {
+      console.log("updateexist")
       axios
         .post(
           "http://localhost:5000/studentprofile/updatestudentprofile",
@@ -396,7 +388,7 @@ class ProfileComponent extends Component {
         .then((res) => {
           console.log(res);
           const response = res.data.result;
-          if (response == "success") {
+          if (response === "success") {
             console.log("success");
             this.setState({ disable: false });
             this.setState({ disablepre: false });
@@ -482,7 +474,6 @@ class ProfileComponent extends Component {
             <CardContent>
               {this.state.imgurl && (
                   <div className='text-center'>
-                    {/*<img className='border' src={this.state.imgurl} alt='CV Photo' style={{height:'100px',width:'100px',borderRadius:'50%',display:'inline-block'}}/>*/}
                     <Avatar alt="Remy Sharp" src={this.state.imgurl} style={{width:'100px',height:'100px',display:'inline-block'}} />
                   </div>
               )}
