@@ -89,6 +89,7 @@ class StudentCV extends Component {
       refemail2: "",
       refphone2: "",
       studentId: "",
+      imgurl:""
     };
   }
   componentDidMount(props) {
@@ -170,6 +171,7 @@ class StudentCV extends Component {
               refpos2: item.refpos2,
               refemail2: item.refemail2,
               refphone2: item.refphone2,
+              imgurl:item.photo
             });
           });
         } else {
@@ -229,10 +231,10 @@ class StudentCV extends Component {
             refpos2: "",
             refemail2: "",
             refphone2: "",
+            imgurl:""
           });
         }
       });
-    console.log("name", this.state.firstname);
   };
 
   sendcomment = () => {
@@ -278,18 +280,16 @@ class StudentCV extends Component {
         <Container
           style={{ padding: "15px", borderRadius: "10px" }}
         >
-          {/*<Row className='m-3'>*/}
-          {/*    <Row>*/}
-          {/*    <Avatar alt="Remy Sharp" src="https://thumbs.dreamstime.com/b/corporate-profile-photo-professional-businessman-executive-arms-folded-boardroom-45082954.jpg" style={{width:'100px',height:'100px'}} />*/}
-          {/*    </Row>*/}
-          {/*    <Row>*/}
-          {/*        <h3>Lakshan Rasingolla</h3>*/}
-          {/*    </Row>*/}
-          {/*    <Row>*/}
-          {/*        <span>Career profile</span>*/}
-          {/*    </Row>*/}
-
-          {/*</Row>*/}
+          <div className='text-center'>
+            <Avatar alt="profile photo" src={this.state.imgurl} style={{width:'100px',height:'100px',display:'inline-block',border: '1px solid lightblue'}} />
+          </div>
+          <h3 className="text-center m-3" style={{ color: "#2E86C1" }}>
+            {this.state.firstname} {this.state.lastname}
+          </h3>
+          <div className='text-center mb-3'>
+            <span>{this.state.career}</span>
+          </div>
+          <hr style={{marginRight:'5%',marginLeft:'5%'}} />
           <Row>
             <Col>
               <Paper

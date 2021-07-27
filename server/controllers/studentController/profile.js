@@ -29,7 +29,7 @@ export const Addpersonaldetail = async (req, res) => {
   }
 };
 export const updateProfile = async (req, res) => {
-    console.log("data",req.body)
+    console.log("data",req.body.image)
   try {
     await studentProfile.findOneAndUpdate(
       { studentId: req.body.studentId },
@@ -89,7 +89,7 @@ export const updateProfile = async (req, res) => {
         refpos2: req.body.refpos2,
         refemail2: req.body.refemail2,
         refphone2: req.body.refphone2,
-          photo:req.body.photo
+          photo: req.body.image
       }
     );
     res.status(201).json({ result: "success" });

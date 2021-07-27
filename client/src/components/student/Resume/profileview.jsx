@@ -10,7 +10,7 @@ import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import PersonIcon from "@material-ui/icons/Person";
 import WorkIcon from "@material-ui/icons/Work";
 import AssignmentIcon from "@material-ui/icons/Assignment";
-import { Divider, ListItem, ListItemText, Paper } from "@material-ui/core";
+import {Avatar, Divider, ListItem, ListItemText, Paper} from "@material-ui/core";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -73,7 +73,7 @@ class Profileview extends Component {
       refpos2: "",
       refemail2: "",
       refphone2: "",
-      photo:""
+      imgurl:""
     };
   }
   componentDidMount() {
@@ -144,7 +144,7 @@ class Profileview extends Component {
               refpos2: item.refpos2,
               refemail2: item.refemail2,
               refphone2: item.refphone2,
-              photo:item.photo
+              imgurl:item.photo
             });
           });
         }
@@ -196,11 +196,17 @@ class Profileview extends Component {
               </Button>
             </Col>
           </Row>
-          <Container id="mycv" >
-            <img src={this.state.photo} alt='cv photo'/>
+          <Container id="mycv" className='border p-3' style={{borderRadius:'1%'}} >
+            <div className='text-center'>
+              <Avatar alt="profile photo" src={this.state.imgurl} style={{width:'100px',height:'100px',display:'inline-block',border: '1px solid lightblue'}} />
+            </div>
             <h3 className="text-center m-3" style={{ color: "#2E86C1" }}>
               {this.state.firstname} {this.state.lastname}
             </h3>
+            <div className='text-center mb-3'>
+              <span>{this.state.career}</span>
+            </div>
+            <hr style={{marginRight:'5%',marginLeft:'5%'}} />
             <Row>
               <Col>
                 <center>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {TextField, Button, Container, Divider} from "@material-ui/core";
+import {TextField, Button, Container, Divider, Avatar} from "@material-ui/core";
 import { Card, CardHeader, CardContent } from "@material-ui/core";
 import EmailIcon from "@material-ui/icons/Email";
 import SchoolIcon from "@material-ui/icons/School";
@@ -17,19 +17,21 @@ import LinkIcon from "@material-ui/icons/Link";
 import TitleIcon from "@material-ui/icons/Title";
 import PersonIcon from "@material-ui/icons/Person";
 import HomeIcon from "@material-ui/icons/Home";
-import {Row, Col, FormGroup, FormLabel, FormControl} from "react-bootstrap";
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import {Row, Col, FormGroup, FormLabel, FormControl, InputGroup} from "react-bootstrap";
 import { Paper, Grid } from "@material-ui/core";
 import axios from "axios";
 import "date-fns";
 import Swal from "sweetalert2";
-import { LinkContainer } from "react-router-bootstrap";
 import Navbarstd from "../Navbar";
 import jwtDecode from "jwt-decode";
+
 
 class ProfileComponent extends Component {
   constructor(props) {
     super(props);
     this.preview = this.preview.bind(this);
+    this.postDetails=this.postDetails.bind(this);
     this.state = {
       firstname: "",
       lastname: "",
@@ -90,10 +92,9 @@ class ProfileComponent extends Component {
       exist: false,
       disablepre: true,
       studId: "",
-      fileinput:"",
-      url:""
-      // selectedinput:"",
-      // previewsource:""
+      image:null,
+      imgurl:"",
+
     }
   }
 
@@ -168,6 +169,7 @@ class ProfileComponent extends Component {
               refpos2: item.refpos2,
               refemail2: item.refemail2,
               refphone2: item.refphone2,
+              imgurl:item.photo
             });
           });
         }
@@ -181,117 +183,157 @@ class ProfileComponent extends Component {
   };
 
   handlephotoupload=(e)=>{
-    const file=e.target.files[0]
-    this.setState({fileinput:file})
+    this.setState({image:e.target.files[0]})
   }
 
-  // postDetails = ()=>{
-  //   const data = new FormData()
-  //   data.append("file",this.state.fileinput)
-  //   data.append("upload_preset","lakshancv")
-  //   data.append("cloud_name","cnq")
-  //   axios.post("https://api.cloudinary.com/v1_1/duohawlgq/image/upload",data)
-  //       .then((res)=> {
-  //         console.log("res",res.data.secure_url)
-  //         const url=res.data.secure_url
-  //         this.setState({url:url})
-  //       })
-  //       .catch(err=>{
-  //         console.log(err)
-  //       })
-  //
-  // }
-  //
-  // previewphoto=(file)=>{
-  //   const reader=new FileReader();
-  //   reader.readAsDataURL(file)
-  //   reader.onloadend=()=>{
-  //     this.setState({previewsource:reader.result})
-  //   }
-  //   console.log("64encode",reader.result)
-  // }
-  //
-  // uploadImage=(base64EncodedImage) => {
-  //   console.log(base64EncodedImage)
-  // }
+  postDetails = ()=>{
+    if(this.state.image!==null) {
+      const data = new FormData()
+      data.append("file", this.state.image)
+      data.append("upload_preset", "lakshancv")
+      data.append("cloud_name", "cnq")
+      axios.post("https://api.cloudinary.com/v1_1/duohawlgq/image/upload", data)
+          .then((res) => {
+            this.setState({imgurl: res.data.url}, () => {
+              const jwt = localStorage.getItem("token");
+              const stuid = jwtDecode(jwt)._id;
+              const Studentprofile = {
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                phone: this.state.phone,
+                address: this.state.address,
+                github: this.state.github,
+                linkedin: this.state.linkedin,
+                career: this.state.career,
+                college: this.state.college,
+                fromyear1: this.state.fromyear1,
+                toyear1: this.state.toyear1,
+                qualification1: this.state.qualification1,
+                description1: this.state.description1,
+                school: this.state.school,
+                fromyear2: this.state.fromyear2,
+                toyear2: this.state.toyear2,
+                qualification2: this.state.qualification2,
+                description2: this.state.description2,
+                title1: this.state.title1,
+                link1: this.state.link1,
+                projectDescription1: this.state.projectDescription1,
+                title2: this.state.title2,
+                link2: this.state.link2,
+                projectDescription2: this.state.projectDescription2,
+                title3: this.state.title3,
+                link3: this.state.link3,
+                projectDescription3: this.state.projectDescription3,
+                institute1: this.state.institute1,
+                position1: this.state.position1,
+                duration1: this.state.duration1,
+                experienceDescription1: this.state.experienceDescription1,
+                institute2: this.state.institute2,
+                position2: this.state.position2,
+                duration2: this.state.duration2,
+                experienceDescription2: this.state.experienceDescription2,
+                skill1: this.state.skill1,
+                skill2: this.state.skill2,
+                skill3: this.state.skill3,
+                skill4: this.state.skill4,
+                skill5: this.state.skill5,
+                skill6: this.state.skill6,
+                interest1: this.state.interest1,
+                interest2: this.state.interest2,
+                interest3: this.state.interest3,
+                interest4: this.state.interest4,
+                interest5: this.state.interest5,
+                interest6: this.state.interest6,
+                refname1: this.state.refname1,
+                refpos1: this.state.refpos1,
+                refemail1: this.state.refemail1,
+                refphone1: this.state.refphone1,
+                refname2: this.state.refname2,
+                refpos2: this.state.refpos2,
+                refemail2: this.state.refemail2,
+                refphone2: this.state.refphone2,
+                action: "save",
+                studentId: stuid,
+                image:this.state.imgurl
+              };
+              this.onsave(Studentprofile)
+            })
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    }
+    else {
+      const jwt = localStorage.getItem("token");
+      const stuid = jwtDecode(jwt)._id;
+      const Studentprofile = {
+        firstname: this.state.firstname,
+        lastname: this.state.lastname,
+        email: this.state.email,
+        phone: this.state.phone,
+        address: this.state.address,
+        github: this.state.github,
+        linkedin: this.state.linkedin,
+        career: this.state.career,
+        college: this.state.college,
+        fromyear1: this.state.fromyear1,
+        toyear1: this.state.toyear1,
+        qualification1: this.state.qualification1,
+        description1: this.state.description1,
+        school: this.state.school,
+        fromyear2: this.state.fromyear2,
+        toyear2: this.state.toyear2,
+        qualification2: this.state.qualification2,
+        description2: this.state.description2,
+        title1: this.state.title1,
+        link1: this.state.link1,
+        projectDescription1: this.state.projectDescription1,
+        title2: this.state.title2,
+        link2: this.state.link2,
+        projectDescription2: this.state.projectDescription2,
+        title3: this.state.title3,
+        link3: this.state.link3,
+        projectDescription3: this.state.projectDescription3,
+        institute1: this.state.institute1,
+        position1: this.state.position1,
+        duration1: this.state.duration1,
+        experienceDescription1: this.state.experienceDescription1,
+        institute2: this.state.institute2,
+        position2: this.state.position2,
+        duration2: this.state.duration2,
+        experienceDescription2: this.state.experienceDescription2,
+        skill1: this.state.skill1,
+        skill2: this.state.skill2,
+        skill3: this.state.skill3,
+        skill4: this.state.skill4,
+        skill5: this.state.skill5,
+        skill6: this.state.skill6,
+        interest1: this.state.interest1,
+        interest2: this.state.interest2,
+        interest3: this.state.interest3,
+        interest4: this.state.interest4,
+        interest5: this.state.interest5,
+        interest6: this.state.interest6,
+        refname1: this.state.refname1,
+        refpos1: this.state.refpos1,
+        refemail1: this.state.refemail1,
+        refphone1: this.state.refphone1,
+        refname2: this.state.refname2,
+        refpos2: this.state.refpos2,
+        refemail2: this.state.refemail2,
+        refphone2: this.state.refphone2,
+        action: "save",
+        studentId: stuid,
+        image:this.state.imgurl
+      };
+      this.onsave(Studentprofile)
+    }
 
+  }
 
-  onsave = async (e) => {
-    let photourl
-    const data = new FormData()
-    data.append("file",this.state.fileinput)
-    data.append("upload_preset","lakshancv")
-    data.append("cloud_name","cnq")
-    axios.post("https://api.cloudinary.com/v1_1/duohawlgq/image/upload",data)
-        .then((res)=> {
-          console.log("res",res.data.url)
-          photourl=String(res.data.url)
-        })
-        .catch(err=>{
-          console.log(err)
-        })
-    const jwt = localStorage.getItem("token");
-    const stuid = jwtDecode(jwt)._id;
-    const Studentprofile = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      email: this.state.email,
-      phone: this.state.phone,
-      address: this.state.address,
-      github: this.state.github,
-      linkedin: this.state.linkedin,
-      career: this.state.career,
-      college: this.state.college,
-      fromyear1: this.state.fromyear1,
-      toyear1: this.state.toyear1,
-      qualification1: this.state.qualification1,
-      description1: this.state.description1,
-      school: this.state.school,
-      fromyear2: this.state.fromyear2,
-      toyear2: this.state.toyear2,
-      qualification2: this.state.qualification2,
-      description2: this.state.description2,
-      title1: this.state.title1,
-      link1: this.state.link1,
-      projectDescription1: this.state.projectDescription1,
-      title2: this.state.title2,
-      link2: this.state.link2,
-      projectDescription2: this.state.projectDescription2,
-      title3: this.state.title3,
-      link3: this.state.link3,
-      projectDescription3: this.state.projectDescription3,
-      institute1: this.state.institute1,
-      position1: this.state.position1,
-      duration1: this.state.duration1,
-      experienceDescription1: this.state.experienceDescription1,
-      institute2: this.state.institute2,
-      position2: this.state.position2,
-      duration2: this.state.duration2,
-      experienceDescription2: this.state.experienceDescription2,
-      skill1: this.state.skill1,
-      skill2: this.state.skill2,
-      skill3: this.state.skill3,
-      skill4: this.state.skill4,
-      skill5: this.state.skill5,
-      skill6: this.state.skill6,
-      interest1: this.state.interest1,
-      interest2: this.state.interest2,
-      interest3: this.state.interest3,
-      interest4: this.state.interest4,
-      interest5: this.state.interest5,
-      interest6: this.state.interest6,
-      refname1: this.state.refname1,
-      refpos1: this.state.refpos1,
-      refemail1: this.state.refemail1,
-      refphone1: this.state.refphone1,
-      refname2: this.state.refname2,
-      refpos2: this.state.refpos2,
-      refemail2: this.state.refemail2,
-      refphone2: this.state.refphone2,
-      photo:photourl,
-      action: "save",
-      studentId: stuid,
-    };
+  onsave =(profile) => {
+    const Studentprofile =profile
     console.log("obj",Studentprofile)
 
     if (this.state.exist === false) {
@@ -438,11 +480,12 @@ class ProfileComponent extends Component {
               <CardHeader title="Personal Details" />
             </Card>
             <CardContent>
-              {/*{this.state.previewsource && (*/}
-              {/*    <div>*/}
-              {/*      <img src={this.state.previewsource} alt='CV Photo' style={{height:'100px'}}/>*/}
-              {/*    </div>*/}
-              {/*)}*/}
+              {this.state.imgurl && (
+                  <div className='text-center'>
+                    {/*<img className='border' src={this.state.imgurl} alt='CV Photo' style={{height:'100px',width:'100px',borderRadius:'50%',display:'inline-block'}}/>*/}
+                    <Avatar alt="Remy Sharp" src={this.state.imgurl} style={{width:'100px',height:'100px',display:'inline-block'}} />
+                  </div>
+              )}
               <div className="Container text-center">
                 <Grid container spacing={2} alignItems="center" lg={12}>
                   <Grid item md={6} sm={12} xs={12} lg={6}>
@@ -588,9 +631,26 @@ class ProfileComponent extends Component {
 
                   {/*photo upload*/}
                   <Grid item lg={6} xs={12} sm={12} md={6}>
-                    <label className='mr-2'>Photo</label>
-                    <input type="file"  onChange={this.handlephotoupload}   style={{borderRadius:'3px'}} id="myfile" name="fileinput"/>
+                    <TextField
+                        type='file'
+                        margin="dense"
+                        variant="outlined"
+                        name="image"
+                        style={{ alignItems: "left", width: "80%" }}
+                        onChange={this.handlephotoupload}
+                        InputProps={{
+                          endAdornment: (
+                              <InputAdornment position="start">
+                                <PhotoCameraIcon />
+                              </InputAdornment>
+                          ),
+                        }}
+                    />
                   </Grid>
+
+                    {/*<label className='mr-2'>Photo</label>*/}
+                    {/*<input type="file"  onChange={this.handlephotoupload}   style={{borderRadius:'3px'}} name="image"/>*/}
+
                 </Grid>
               </div>
             </CardContent>
@@ -1514,7 +1574,7 @@ class ProfileComponent extends Component {
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={this.onsave}
+                        onClick={this.postDetails}
                       >
                         Save
                       </Button>
